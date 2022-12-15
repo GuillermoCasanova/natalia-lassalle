@@ -1,0 +1,1 @@
+import{aa as i}from"./index-651331ac.js";function s(o){const t=o-1;return t*t*t+1}function u(o,{delay:t=0,duration:c=400,easing:n=i}={}){const a=+getComputedStyle(o).opacity;return{delay:t,duration:c,easing:n,css:e=>`opacity: ${e*a}`}}export{s as c,u as f};

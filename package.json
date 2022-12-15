@@ -1,0 +1,45 @@
+{
+  "name": "maison-matador",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node build/index.js",
+    "dev": "vite dev --https",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./jsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
+    "test": "playwright test",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+    "format": "prettier --write --plugin-search-dir=. ."
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.25.0",
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-node": "^1.0.0-next.96",
+    "@sveltejs/kit": "1.0.0-next.512",
+    "@vitejs/plugin-basic-ssl": "^0.1.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^3.2.1",
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.5.0",
+    "svelte": "^3.49.0",
+    "svelte-check": "^2.7.1",
+    "svelte-intersection-observer": "^0.10.0",
+    "svelte-meta-tags": "^2.6.3",
+    "swiper": "^8.3.2",
+    "vite": "^3.0.8"
+  },
+  "type": "module",
+  "dependencies": {
+    "@portabletext/svelte": "^0.2.0",
+    "@sanity/client": "^3.3.0",
+    "@sanity/image-url": "^1.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.2",
+    "express-sslify": "^1.2.0",
+    "googleapis": "^107.0.0",
+    "nodemailer": "^6.7.8",
+    "normalize.css": "^8.0.1"
+  }
+}

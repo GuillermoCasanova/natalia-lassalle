@@ -1,0 +1,21 @@
+.headerLogo {
+    max-width: 15rem;
+    margin: 0;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.headerLogo svg {
+    max-width: 100%;
+}
+
+:global(img) {
+    width: 100%;
+}
+
+:root {
+    --brand-primary: red;
+    --brand-secondary: red;
+    --main-navigation-color: #f2f0ec;
+    --main-navigation-color--inverted: #f2f0ec;
+}

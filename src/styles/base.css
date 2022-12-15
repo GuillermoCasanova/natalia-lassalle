@@ -1,0 +1,764 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,300;1,700&display=swap');
+
+/*------------------------------------*\
+    #Reset
+\*------------------------------------*/
+
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+li,
+ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset,
+img {
+    border: 0;
+}
+
+address,
+caption,
+cite,
+dfn,
+th,
+var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+caption,
+th {
+    text-align: left;
+}
+
+q:before,
+q:after {
+    content: '';
+}
+
+abbr,
+acronym {
+    border: 0;
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+    list-style-type: none;
+}
+
+summary::before {
+    display: none;
+}
+
+
+summary::-webkit-details-marker {
+    display: none;
+    list-style-type: none;
+}
+
+summary::before {
+    display: none;
+
+}
+
+
+.visually-hidden {
+    z-index: -9999;
+    pointer-events: none;
+    opacity: 0;
+    position: fixed;
+}
+
+[aria-hidden="true"] {
+    pointer-events: none;
+}
+
+img {
+    width: 100%;
+    max-width: 100%;
+}
+
+main {
+    min-height: calc(120vh);
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Colors
+\*------------------------------------*/
+
+:root {
+    --accent-color: #B75656;
+    --secondary-color: #f2f0ec;
+    --tertiary-color: #F2F5F6;
+    --quaternary-color: #888888;
+    /* --secondary-color: #F5F5F5; */
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Animations
+\*------------------------------------*/
+
+:root {
+    --duration-short: 100ms;
+    --duration-default: 200ms;
+    --duration-medium: 400ms;
+    --duration-long: 800ms;
+    --primary-easing: cubic-bezier(0.5, 1, 0.89, 1);
+}
+
+
+@media (prefers-reduced-motion) {
+    .motion-reduce {
+        transition: none !important;
+    }
+}
+
+
+
+
+
+
+/*------------------------------------*\
+    #PaddingAndMarginsLevels
+\*------------------------------------*/
+
+:root {
+    --level0: .25rem;
+    --level1: .5rem;
+    --level2: .75rem;
+    --level3: 1rem;
+    --level4: 1.5rem;
+    --level5: 2rem;
+    --level6: 2.5rem;
+    --level7: 3rem;
+    --level8: 3.5rem;
+    --level9: 4rem;
+    --level10: 4.5rem;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Typography
+\*------------------------------------*/
+
+
+:root {
+    --primary-font-family: 'Roboto', 'arial', 'sans-serif';
+    --secondary-font-family: 'times new roman', 'serif';
+    --tertiary-font-family: 'minerva-modern', 'arial', 'sans-serif';
+    --letter-spacing-1: 1px;
+    --letter-spacing-2: 1px;
+    --letter-spacing-3: 3px;
+    --letter-spacing-4: 5px;
+    --font-weight-light: 300;
+    --kilo: 3.81rem;
+    --h1: 3.05rem;
+    --h2: 2.44rem;
+    --h3: 1.95rem;
+    --h4: 1.56rem;
+    --h5: 1.15rem;
+    --h6: 1rem;
+    --normal: 1rem;
+    --micro: .9rem;
+    --mini: .75rem;
+    --line-height: 1.25;
+    --line-height-double: 1.5;
+}
+
+
+
+.headline :global(strong) {
+    font-family: var(--secondary-font-family);
+    font-weight: normal;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Root Typography Resizing
+\*------------------------------------*/
+
+:root {
+    font-size: .7rem;
+}
+
+
+/*X-SMALL*/
+@media screen and (min-width: 300px) {
+    :root {
+        font-size: .9rem;
+    }
+}
+
+/*SMALL-UP*/
+@media screen and (min-width: 370px) {
+    :root {
+        font-size: .9rem;
+    }
+}
+
+/*MEDIUM-UP*/
+@media screen and (min-width: 600px) {
+    :root {
+        font-size: .85rem;
+    }
+}
+
+
+/*LARGE-UP*/
+@media screen and (min-width: 900px) {
+    :root {
+        font-size: .9rem;
+    }
+}
+
+/*X-LARGE-UP*/
+@media screen and (min-width: 1200px) {
+    :root {
+        font-size: 1rem;
+    }
+}
+
+
+/*X-LARGE-UP*/
+@media screen and (min-width: 1681px) {
+    :root {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 1700px) {
+    :root {
+        font-size: 1.05rem;
+    }
+}
+
+
+
+/*WIDESCREEN-UP*/
+@media screen and (min-width: 2000px) {
+    :root {
+        font-size: 1.1rem;
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Default Text Selection Color 
+\*------------------------------------*/
+
+
+::selection {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+::-moz-selection {
+
+    background-color: var(--accent-color);
+    color: white;
+}
+
+
+
+
+/*------------------------------------*\
+    #Headlines
+\*------------------------------------*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: var(--level4);
+    letter-spacing: -.05px;
+    line-height: 1;
+}
+
+body {
+    font-family: var(--primary-font-family);
+    font-size: var(--h5);
+    line-height: 1.5;
+    font-display: fallback;
+    color: black;
+}
+
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Paragraphs
+\*------------------------------------*/
+
+p {
+    margin-bottom: var(--level5);
+}
+
+
+.screen-readers-only {
+    opacity: 0;
+    z-index: -100;
+    left: -999;
+    position: fixed;
+}
+
+
+
+
+/*------------------------------------*\
+    #Buttons
+\*------------------------------------*/
+
+.button,
+button {
+    text-align: center;
+    display: inline-block;
+}
+
+.button:hover,
+button:hover {
+    cursor: pointer;
+}
+
+.button--primary {
+    border: 1px solid black;
+    background: #fff;
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: var(--tertiary-font-family);
+}
+
+
+.button--medium {
+    width: 100%;
+    padding: var(--level2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    border-radius: 69px;
+    transition: all var(--duration-default) ease;
+    font-size: var(--h5);
+}
+
+.button--primary:hover,
+.button--primary:focus {
+    cursor: pointer;
+    background-color: black;
+    color: #fff;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Sections
+\*------------------------------------*/
+
+section {
+    padding-bottom: var(--level7);
+}
+
+@media only screen and (min-width: 975px) {
+    section {
+        padding-bottom: calc(var(--level6));
+    }
+}
+
+
+section.no-padding {
+    padding: 0;
+}
+
+
+
+
+/*------------------------------------*\
+  #Overflows Hiding
+\*------------------------------------*/
+
+
+.overflow-hidden-mobile,
+.overflow-hidden-tablet {
+    overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+    .overflow-hidden-mobile {
+        overflow: auto;
+    }
+}
+
+@media screen and (min-width: 975px) {
+    .overflow-hidden-tablet {
+        overflow: auto;
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+    #Visibility
+\*------------------------------------*/
+
+
+.show-for-large-up {
+    display: none;
+}
+
+@media only screen and (min-width: 975px) {
+    .show-for-large-up {
+        display: block;
+    }
+}
+
+
+.hide-for-large-up {
+    display: block;
+}
+
+@media only screen and (min-width: 975px) {
+    .hide-for-large-up {
+        display: none;
+    }
+}
+
+
+
+
+
+
+/*------------------------------------*\
+    #Responsive Video
+\*------------------------------------*/
+
+
+.responsive-video {
+    position: relative;
+    padding-bottom: 56.6%;
+    width: 100%;
+}
+
+.responsive-video video {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+
+/*------------------------------------*\
+    #Links
+\*------------------------------------*/
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+
+p a {
+    position: relative;
+    display: inline-block;
+}
+
+
+p a:before {
+    content: ' ';
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    width: 100%;
+    background-color: var(--accent-color);
+    height: 2px;
+    pointer-events: none;
+}
+
+p a:hover:before,
+p a:focus:before {
+    animation: hover-link var(--duration-long) forwards;
+}
+
+
+
+@keyframes hover-link {
+    0% {
+        width: 100%;
+        right: 0;
+        left: auto;
+        opacity: 1;
+    }
+
+    49% {
+        width: 0;
+        right: 0;
+        left: auto;
+        opacity: 0;
+    }
+
+    59% {
+        width: 0;
+        left: 0;
+        right: auto;
+        opacity: 0;
+    }
+
+    60% {
+        left: 0;
+        right: auto;
+        width: 0;
+    }
+
+    100% {
+        left: 0;
+        right: auto;
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+
+
+
+/*------------------------------------*\
+    #Forms 
+\*------------------------------------*/
+
+
+/*------------------------------------*\
+    #Inputs 
+\*------------------------------------*/
+
+:root {
+    --input-border-width: 1.5px
+}
+
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="color"],
+input {
+    padding: var(--level2);
+
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="color"],
+input,
+textarea {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    border: 1px solid black;
+    border-radius: 0;
+    font-family: var(--primary-font-family);
+    transition: all .4s ease-in-out;
+    border-radius: 6px;
+    max-width: 100%;
+    font-size: var(--micro)
+}
+
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="time"]:focus,
+input[type="url"]:focus,
+input[type="color"]:focus,
+input:focus,
+textarea:focus {
+    outline: 0;
+    background-color: var(--secondary-color);
+    border-color: var(--accent-color);
+}
+
+
+input[type="text"]:active,
+input[type="password"]:active,
+input[type="date"]:active,
+input[type="datetime"]:active,
+input[type="datetime-local"]:active,
+input[type="month"]:active,
+input[type="week"]:active,
+input[type="email"]:active,
+input[type="number"]:active,
+input[type="search"]:active,
+input[type="tel"]:active,
+input[type="time"]:active,
+input[type="url"]:active,
+input[type="color"]:active,
+input:active,
+textarea:active {
+    outline: 0;
+    background-color: transparent;
+    border-color: var(--accent-color);
+}
+
+label {
+    font-family: var(--primary-font-family);
+    letter-spacing: 1px;
+    font-size: var(--micro);
+}
+
+input {
+    margin-bottom: var(--level0);
+}
+
+
+/* Change the white to any color ;) */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    -webkit-text-fill-color: black !important;
+}
+
+
+textarea {
+    width: 100%;
+    padding: var(--level2);
+    min-height: 8rem;
+}
+
+
+textarea:active+label,
+textarea:focus+label {
+    color: #fff;
+}
+
+
+
+.form-section {
+    margin-bottom: var(--level2);
+}
+
+
+label {
+    display: block;
+    text-align: left;
+    color: black;
+    margin-bottom: var(--level0);
+}
+
+label span {
+    color: red;
+}
+
+
+legend {
+    padding: 0;
+    display: table;
+}
+
+fieldset {
+    border: 0;
+    padding: 0.01em 0 0 0;
+    margin: 0;
+    min-width: 0;
+}
+
+body:not(:-moz-handler-blocked) fieldset {
+    display: table-cell;
+}
+
+.input-required {
+    color: red;
+}

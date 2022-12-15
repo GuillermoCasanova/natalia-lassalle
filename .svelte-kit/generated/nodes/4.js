@@ -1,0 +1,2 @@
+export { default as component } from "../../../src/routes/our-work/+page.svelte";
+export const server = true;

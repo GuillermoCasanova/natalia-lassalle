@@ -1,0 +1,22 @@
+{
+	"": [
+		"src/routes/+page.server.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"hiring": [
+		"src/routes/hiring/+page.server.js",
+		"src/routes/+layout.js"
+	],
+	"our-work": [
+		"src/routes/our-work/+page.server.js",
+		"src/routes/+layout.js"
+	],
+	"api/send-mail": [
+		"src/routes/api/send-mail/+server.js"
+	],
+	"our-work/[slug]": [
+		"src/routes/our-work/[slug]/+page.server.js",
+		"src/routes/+layout.js"
+	]
+}

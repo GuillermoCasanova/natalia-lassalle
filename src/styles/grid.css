@@ -1,0 +1,11 @@
+@import './base.css';
+
+main {
+    padding-top: 5rem;
+}
+
+.main-container {
+    padding-left: var(--level4);
+    padding-right: var(--level4);
+    width: 100%;
+}
