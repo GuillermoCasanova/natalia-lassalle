@@ -1,8 +1,6 @@
 @import './base.css';
 
-main {
-    padding-top: 5rem;
-}
+main {}
 
 .main-container {
     padding-left: var(--level4);

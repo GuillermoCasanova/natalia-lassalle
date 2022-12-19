@@ -13,7 +13,7 @@ export default {
             name: "page_layout", 
             type: "array", 
             title: "Page Layout", 
-            of:[{type: 'page_hero_header'}, {type: "page_brand_statement"}, {type: "page_featured_work_list"}, {type: "page_marquee"}, {type: "sctn_expertise"}],
+            of:[{type: 'sctn_hero_header'},{type: "sctn_projects_list"} ],
             validation: Rule => Rule.required()
           }
     ]

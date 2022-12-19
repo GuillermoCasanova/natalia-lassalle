@@ -3,7 +3,7 @@ import {FiBriefcase} from 'react-icons/fi';
 export default   {
     name: 'project', 
     type: 'document', 
-    title: 'Work',
+    title: 'Projects',
     icon: FiBriefcase, 
     fields: [
 

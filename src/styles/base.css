@@ -189,7 +189,7 @@ main {
 
 :root {
     --primary-font-family: 'acumin-pro-condensed', 'roboto', 'sans-serif';
-    --secondary-font-family: 'ivypresto-test', 'serif';
+    --secondary-font-family: 'ivypresto-text', 'serif';
     --tertiary-font-family: 'minerva-modern', 'arial', 'sans-serif';
     --letter-spacing-1: 1px;
     --letter-spacing-2: 1px;
@@ -350,7 +350,7 @@ a:focus {
 \*------------------------------------*/
 
 p {
-    margin-bottom: var(--level5);
+    margin-bottom: var(--level3);
 }
 
 

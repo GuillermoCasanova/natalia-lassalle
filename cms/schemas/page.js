@@ -31,7 +31,7 @@ export default {
             name: "page_layout", 
             type: "array", 
             title: "Page Layout", 
-            of:[{type: 'project_list'},{type: "page_featured_work_list"}, {type: "sctn_jobs_list"}]
+            of:[{type: 'sctn_projects_list'} ]
           }
     ]
 }
