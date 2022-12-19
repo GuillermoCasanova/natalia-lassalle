@@ -10,18 +10,26 @@ export default {
             validation: Rule => Rule.required()
         },
         {
-            type: "file",
-            name: "video_file", 
-            title: "Video File",
-            description: "MP4 or .MOV file under 2mb",
+            name: "video", 
+            type: "array", 
+            title: "Video", 
+            of:[{type: 'video'} ],
             validation: Rule => Rule.required()
         },
         {
-            type: "image",
-            name: "video_poster", 
-            title: "An image to serve as placeholder for the video before it lazy loads or user clicks  play. Usually the first frame in the video.",
-            validation: Rule => Rule.required()
+            type: "boolean",
+            name: "video_autoplay", 
+            title: "Autoplay (Default: False)",
+            description: "Set wether these videos should autoplay on loop or should the user have to click  play.",
+            initialVaue: false 
         },
+        {
+            type: "boolean",
+            name: "video_show_controls", 
+            title: "Show Controls (Default: False)",
+            description: "Set wether  videos should show controls",
+            initialVaue: false 
+        }
     ]
 }
 

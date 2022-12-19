@@ -16,9 +16,9 @@ onMount(async () => {
 
 {#if data.content.page_layout}
   {#each data.content.page_layout as section}
-    <!-- {#if section._type == 'sctn_hero_header'}
-    <SectionHeroHeader {section} />
-  {/if} -->
+    {#if section._type == 'sctn_hero_header'}
+      <SectionHeroHeader {section} />
+    {/if}
 
     {#if section._type == 'sctn_projects_list'}
       <SectionProjectsList {data} />

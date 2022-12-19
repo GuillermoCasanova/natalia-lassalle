@@ -6,7 +6,8 @@ export default {
         {
             name: "title", 
             title: "Title", 
-            type: "string"
+            type: "string",
+            description: "This is the section that features all projects on the site by date."
         }
         // {
         //     name: "projects",

@@ -14,32 +14,16 @@ export async function load({ params, fetch }) {
         ...,
         page_layout[] {
                 ...,
-                select(_type == "page_featured_work_list")=> {
+                select(_type == "sctn_hero_header") => {
                     ...,
-                    'projects': projects[]-> {
-                        name, 
-                        overview,
-                        handle, 
-                        work_done,
-                        seo,
-                        'brand_video': brand_video.asset-> { 
+                    video[] {
+                        ...,
+                        'video_file': video_file.asset-> { 
                             ..., url, originalFilename
                             }
                     }
-                },
-                select(_type == "page_brand_statement") => {
-                    ...,
-                    'video_file': video_file.asset-> { 
-                    ..., url, originalFilename
-                    }
-                    
-                },
-                select(_type == "page_team")=> {
-                    ...,
-                    'team_members': team_members[]-> {
-                        ...
-                    } 
-                },
+                  
+                }
             }
     } 
     `;

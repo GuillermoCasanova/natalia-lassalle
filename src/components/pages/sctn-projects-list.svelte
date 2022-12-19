@@ -114,7 +114,7 @@ summary {
 @media screen and (min-width: 900px) {
   details[open] summary {
     background-color: black;
-    color: #fff;
+    color: var(--secondary-color);
     border-top: var(--border-thickness) solid black;
   }
 
@@ -145,6 +145,7 @@ summary::marker {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   padding-top: 2rem;
+  background-color: var(--secondary-color);
 }
 
 @media screen and (min-width: 900px) {
@@ -176,7 +177,7 @@ summary::marker {
 .project-media-area {
   background-color: black;
   height: 100vw;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 40%;
@@ -211,6 +212,7 @@ summary::marker {
     position: fixed;
     right: 0;
     top: 0;
+    z-index: 0;
     height: 100vh;
     overflow: auto;
     padding: 1.5rem;
@@ -414,7 +416,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1700px) {
+@media screen and (min-width: 1800px) {
   .project-summary-content {
     padding: 1.5vw;
     column-gap: 3em;
@@ -423,6 +425,17 @@ h1 {
 
 .project-summary-about {
   width: 100%;
+}
+
+@media screen and (min-width: 900px) {
+  .project-summary-about {
+    font-size: var(--h6);
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .project-summary-about {
+  }
 }
 
 .project-summary-formats {
@@ -465,10 +478,17 @@ h1 {
   width: 100%;
   overflow: auto;
   display: flex;
+  margin-bottom: 2rem;
 }
 
 .project-preview-videos__item {
   width: 45%;
+}
+
+@media screen and (min-width: 1400px) {
+  .project-preview-videos__item {
+    width: 35%;
+  }
 }
 
 .project-preview-videos__video-container {
