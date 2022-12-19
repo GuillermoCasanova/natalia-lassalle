@@ -188,8 +188,8 @@ main {
 
 
 :root {
-    --primary-font-family: 'Roboto', 'arial', 'sans-serif';
-    --secondary-font-family: 'times new roman', 'serif';
+    --primary-font-family: 'acumin-pro-condensed', 'roboto', 'sans-serif';
+    --secondary-font-family: 'ivypresto-test', 'serif';
     --tertiary-font-family: 'minerva-modern', 'arial', 'sans-serif';
     --letter-spacing-1: 1px;
     --letter-spacing-2: 1px;
@@ -270,13 +270,13 @@ main {
 /*X-LARGE-UP*/
 @media screen and (min-width: 1681px) {
     :root {
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
 }
 
 @media screen and (min-width: 1700px) {
     :root {
-        font-size: 1.05rem;
+        font-size: 1rem;
     }
 }
 
@@ -285,7 +285,7 @@ main {
 /*WIDESCREEN-UP*/
 @media screen and (min-width: 2000px) {
     :root {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 }
 

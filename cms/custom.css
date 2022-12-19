@@ -28,9 +28,9 @@
     --large-padding--em: 1.5em;
     --extra-large-padding: 2rem;
     --extra-large-padding--em: 2em;
-    --brand-primary: #B75656;
+    --brand-primary: #22212e;
 
-    --main-navigation-color: #f2f0ec;
+    --main-navigation-color: #22212e;
     ;
 }
 
@@ -42,4 +42,8 @@
 
 .header-logo {
     max-width: 5rem;
+}
+
+#sanityBody {
+    background-color: black;
 }
