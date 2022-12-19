@@ -1,85 +1,144 @@
 <script>
+import Nav from '../nav.svelte';
 import PortableText from '@portabletext/svelte';
+import ProjectMedia from '../project-media-list.svelte';
 import { urlFor } from '$lib/sanity';
 export let data;
 </script>
 
-<div class="projects-container">
-  {#each data.projects as project}
-    <article class="project-line-item">
-      <details>
-        <summary>
-          <div class="project-summary-header">
-            <h1 class="project-column  project-name">
-              {project.name}
-            </h1>
+<div class="projects-archive-container">
+  <div class="projects-container">
+    <Nav {...data.navigation} />
+    {#each data.projects as project, index}
+      <article class="project-line-item">
+        {#if index == 0}
+          <details open>
+            <summary>
+              <div class="project-summary-header">
+                <h1 class="project-column  project-name">
+                  {project.name}
+                </h1>
 
-            <div class="project-column  project-publish-date">
-              <p>
-                {project.date_released}
-              </p>
-            </div>
+                <div class="project-column  project-publish-date">
+                  <p>
+                    {project.date_released}
+                  </p>
+                </div>
 
-            <div class="project-column  project-medium">
-              <p aria-label="Project Medium">
-                {project.medium.title}
-              </p>
-            </div>
-          </div>
-        </summary>
+                <div class="project-column  project-medium">
+                  <p aria-label="Project Medium">
+                    {project.medium.title}
+                  </p>
+                </div>
+              </div>
+            </summary>
 
-        <div class="project-summary-content">
-          <div class="project-summary-main">
-            <h2 class="project-summary-headline">About THe Work</h2>
-            <div class="project-summary-about">
-              <PortableText blocks={project.about} />
-              <div class="project-summary-formats">
-                <PortableText blocks={project.formats} />
+            <div class="project-summary-content">
+              <div class="project-summary-main">
+                <h2 class="project-summary-headline">About THe Work</h2>
+                <div class="project-summary-about">
+                  <PortableText blocks={project.about} />
+                  <div class="project-summary-formats">
+                    <span><PortableText blocks={project.formats} /></span>
+                  </div>
+                </div>
+
+                {#if project.preview_videos}
+                  <ul class="project-preview-videos">
+                    {#each project.preview_videos as video}
+                      <li class="project-preview-videos__item">
+                        <div class="project-preview-videos__video-container">
+                          <video poster={urlFor(video.video_poster.asset)}>
+                            <source src={video.video_file.url} />
+                          </video>
+                        </div>
+                      </li>
+                    {/each}
+                  </ul>
+                {/if}
+              </div>
+
+              <div class="project-summary-credits">
+                <h2 class="project-summary-headline">Credits</h2>
+                <PortableText blocks={project.credits} />
               </div>
             </div>
 
-            {#if project.preview_videos}
-              <ul class="project-preview-videos">
-                {#each project.preview_videos as video}
-                  <li class="project-preview-videos__item">
-                    <div class="project-preview-videos__video-container">
-                      <video poster={urlFor(video.video_poster.asset)}>
-                        <source src={video.video_file.url} />
-                      </video>
-                    </div>
-                  </li>
-                {/each}
-              </ul>
-            {/if}
-          </div>
+            <div />
 
-          <div class="project-summary-credits">
-            <h2 class="project-summary-headline">Credits</h2>
-            <PortableText blocks={project.credits} />
-          </div>
-        </div>
-
-        <div />
-
-        <div class="project-media">
-          {#if project.project_media}
-            {#each project.project_media as media}
-              {#if media.asset}
-                <div>
-                  <p>{media.alt_text}</p>
-                  <img
-                    src={urlFor(media.asset).width(900).auto('format').url()}
-                    alt={media.alt_text}
-                    loading="lazy"
-                  />
-                </div>
+            <div class="project-media">
+              {#if project.project_media}
+                <ProjectMedia media={project.project_media} />
               {/if}
-            {/each}
-          {/if}
-        </div>
-      </details>
-    </article>
-  {/each}
+            </div>
+          </details>
+        {/if}
+
+        {#if index != 0}
+          <details>
+            <summary>
+              <div class="project-summary-header">
+                <h1 class="project-column  project-name">
+                  {project.name}
+                </h1>
+
+                <div class="project-column  project-publish-date">
+                  <p>
+                    {project.date_released}
+                  </p>
+                </div>
+
+                <div class="project-column  project-medium">
+                  <p aria-label="Project Medium">
+                    {project.medium.title}
+                  </p>
+                </div>
+              </div>
+            </summary>
+
+            <div class="project-summary-content">
+              <div class="project-summary-main">
+                <h2 class="project-summary-headline">About THe Work</h2>
+                <div class="project-summary-about">
+                  <PortableText blocks={project.about} />
+                  <div class="project-summary-formats">
+                    <span><PortableText blocks={project.formats} /></span>
+                  </div>
+                </div>
+
+                {#if project.preview_videos}
+                  <ul class="project-preview-videos">
+                    {#each project.preview_videos as video}
+                      <li class="project-preview-videos__item">
+                        <div class="project-preview-videos__video-container">
+                          <video poster={urlFor(video.video_poster.asset)}>
+                            <source src={video.video_file.url} />
+                          </video>
+                        </div>
+                      </li>
+                    {/each}
+                  </ul>
+                {/if}
+              </div>
+
+              <div class="project-summary-credits">
+                <h2 class="project-summary-headline">Credits</h2>
+                <PortableText blocks={project.credits} />
+              </div>
+            </div>
+
+            <div />
+
+            <div class="project-media">
+              {#if project.project_media}
+                <ProjectMedia media={project.project_media} />
+              {/if}
+            </div>
+          </details>
+        {/if}
+      </article>
+    {/each}
+  </div>
 </div>
 
 <div class="project-media-area" />
@@ -140,16 +199,27 @@ summary::marker {
     #Work Container
 \*------------------------------------*/
 
-.projects-container {
+.projects-archive-container {
+  position: relative;
+}
+
+.projects-container,
+.nav-container {
   width: 100%;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
-  padding-top: 2rem;
+  padding-top: 0.5rem;
   background-color: var(--secondary-color);
 }
 
+.nav-container {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+}
 @media screen and (min-width: 900px) {
-  .projects-container {
+  .projects-container,
+  .nav-container {
     width: 60%;
     padding-right: 1rem;
     padding-left: 1rem;
@@ -158,14 +228,19 @@ summary::marker {
     overflow: auto;
     position: relative;
   }
+  .nav-container {
+    height: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 @media screen and (min-width: 1400px) {
-  .projects-container {
+  .projects-container,
+  .nav-container {
     padding-right: 1.5rem;
     padding-left: 1.5rem;
     width: 50%;
-    height: 100vh;
     overflow: auto;
   }
 }
@@ -226,13 +301,6 @@ summary::marker {
     width: 50%;
     padding: 5rem;
   }
-  .project-media img {
-    margin-bottom: 3rem;
-  }
-}
-
-.project-media img {
-  border: 1px solid rgb(31, 30, 30);
 }
 
 /*------------------------------------*\
@@ -418,7 +486,8 @@ h1 {
 
 @media screen and (min-width: 1800px) {
   .project-summary-content {
-    padding: 1.5vw;
+    padding: 1rem;
+    padding-top: 2rem;
     column-gap: 3em;
   }
 }
@@ -443,6 +512,26 @@ h1 {
   margin-bottom: 1.25rem;
 }
 
+@media screen and (min-width: 900px) {
+  .project-summary-formats {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.project-summary-formats span {
+  position: relative;
+  padding-left: 1rem;
+  display: block;
+}
+.project-summary-formats span:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  content: '■';
+}
+
 .project-summary-credits :global(p) {
   margin-bottom: 0.5rem;
 }
@@ -456,11 +545,18 @@ h1 {
   .project-summary-credits {
     font-size: var(--micro);
     max-width: 30ch;
+    opacity: 0.4;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .project-summary-credits:hover {
+    opacity: 1;
   }
 }
 
 @media screen and (min-width: 1400px) {
   .project-summary-credits {
+    font-size: var(--mini);
     max-width: 32ch;
   }
 }
@@ -468,7 +564,7 @@ h1 {
 @media screen and (min-width: 1400px) {
   .project-summary-main {
     width: 100%;
-    max-width: 100ch;
+    max-width: 105ch;
     line-height: 1.5;
   }
 }
@@ -488,6 +584,12 @@ h1 {
 @media screen and (min-width: 1400px) {
   .project-preview-videos__item {
     width: 35%;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .project-preview-videos__item {
+    width: 45%;
   }
 }
 

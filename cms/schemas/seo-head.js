@@ -28,8 +28,7 @@ export default {
             name: "banner_image",
             title: "Share Open Graph Image",
             type: "default_image", 
-            description: "Thumbnail image that appears on social shares or text messages. Used for social, wwww sharing and SEO.",
-            validation: Rule => Rule.required(),
+            description: "Thumbnail image that appears on social shares or text messages. Used for social, wwww sharing and SEO."
         }
     ]
 

@@ -61,8 +61,6 @@ onMount(() => {
 });
 </script>
 
-<!-- <Nav {...data.navigation} /> -->
-
 {#if loading}
   <div
     class="loading-screen"
