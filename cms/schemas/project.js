@@ -45,6 +45,9 @@ export default   {
         type: "date", 
         title: "Date Released", 
         name: "date_released", 
+        options: {
+          dateFormat: "MMM YYYY"
+        },
         validation: Rule => Rule.required()
       },
       {
@@ -62,7 +65,7 @@ export default   {
         validation: Rule => Rule.required()
       },
       {
-        name: "work_preview", 
+        name: "preview_videos", 
         type: "array", 
         title: "Preview Videos", 
         of:[{type:"project_video_break"}],

@@ -1,73 +1,93 @@
 <script>
-	import { MetaTags } from 'svelte-meta-tags';
-	import { urlFor } from '$lib/sanity';
-	import { page } from '$app/stores';
-	import SectionTeam from '../components/pages/sctn-team.svelte';
-	import SectionMarquee from '../components/pages/sctn-marquee.svelte';
-	import SectionHeroHeader from '../components/pages/sctn-hero-header.svelte';
-	import SectionBrandStatement from '../components/pages/sctn-brand-statement.svelte';
-	import SectionFeaturedWork from '../components/pages/sctn-featured-work.svelte';
-	import SectionExpertise from '../components/pages/sctn-expertise.svelte';
-	export let data;
+import { MetaTags } from 'svelte-meta-tags';
+import { urlFor } from '$lib/sanity';
+import { page } from '$app/stores';
+import SectionTeam from '../components/pages/sctn-team.svelte';
+import SectionMarquee from '../components/pages/sctn-marquee.svelte';
+import SectionHeroHeader from '../components/pages/sctn-hero-header.svelte';
+import SectionBrandStatement from '../components/pages/sctn-brand-statement.svelte';
+import SectionFeaturedWork from '../components/pages/sctn-featured-work.svelte';
+import SectionExpertise from '../components/pages/sctn-expertise.svelte';
+import { onMount } from 'svelte';
+import PortableText from '@portabletext/svelte';
+
+export let data;
+
+onMount(async () => {
+  await import('datejs');
+});
 </script>
 
-<svelte:head>
-	<MetaTags
-		title="{$page.data.siteHead.seo.title}"
-		description="{$page.data.siteHead.seo.description}"
-		canonical="https://www.canonical.ie/"
-		siteName="{$page.data.siteHead.seo.title}"
-		openGraph="{{
-			url: 'https://www.url.ie/a',
-			title: $page.data.siteHead.seo.title,
-			description: $page.data.siteHead.seo.description,
-			images: [
-				{
-					url: urlFor($page.data.siteHead.seo.banner_image.asset).width(1200),
-					width: 800,
-					height: 600,
-					alt: $page.data.siteHead.seo.banner_image.alt_text
-						? $page.data.siteHead.seo.banner_image.alt_text
-						: 'Missing Alt Text'
-				}
-			],
-			site_name: $page.data.siteHead.seo.title
-		}}"
-		twitter="{{
-			handle: '@MaisonMatador',
-			site: '@MaisonMatador',
-			cardType: 'summary_large_image',
-			title: $page.data.siteHead.seo.title,
-			description: $page.data.siteHead.seo.description,
-			image: urlFor($page.data.siteHead.seo.banner_image.asset).width(1200),
-			imageAlt: $page.data.siteHead.seo.banner_image.alt_text
-				? $page.data.siteHead.seo.banner_image.alt_text
-				: 'Missing Alt Text'
-		}}"
-	/>
-</svelte:head>
+<div class="work-container">
+  {#each data.projects as project}
+    <article>
+      <details>
+        <summary>
+          <h1>
+            {project.name}
+          </h1>
 
-{#each data.content.page_layout as section}
-	{#if section._type == 'page_hero_header'}
-		<SectionHeroHeader section="{section}" />
-	{/if}
-	{#if section._type == 'page_brand_statement'}
-		<SectionBrandStatement section="{section}" />
-	{/if}
+          <p>
+            {new Date(project.date_released).toString('MMM yyyy')}
+          </p>
 
-	{#if section._type == 'page_featured_work_list'}
-		<SectionFeaturedWork section="{section}" />
-	{/if}
+          <p aria-label="Project Medium">
+            {project.medium.title}
+          </p>
+        </summary>
 
-	{#if section._type == 'page_marquee'}
-		<SectionMarquee section="{section}" />
-	{/if}
+        <div>
+          <div>
+            <h2>About THe Work</h2>
+            <div>
+              <PortableText blocks={project.about} />
+            </div>
 
-	{#if section._type == 'page_team'}
-		<SectionTeam {...section} />
-	{/if}
+            <div>
+              <PortableText blocks={project.formats} />
+            </div>
 
-	{#if section._type == 'sctn_expertise'}
-		<SectionExpertise {...section} />
-	{/if}
-{/each}
+            {#if project.preview_videos}
+              <ul>
+                {#each project.preview_videos as video}
+                  <li>
+                    <video poster={urlFor(video.video_poster.asset)}>
+                      <source src={video.video_file.url} />
+                    </video>
+                  </li>
+                {/each}
+              </ul>
+            {/if}
+          </div>
+
+          <div>
+            <h2>Credits</h2>
+            <PortableText blocks={project.credits} />
+          </div>
+
+          <div>
+            {#if project.project_media}
+              {#each project.project_media as media}
+                {#if media.asset}
+                  <p>{media.alt_text}</p>
+                  <img
+                    src={urlFor(media.asset).width(900).auto('format').url()}
+                    alt={media.alt_text}
+                    loading="lazy"
+                  />
+                {/if}
+              {/each}
+            {/if}
+          </div>
+        </div>
+      </details>
+    </article>
+  {/each}
+</div>
+
+<style>
+.work-container {
+  width: 100%;
+  padding: 2rem;
+}
+</style>

@@ -36,16 +36,34 @@ export async function load({ params, fetch }) {
                 },
                 select(_type == "page_team")=> {
                     ...,
-                    'team_members': team_members[]-> 
+                    'team_members': team_members[]-> {
+                        ...
+                    } 
                 },
             }
     } 
     `;
+
+    const projects_request  = `*[_type == 'project'][] {
+        ...,
+        "medium" : medium ->{
+            ...
+        },
+        "preview_videos": preview_videos[] {
+            ...,
+            "video_file": video_file.asset->
+        }
+    }
+    `;
+
     const content = await client.fetch(page_request, params);
+
+    const projects = await client.fetch(projects_request, params);
 
     //This is available to child components via STUFF since it is in layout
     return {
         siteHead,
-        content
+        content,
+        projects
     };
 }

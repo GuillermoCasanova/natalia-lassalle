@@ -12,10 +12,10 @@ import imageUrlBuilder from '@sanity/image-url';
 
 
 const config = {
-    projectId: 'gnft3vvt',
-    dataset: 'mm-dataset',
-    apiVersion: '2021-03-25', // use current UTC date - see "specifying API version"!
-    token: 'sk3UF9wdQiUuTGnxosrIFUuokBTXTge66CfxmSwUMGeI60wyGqF6Ptomk2TPnYDJCHQy3HnTvL5Pnz2z5dR6sWUx6Yy3RWBIoczZTYM31i2ck8ku8jTL8zizUPcLZM1eNLIpfUNGc7rw9bwvKVg7ELyrohMzhaZ5cmgAkm4LeNah37ldf9EG', // or leave blank for unauthenticated usage
+    projectId: '43ajij5z',
+    dataset: 'production',
+    apiVersion: '2022-11-14', // use current UTC date - see "specifying API version"!
+    token: 'skKfNNgILwxuXfQfQ97HXSLu99pc8h1F85pevC454YTmuFFtQgwVCdxGGK1h0usLl9xFiwqMAvtlGY2XPPWECTE3ABDzNmPl9K54f2dGs1YwOyUYOzaMFeYCdlfqru4ZWWM8kBqxech5NChxrrQcA4vsN4ZyBHVIgTmVtiafKWYYVulor47Q', // or leave blank for unauthenticated usage
     useCdn: false, // `false` if you want to ensure fresh data
 };
 
