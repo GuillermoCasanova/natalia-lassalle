@@ -90,7 +90,9 @@ export let data;
 
                 <div class="project-column  project-medium">
                   <p aria-label="Project Medium">
-                    {project.medium.title}
+                    {#if project.medium}
+                      {project.medium.title}
+                    {/if}
                   </p>
                 </div>
               </div>
