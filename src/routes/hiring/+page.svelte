@@ -2,9 +2,9 @@
 	import { urlFor } from '$lib/sanity';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { page } from '$app/stores';
-	import SctnPageProjectList from '../../components/pages/sctn-proj-list.svelte';
-	import SectionFeaturedWork from '../../components/pages/sctn-featured-work.svelte';
-	import SectionJobsList from '../../components/pages/sctn-jobs-list.svelte';
+	import SctnPageProjectList from '../../components/sections/sctn-proj-list.svelte';
+	import SectionFeaturedWork from '../../components/sections/sctn-featured-work.svelte';
+	import SectionJobsList from '../../components/sections/sctn-jobs-list.svelte';
 	export let data;
 </script>
 

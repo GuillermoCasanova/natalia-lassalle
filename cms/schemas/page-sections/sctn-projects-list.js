@@ -1,7 +1,7 @@
 export default {
     name: "sctn_projects_list",
     title: "Project List Section",
-    type: "object",
+    type: "document",
     fields: [
         {
             name: "title", 

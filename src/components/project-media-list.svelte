@@ -14,7 +14,7 @@ export let media;
     </div>
   {/if}
 
-  {#if media._type == 'image_with_figure'}
+  {#if media._type == 'image_with_figure' && media.figure}
     <figure>
       <img
         src={urlFor(media.image.asset).width(900).auto('format').url()}
@@ -39,22 +39,26 @@ caption {
   width: 100%;
   display: block;
   margin-bottom: 3rem;
+  font-size: var(--mini); 
 }
 
+figure {
+  margin: 0; 
+}
 figure img {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0; 
 }
 
 @media screen and (min-width: 900px) {
   caption {
-    font-size: var(--h6);
     max-width: 50ch;
     margin: auto;
-    margin-bottom: 4rem;
+    height: var(--level3);
+    margin-bottom: var(--level1);
   }
 
   img {
-    margin-bottom: 5rem;
+    margin-bottom: var(--level2);
   }
 }
 </style>

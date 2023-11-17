@@ -128,7 +128,7 @@ onMount(() => {
         >
           <span class="visually-hidden"> Natalia Lassalle Morillo </span>
           <svg role="presentation" aria-hidden="true"
-            ><use xlink:href="#maison-logo" /></svg
+            ><use xlink:href="#logo" /></svg
           >
         </a>
       {/if}

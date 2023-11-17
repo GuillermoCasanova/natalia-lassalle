@@ -10,21 +10,9 @@ export async function load({ params, fetch }) {
 
     const siteHead = await client.fetch(request, params);
 
-    const page_request = `*[_type == 'page-home'][0] {
+    const page_request = `*[_type == 'page' && handle.current == 'current'][0] {
         ...,
-        page_layout[]-> {
-                ...,
-                select(_type == "sctn_hero_header") => {
-                    ...,
-                    video[] {
-                        ...,
-                        'video_file': video_file.asset-> { 
-                            ..., url, originalFilename
-                            }
-                    }
-                  
-                }
-            }
+        page_layout[]->
     } 
     `;
 

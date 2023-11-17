@@ -1,6 +1,6 @@
 export default {
     name: "sctn_hero_header",
-    type: "object",
+    type: "document",
     title: "Hero Header",
     fields: [
         {

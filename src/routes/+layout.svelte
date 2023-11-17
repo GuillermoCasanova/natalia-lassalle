@@ -62,11 +62,11 @@ onMount(() => {
 </script>
 
 {#if loading}
-  <div
+  <!-- <div
     class="loading-screen"
     in:fade={{ duration: 500, easing: cubicOut }}
     out:fade={{ duration: 600, easing: cubicOut }}
-  />
+  /> -->
 {/if}
 
 <main data-sveltekit-prefetch>

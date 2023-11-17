@@ -4,7 +4,9 @@ import { client } from '$lib/sanity';
 
 export const ssr = true;
 
-export async function load({ url: { pathname } }) {
+export async function load( {url: {pathname}}) {
+
+
     const footerRequest = `*[_type == 'footer-settings'][0] {
         ...,
         blocks[] {
@@ -36,15 +38,29 @@ export async function load({ url: { pathname } }) {
             }
         }
     }`;
+
+
+    const projects_request  = `*[_type == 'project'][] {
+        ...,
+        "medium" : medium ->{
+            ...
+        },
+        "preview_videos": preview_videos[] {
+            ...,
+            "video_file": video_file.asset->
+        }
+    }
+    `;
     
 
     const navigation = await client.fetch(mainNavRequest); 
     const footer = await client.fetch(footerRequest); 
-
+    const projects = await client.fetch(projects_request);
     
     return {
         navigation,
         footer,
+        projects,
         pathname
     };
 }

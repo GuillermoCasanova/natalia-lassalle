@@ -1,0 +1,147 @@
+
+<script>
+    import Nav from '../../components/nav.svelte';
+	import { urlFor } from '$lib/sanity';
+	import { MetaTags } from 'svelte-meta-tags';
+	import { page } from '$app/stores';
+	import SectionRichText from '../../components/sections/sctn-rich-text.svelte';
+    import SectionProjectsList from '../../components/sections/sctn-projects-list.svelte';
+	import SectionExperienceList from '../../components/sections/sctn-experience-list.svelte';
+	export let data;
+</script>
+
+<div class="subpage">
+	<div class="subpage__inner">
+			<div class="subpage__left-content">
+				<Nav {...data.navigation} />
+				<div class="subpage__content-body">
+					<!-- <section class="no-padding">
+						<div >
+							<h1>{$page.data.content.page_title}</h1>
+						</div>
+					</section> -->
+					{#if data.content.page_layout}
+						{#each data.content.page_layout as section}
+							{#if section._type == 'sctn_rich_text'}
+							<SectionRichText  {section}/>
+							{/if}
+						
+							{#if section._type == 'sctn_experience_list'}
+							<SectionExperienceList  {section}/>
+							{/if}
+
+							{#if section._type == 'sctn_projects_list'}
+							<SectionProjectsList />
+							{/if} 
+						{/each}
+					{/if}
+				</div>
+			</div>
+		<div class="subpage__right-content">
+			graphic
+		</div>
+	</div>
+</div>
+
+<style>
+
+
+@media screen and (min-width: 900px) {
+	.subpage {
+		position: fixed;
+		height: 100vh;
+		width: 100%; 
+		top: 0; 
+		bottom: 0; 
+	}
+}
+
+.subpage__inner {
+	width: 100%; 
+}
+
+@media screen and (min-width: 900px) {
+	.subpage__inner .subpage__left-content {
+		width: 55%;
+		padding-right: var(--level1);
+		padding-left: var(--level1);
+		overflow: hidden;
+		height: 100vh;
+		overflow: auto;
+		position: relative;
+		overflow-x: hidden; 
+		background-color: white;
+		z-index: 1;
+		position: relative;
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.subpage__inner .subpage__left-content {
+		width: 55%;
+		padding-right: var(--level3);
+		padding-left: var(--level3);
+	}
+}
+
+.subpage__content-body {
+	padding-right: var(--level1);
+	padding-left: var(--level1);
+}
+
+@media screen and (min-width: 900px) {
+	.subpage__content-body {
+		padding-top: var(--level4);
+	}
+}
+@media screen and (min-width: 1400px) {
+	.subpage__content-body {
+		padding-right: var(--level8);
+		padding-left: var(--level8);
+	}
+}
+
+.subpage__right-content { 
+	display: none;
+}
+
+@media screen and (min-width: 900px) {
+	.subpage__right-content{
+		background-color: black;
+		height: 100vh;
+		display: flex;
+		width: 40%;
+		position: fixed;
+		top: 0; 
+		right: 0;  
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.subpage__right-content{
+		width: 50%;
+	}
+}
+
+@media screen and (min-width: 900px) {
+  .subpage__right-content {
+    width: 60%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow: hidden;
+    height: 100vh;
+    overflow: auto;
+	background-color: black;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .subpage__right-content {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    width: 45%;
+    overflow: auto;
+  }
+}
+
+</style>

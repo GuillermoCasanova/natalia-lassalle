@@ -7,21 +7,12 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import page from './page'
 import pageHome from './page-home'
 import sctnHeroHeader from './page-sections/sctn-hero-header'
-import sctnBrandStatement from './page-sections/sctn-brand-statement'
-import sctnFeaturedWorkList from './page-sections/sctn-featured-work-list'
 import expertiseExample from './expertise-example'
-import sctnExpertise from './page-sections/sctn-expertise'
-import sctnMarquee from './page-sections/sctn-marquee'
-import sctnJobsList from './objects/sctn-jobs-list'
-import jobPost from './objects/job-post'
+import sctnExperienceList from './page-sections/sctn-experience-list'
 import project from './project'
 import projectList from './page-sections/sctn-projects-list'
-import projectHeader from './projects/proj-header'
-import projectIntro from './projects/proj-intro'
-import projectImages from './projects/proj-images'
-import projectCopy from './projects/proj-copy'
-import projectOverview from './projects/proj-overview'
 import projectVideoBreak from './projects/proj-video-break'
+import sctnRichText from './page-sections/sctn-rich-text'
 import seoHead from './seo-head'
 import siteSettings from './site-settings'
 import image from './image'
@@ -47,13 +38,13 @@ export default createSchema({
     page,
     pageHome, 
     sctnHeroHeader,
-    sctnMarquee,
     richtext,
     expertiseExample,
-    sctnExpertise,
+    sctnExperienceList,
     project,
     projectList,
     projectVideoBreak,
+    sctnRichText,
     seoHead,
     siteSettings,
     tag,

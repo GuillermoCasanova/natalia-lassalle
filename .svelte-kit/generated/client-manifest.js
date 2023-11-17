@@ -5,15 +5,19 @@ export { matchers } from './client-matchers.js';
 	() => import('./nodes/2'),
 	() => import('./nodes/3'),
 	() => import('./nodes/4'),
-	() => import('./nodes/5')];
+	() => import('./nodes/5'),
+	() => import('./nodes/6'),
+	() => import('./nodes/7')];
 
 			export const server_loads = [];
 
 			export const dictionary = {
 	"": [~2],
-	"hiring": [~3],
-	"our-work": [~4],
-	"our-work/[slug]": [~5]
+	"about": [~3],
+	"current": [~4],
+	"hiring": [~5],
+	"work": [~6],
+	"work/[slug]": [~7]
 };
 
 			export const hooks = {
