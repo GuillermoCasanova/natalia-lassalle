@@ -52,13 +52,6 @@ export default   {
       },
       {
         type: "array", 
-        title: "Formats", 
-        name: "formats", 
-        of: [{ type: "block"}],
-        validation: Rule => Rule.required()
-      },
-      {
-        type: "array", 
         title: "Credits", 
         name: "credits", 
         of: [{ type: "block"}],
@@ -69,7 +62,6 @@ export default   {
         type: "array", 
         title: "Preview Videos", 
         of:[{type:"project_video_break"}],
-        validation: Rule => Rule.required()
       },
       {
         name: "medium", 

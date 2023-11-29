@@ -353,6 +353,11 @@ summary::marker {
   }
 }
 
+
+
+
+
+
 /*------------------------------------*\
     #Project Summary
 \*------------------------------------*/
@@ -502,10 +507,15 @@ h1 {
   padding-top: 3rem;
 }
 
-.project-summary-content :global(strong) {
+.project-summary-content :global(em) {
   text-transform: uppercase;
   font-family: var(--secondary-font-family);
   font-weight: normal;
+  font-style: normal;
+}
+
+.project-summary-content :global(strong) {
+  text-transform: uppercase;
 }
 
 @media screen and (min-width: 900px) {
