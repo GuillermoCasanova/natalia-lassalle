@@ -1,7 +1,8 @@
 
-import {FaPaperclip, FaRegEnvelope, FaExternalLinkAlt} from 'react-icons/fa';
+import {FaPaperclip, FaRegEnvelope, FaExternalLinkAlt,  FaStickyNote, FaCode} from 'react-icons/fa';
 import InternalLinkRenderer from '../renderers/InternalLinkRenderer'; 
 import ExternalLinkRender from '../renderers/ExternalLinkRenderer'; 
+
 
 export default {
     name: "richtext", 
@@ -25,8 +26,7 @@ export default {
                                 name: 'page', 
                                 type: 'reference', 
                                 to: [
-                                    {type: "page"},
-                                    {type: "project"}
+                                    {type: "page"}
                                 ]
                             }
                         ]
@@ -74,7 +74,7 @@ export default {
                                     Rule.regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).warning("Please enter a valid email address.")
                             }
                         ]
-                    },
+                    }
                 ]
             }
         }

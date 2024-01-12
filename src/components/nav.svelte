@@ -4,6 +4,7 @@ import { page } from '$app/stores';
 import ModalTrigger from './modal-trigger.svelte';
 import { onMount } from 'svelte';
 
+
 export let main_nav;
 
 let navLinks = main_nav.items;
@@ -37,11 +38,11 @@ let toggleMenuDrawer = function (event) {
 };
 
 let openMenuDrawer = function (event, elementToFocus = false) {
-  drawerMenuContainer.querySelector('aside').style.height = `calc(101vh - ${
-    document.querySelector('header').clientHeight + 'px'
-  })`;
-  drawerMenuContainer.querySelector('aside').style.top =
-    document.querySelector('header').clientHeight + 1 + 'px';
+  // drawerMenuContainer.querySelector('aside').style.height = `calc(101vh - ${
+  //   document.querySelector('header').clientHeight + 'px'
+  // })`;
+  // drawerMenuContainer.querySelector('aside').style.top =
+  //   document.querySelector('header').clientHeight + 1 + 'px';
   setTimeout(() => {
     showNavItems = !showNavItems;
   }, 100);
@@ -65,7 +66,7 @@ let onKeyUp = (event) => {
 
   openDetailsElement === drawerMenuContainer
     ? closeMenuDrawer(event, menuDrawerToggle)
-    : closeSubMenu(openDetailsElement);
+    : false
 };
 
 let menuDrawerCloseAnim = function (pDetailsElement) {
@@ -101,7 +102,7 @@ onMount(() => {
 });
 </script>
 
-<header bind:this={container}>
+<header bind:this={container} class:menu-opening={navIsOpen}>
   <div class="header__inner">
     <div class="header__logo">
       {#if pathName == '/'}
@@ -190,7 +191,9 @@ onMount(() => {
                         rel="external"
                         title="Go to external link at {navItem.navigationItemUrl
                           .href}"
+                         
                       >
+                      
                         {navItem.text}
                       </a>
                     {/if}
@@ -204,6 +207,7 @@ onMount(() => {
                           .current}
                         rel="internal"
                         title="Go to {navItem.text.toLowerCase()} page"
+                        class:is-active={pathName == navItem.navigationItemUrl.href }
                       >
                         {navItem.text}
                       </a>
@@ -256,6 +260,7 @@ onMount(() => {
                     rel="external"
                     title="Go to external link at {navItem.navigationItemUrl
                       .href}"
+
                   >
                     {navItem.text}
                   </a>
@@ -266,10 +271,15 @@ onMount(() => {
                     data-sveltekit-noscroll
                     on:click={closeMenuDrawer}
                     class="menu-list__link"
-                    href="/{navItem.navigationItemUrl.internalLink.handle
+                    href="{navItem.navigationItemUrl.internalLink.handle
                       .current}"
                     rel="internal"
                     title="Go to {navItem.text.toLowerCase()} page"
+                    aria-current={pathName == "/" + navItem.navigationItemUrl.internalLink.handle
+                    .current ? 'page' : false || null}
+                    class:is-active={pathName == "/" + navItem.navigationItemUrl.internalLink.handle
+                      .current }
+
                   >
                     {navItem.text}
                   </a>
@@ -310,8 +320,6 @@ onMount(() => {
 	\*------------------------------------*/
 
 header {
-  padding-top: var(--level3);
-  padding-bottom: var(--level3);
   z-index: 1;
   position: relative;
   width: 100%;
@@ -332,6 +340,7 @@ header.menu-opening {
   }
 
   header {
+    border-bottom: 1px solid black;
   }
 }
 
@@ -340,14 +349,21 @@ header.menu-opening {
   grid-template-areas: 'logo navigation';
   grid-template-columns: 2fr 1fr;
   margin-bottom: 0;
+  padding-left: var(--level2); 
+  padding-right: var(--level2);
+  padding-top: var(--level2);
+  padding-bottom: var(--level2);
 }
 
 @media screen and (min-width: 900px) {
   .header__inner {
-    max-width: 90rem;
     margin-right: auto;
     margin-left: auto;
+    padding-left: var(--level4); 
+    padding-right: var(--level4);
     grid-template-columns: 1fr 2fr;
+    padding-top: var(--level1);
+    padding-bottom: var(--level1);
   }
 }
 
@@ -366,6 +382,10 @@ header.menu-opening {
   .header__logo {
     max-width: 14rem;
   }
+}
+
+:global(header.menu-opening .header__logo svg) {
+  fill: #FFF; 
 }
 
 .header__logo a {
@@ -408,9 +428,11 @@ header.menu-opening {
   }
 }
 
+
+
 /*------------------------------------*\
     	#Menu Drawer  
-	\*------------------------------------*/
+\*------------------------------------*/
 
 @keyframes headerDrawerOpen {
   0% {
@@ -452,17 +474,18 @@ header.menu-opening {
   width: 100vw;
   left: 0;
   right: 0;
-  background: white;
+  background: black;
   z-index: 0;
   height: 100vh;
   opacity: 0;
+  top: 0; 
   will-change: opacity;
 }
 
 .menu-drawer__inner {
   padding-left: var(--level5);
   padding-right: var(--level5);
-  padding-top: var(--level4);
+  padding-top: calc(var(--level8) + var(--level8));
 }
 
 .menu-drawer__item {
@@ -472,24 +495,33 @@ header.menu-opening {
   opacity: 0;
   will-change: opacity;
   transition: all 0.4s cubic-bezier(0.5, 1, 0.89, 1);
+  text-align: right;
 }
 
 .menu-drawer__items.show-nav-items .menu-drawer__item {
   opacity: 1;
 }
 
-:global(.menu-drawer__link) {
+.menu-drawer__link {
   position: relative;
-  padding: var(--level0);
-  padding-right: var(--level3);
-  padding-left: var(--level3);
   display: inline-block;
   text-align: center;
-  margin-left: calc(var(--level3) * -1);
   background-color: transparent;
   border: none;
+  color: white;
+  text-transform: uppercase;
+  font-size: var(--h1);
+  font-weight: bold;
+  padding: var(--level1);
+  line-height: 1;
+}
+
+
+.menu-drawer__link:hover,
+.menu-drawer__link:focus {
   color: black;
 }
+
 
 :global(button.menu-drawer__link) {
   padding-top: var(--level1);
@@ -504,16 +536,15 @@ header.menu-opening {
 
 :global(.menu-drawer__link):before {
   content: ' ';
-  border: 1px solid black;
   width: 100%;
-  height: 100%;
-  top: 0;
+  height: 100%; 
+  background: white;
   left: 0;
   bottom: 0;
-  border-radius: 50px;
   position: absolute;
   opacity: 0;
-  transition: all var(--duration-default) cubic-bezier(0.5, 1, 0.89, 1);
+  z-index: -1;
+  transition: all 0 cubic-bezier(0.5, 1, 0.89, 1);
 }
 
 :global(.menu-drawer__link):hover:before,
@@ -521,9 +552,13 @@ header.menu-opening {
   opacity: 1;
 }
 
+
+
+
+
 /*------------------------------------*\
-    	#Menu Items + Links  
-	\*------------------------------------*/
+    	#Menu List 
+\*------------------------------------*/
 
 .menu-list__items {
   display: flex;
@@ -570,31 +605,45 @@ header.menu-opening {
   margin-right: 0;
 }
 
-:global(.menu-list__link) {
-  padding-left: var(--level2);
-  padding-right: var(--level2);
-  padding-top: var(--level1);
-  padding-bottom: var(--level1);
+.menu-list__link {
+  padding-left: var(--level1);
+  padding-right: var(--level1);
+  padding-bottom: .15rem;
   font-size: var(--h5);
   position: relative;
   background: transparent;
   border: none;
   text-transform: uppercase;
+  line-height: 1;
 }
 
 :global(.menu-list__link):before {
   content: ' ';
-  border: 1px solid black;
-  width: 100%;
-  height: 100%;
-  top: 0;
+  width: 1.5rem;
+  height: 2px; 
+  background: black;
   left: 0;
-  bottom: 0;
-  border-radius: 50px;
+  bottom: -1px;
+  right: 0; 
+  margin: auto; 
   position: absolute;
   opacity: 0;
-  transition: all var(--duration-default) cubic-bezier(0.5, 1, 0.89, 1);
+  z-index: -1;
+  transition: all 0 cubic-bezier(0.5, 1, 0.89, 1);
 }
+
+:global(.menu-list__link):hover:before,
+:global(.menu-list__link):focus:before {
+  opacity: 1;
+}
+
+:global(.menu-list__link)[aria-current]:before {
+ opacity: 1;
+}
+
+
+
+
 
 /*------------------------------------*\
     	#Menu Drawer  Icon
@@ -633,7 +682,7 @@ header.menu-opening {
 .header__menu-icon .header__menu-icon-middle-bar,
 .header__menu-icon .header__menu-icon-bottom-bar {
   width: 70%;
-  height: 1px;
+  height: 2px;
   display: block;
   position: absolute;
   top: 0;
@@ -659,15 +708,18 @@ header.menu-opening {
 
 .header__menu-icon[aria-expanded='true'] .header__menu-icon-middle-bar {
   opacity: 0;
+  background: white;
 }
 
 .header__menu-icon[aria-expanded='true'] .header__menu-icon-top-bar {
   transform: rotate(45deg);
   top: 0;
+  background: white;
 }
 
 .header__menu-icon[aria-expanded='true'] .header__menu-icon-bottom-bar {
   transform: rotate(-45deg);
   top: 0;
+  background: white;
 }
 </style>

@@ -9,12 +9,6 @@ import pageHome from './page-home'
 import sctnHeroHeader from './page-sections/sctn-hero-header'
 import expertiseExample from './expertise-example'
 import sctnExperienceList from './page-sections/sctn-experience-list'
-import project from './project'
-import projectList from './page-sections/sctn-projects-list'
-import projectVideoBreak from './projects/proj-video-break'
-import sctnRichText from './page-sections/sctn-rich-text'
-import seoHead from './seo-head'
-import siteSettings from './site-settings'
 import image from './image'
 import imageWithFigure from './image-with-figure'
 import footerLink from './footer-email'
@@ -23,7 +17,14 @@ import footerSettings from './footer-settings'
 import navigation from './documents/navigation'
 import navItem from './objects/navItem'
 import link from './objects/link'
+import project from './project'
+import projectList from './page-sections/sctn-projects-list'
+import projectVideoBreak from './projects/proj-video-break'
+import post from './documents/post'
 import richtext from './objects/richtext'
+import sctnRichText from './page-sections/sctn-rich-text'
+import seoHead from './seo-head'
+import siteSettings from './site-settings'
 import tag from './documents/tag'
 import video from './objects/video'
 
@@ -41,6 +42,7 @@ export default createSchema({
     richtext,
     expertiseExample,
     sctnExperienceList,
+    post,
     project,
     projectList,
     projectVideoBreak,

@@ -37,6 +37,10 @@ function loadVideo(e) {
           <svg role="presentation"><use xlink:href="#logo" /></svg>
         </div>
 
+        <div class="spiral">
+          <svg role="presentation"><use xlink:href="#spiral" /></svg>
+        </div>
+
         <div class="section-hero-header__video-container">
           <div class="section-hero-header__video">
             <video
@@ -56,6 +60,7 @@ function loadVideo(e) {
                 type="video/mp4"
               />
             </video>
+            <img src={urlFor(section.video[0].video_poster.asset)} alt="" class="responsive-image">
           </div>
         </div>
       </div>
@@ -87,6 +92,7 @@ function loadVideo(e) {
   position: relative;
   color: #fff;
   fill: #fff;
+  opacity: 0;
 }
 
 .section-hero-header__headline svg {
@@ -120,5 +126,42 @@ function loadVideo(e) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+}
+
+.spiral {
+  position: absolute;
+  left:0; 
+  right: 0; 
+  bottom: 0; 
+  width: 15vw; 
+  height: 15vw;
+  z-index: 3;
+  margin: auto; 
+  bottom: 0; 
+  top: 0; 
+  animation: rotate 10s linear infinite;
+  max-width: 4rem;
+}
+
+.spiral svg,
+ img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+
+.spiral svg {
+  fill: #fff; 
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+   100% {
+    transform: rotate(360deg);
+   }
 }
 </style>

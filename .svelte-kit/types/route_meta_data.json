@@ -1,37 +1,29 @@
 {
-	"": [
+	"/": [
 		"src/routes/+page.server.js",
 		"src/routes/+layout.js",
 		"src/routes/+layout.js"
 	],
-	"about": [
+	"/about": [
 		"src/routes/about/+page.server.js",
 		"src/routes/+layout.js"
 	],
-	"hiring": [
-		"src/routes/hiring/+page.server.js",
-		"src/routes/+layout.js"
-	],
-	"our-work": [
-		"src/routes/our-work/+page.server.js",
-		"src/routes/+layout.js"
-	],
-	"api/send-mail": [
+	"/api/send-mail": [
 		"src/routes/api/send-mail/+server.js"
 	],
-	"our-work/[slug]": [
-		"src/routes/our-work/[slug]/+page.server.js",
-		"src/routes/+layout.js"
-	],
-	"current": [
+	"/current": [
 		"src/routes/current/+page.server.js",
 		"src/routes/+layout.js"
 	],
-	"work": [
+	"/hiring": [
+		"src/routes/hiring/+page.server.js",
+		"src/routes/+layout.js"
+	],
+	"/work": [
 		"src/routes/work/+page.server.js",
 		"src/routes/+layout.js"
 	],
-	"work/[slug]": [
+	"/work/[slug]": [
 		"src/routes/work/[slug]/+page.server.js",
 		"src/routes/+layout.js"
 	]

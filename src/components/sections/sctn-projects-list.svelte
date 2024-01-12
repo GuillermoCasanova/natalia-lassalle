@@ -1,10 +1,11 @@
 <script>
-import Nav from '../nav.svelte';
-import PortableText from '@portabletext/svelte';
+import {PortableText} from '@portabletext/svelte';
 import ProjectMedia from '../project-media-list.svelte';
+import RichText from '../rich-text.svelte'; 
 import { urlFor } from '$lib/sanity';
 
 import { client } from '$lib/sanity';
+import { onMount } from 'svelte';
 
 let myData = [];
 
@@ -31,82 +32,126 @@ async function fetchData() {
 let projects; 
 
 
-fetchData().then((response)=> {
-    projects = response;
+
+onMount(() => {
+
+  let activeDrawer = null; 
+
+  const closeDrawer = (pElem) => {
+    const detailsSelector = pElem.closest('details'); 
+    const projectContentContainer = detailsSelector.querySelector('[data-project-content-container]'); 
+
+    activeDrawer = null;
+
+    projectContentContainer.style.height = 0;
+    projectContentContainer.style.opacity = 0;
+    pElem.querySelector('summary').setAttribute('aria-expanded', false);
+
+    setTimeout(() => {
+      pElem.removeAttribute('open');
+    }, 400);
+  };
+
+  const toggleDrawer = (event) => {
+    event.preventDefault();
+    openDrawer(event.currentTarget);
+  };
+
+  const openDrawer = (pDrawer) => {
+
+    const detailsSelector = pDrawer.closest('details'); 
+    const projectContent = detailsSelector.querySelector('.project-summary-content'); 
+    const projectContentContainer = detailsSelector.querySelector('[data-project-content-container]'); 
+
+
+    pDrawer.setAttribute('aria-expanded', true);
+
+    if (pDrawer.dataset.id == activeDrawer) {
+      closeDrawer(pDrawer.closest('details'));
+      toggleFading(pDrawer.closest('[data-projects-list]'), true); 
+      return;
+    }
+
+    pDrawer.closest('[data-projects-list]').querySelectorAll('details').forEach((elem) => {
+      if (elem.querySelector('summary').dataset.id !== pDrawer.dataset.id) {
+        closeDrawer(elem.closest('details'));
+      }
+    });
+
+    pDrawer.closest('details').setAttribute('open', true);
+    toggleFading(pDrawer.closest('[data-projects-list]')); 
+
+    projectContentContainer.style.height =  projectContent.offsetHeight + 'px';
+    projectContentContainer.style.opacity = 1; 
+
+    activeDrawer = pDrawer.dataset.id;
+
+    setTimeout(()=> {
+      scrollToProject(pDrawer, 0); 
+    }, 300); 
+  };
+
+  const scrollToProject = (pElement, pOffsetPixels) => {
+      // Find the target section element by its ID
+      const targetSection = pElement;
+      // Check if the target section exists
+      if (targetSection) {
+        // Get the final scroll position
+        const scrollPosition = targetSection.offsetTop;
+        // Scroll to the target section with smooth behavior
+        document.querySelector('[data-left-content]').scrollTo({
+          top: scrollPosition - pOffsetPixels,
+          behavior: 'smooth',
+        });
+      }
+  }; 
+
+  const initDrawers = (pContainer) => {
+    pContainer.querySelectorAll('details').forEach((elem) => {
+        elem.querySelector('summary').addEventListener('click', (e) => {
+        toggleDrawer(e);
+      });
+
+      elem
+        .querySelectorAll('[data-project-content-container]')
+        .forEach((elem) => {
+          elem.style.height = 0;
+          elem.style.opacity = 0; 
+        });
+    });
+  }
+
+  const toggleFading = (pContainer, revealAll = false) => {
+
+    pContainer.querySelectorAll('details').forEach(element => {
+
+        if(!revealAll && element.getAttribute('open')  === null) {
+          element.style.opacity = .5; 
+        } else {
+          element.style.opacity = 1; 
+        }
+    });
+  }; 
+
+
+  fetchData().then((response)=> {
+      projects = response;
+  }).then(()=> {
+     initDrawers(document.querySelector('[data-projects-list]'));
 });
+}); 
 </script>
 
-<div class="projects-archive-container">
-  <div class="projects-container">
+<section class="projects-archive-container" data-projects-list>
+  <div class="projects-list-container">
     {#if projects}
       {#each projects as project, index}
         <article class="project-line-item">
-          {#if index == 0}
-            <details open>
-              <summary>
-                <div class="project-summary-header">
-                  <h1 class="project-column  project-name">
-                    {project.name}
-                  </h1>
-
-                  <div class="project-column  project-publish-date">
-                    <p>
-                      {project.date_released}
-                    </p>
-                  </div>
-
-                  <div class="project-column  project-medium">
-                    <p aria-label="Project Medium">
-                      {project.medium.title}
-                    </p>
-                  </div>
-                </div>
-              </summary>
-
-              <div class="project-summary-content">
-                <div class="project-summary-main">
-                  <h2 class="project-summary-headline">About THe Work</h2>
-                  <div class="project-summary-about">
-                    <PortableText blocks={project.about} />
-                    <div class="project-summary-formats">
-                      <span><PortableText blocks={project.formats} /></span>
-                    </div>
-                  </div>
-
-                  {#if project.preview_videos}
-                    <ul class="project-preview-videos">
-                      {#each project.preview_videos as video}
-                        <li class="project-preview-videos__item">
-                          <div class="project-preview-videos__video-container">
-                            <video poster={urlFor(video.video_poster.asset)}>
-                              <source src={video.video_file.url} />
-                            </video>
-                          </div>
-                        </li>
-                      {/each}
-                    </ul>
-                  {/if}
-                </div>
-
-                <div class="project-summary-credits">
-                  <h2 class="project-summary-headline">Credits</h2>
-                  <PortableText blocks={project.credits} />
-                </div>
-              </div>
-
-              <div />
-
-              <div class="project-media">
-                {#if project.project_media}
-                  <ProjectMedia media={project.project_media} />
-                {/if}
-              </div>
-            </details>
-          {/if}
-
-          {#if index != 0}
             <details>
-              <summary>
+              <summary
+              aria-expanded="false"
+              aria-label="Open FAQ answer for question {index}"
+              data-id="project-{index}">
                 <div class="project-summary-header">
                   <h1 class="project-column  project-name">
                     {project.name}
@@ -128,13 +173,17 @@ fetchData().then((response)=> {
                 </div>
               </summary>
 
-              <div class="project-summary-content">
+              <div  class="project-summary-content-container" data-project-content-container>
+                <div class="project-summary-content">
+
                 <div class="project-summary-main">
                   <h2 class="project-summary-headline">About THe Work</h2>
                   <div class="project-summary-about">
-                    <PortableText blocks={project.about} />
+                      
+                    <RichText text="{project.about}"/>
+                    
                     <div class="project-summary-formats">
-                      <span><PortableText blocks={project.formats} /></span>
+                      <span>{project.formats}</span>
                     </div>
                   </div>
 
@@ -155,8 +204,10 @@ fetchData().then((response)=> {
 
                 <div class="project-summary-credits">
                   <h2 class="project-summary-headline">Credits</h2>
-                  <PortableText blocks={project.credits} />
+                  <RichText text="{project.credits}"/>
                 </div>
+              </div>
+
               </div>
 
               <div />
@@ -167,12 +218,11 @@ fetchData().then((response)=> {
                 {/if}
               </div>
             </details>
-          {/if}
         </article>
       {/each} 
     {/if}
   </div>
-</div>
+</section>
 
 <div class="project-media-area" />
 
@@ -241,7 +291,7 @@ summary::marker {
   position: relative;
 }
 
-.projects-container{
+.projects-list-container{
   width: 100%;
   padding-top: 0.5rem;
   background-color: var(--secondary-color);
@@ -252,24 +302,12 @@ summary::marker {
     width: 100vw;
     max-width: 100vw;
     position: absolute;
+    left: 0; 
   }
-  
-  .projects-container {
-    width: 47%;
-  }
-
-  .projects-container {
-    width: 50%;
-    height: 100vh;
+  .projects-list-container {
+    width: 53%;
+    left: 1%;
     position: relative;
-    margin-left: -2rem;
-  }
- 
-}
-
-@media screen and (min-width: 1400px) {
-  .projects-container {
-    width: 50%;
   }
 }
 
@@ -512,6 +550,12 @@ h1 {
   font-family: var(--secondary-font-family);
   font-weight: normal;
   font-style: normal;
+}
+
+.project-summary-content-container {
+  overflow: hidden;
+  position: relative;
+  transition:  all .2s ease-in-out;
 }
 
 .project-summary-content :global(strong) {

@@ -69,6 +69,8 @@ onMount(() => {
   /> -->
 {/if}
 
+<Nav {...data.navigation} />
+
 <main data-sveltekit-prefetch>
   <slot />
 </main>

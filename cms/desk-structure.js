@@ -36,6 +36,6 @@ export default () =>
                         .schemaType('page-home')
                         .documentId('page-home')
                 ),
-                ...S.documentTypeListItems().filter(item => !['site-settings', 'page-home', 'footer-settings'].includes(item.getId()))
-            ]
-        )
+                ...S.documentTypeListItems()
+                .filter(item => !['site-settings', 'page-home', 'footer-settings' ,'sctn_hero_header', 'sctn_experience_list', 'sctn_projects_list', 'sctn_rich_text'].includes(item.getId()))
+        ]);

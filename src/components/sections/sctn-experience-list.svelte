@@ -1,12 +1,5 @@
 <script>
-	import PortableText from '@portabletext/svelte';
-	import internalLink from '../custom-marks/internal-link.svelte';
-	import externalLink from '../custom-marks/external-link.svelte';
-	import mailtoLink from '../custom-marks/mailto-link.svelte';
-
 	export let section;
-    console.log(section);
-
 </script>
 
 <section class="experience-list">

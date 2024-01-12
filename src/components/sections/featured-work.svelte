@@ -95,7 +95,7 @@
 						class="featured-work__summary__name"
 					>
 						<h3>
-							{project.name}
+							{project.name} 
 						</h3>
 					</a>
 				</div>

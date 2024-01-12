@@ -1,6 +1,5 @@
 
 <script>
-    import Nav from '../../components/nav.svelte';
 	import { urlFor } from '$lib/sanity';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { page } from '$app/stores';
@@ -12,8 +11,7 @@
 
 <div class="subpage">
 	<div class="subpage__inner">
-			<div class="subpage__left-content">
-				<Nav {...data.navigation} />
+			<div class="subpage__left-content" data-left-content>
 				<div class="subpage__content-body">
 					<!-- <section class="no-padding">
 						<div >
@@ -51,8 +49,9 @@
 		position: fixed;
 		height: 100vh;
 		width: 100%; 
-		top: 0; 
+		top: 0;
 		bottom: 0; 
+		padding-top: 3.75rem;
 	}
 }
 

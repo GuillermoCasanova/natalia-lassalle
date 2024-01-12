@@ -35,10 +35,9 @@ export default   {
         validation: Rule => Rule.required()
       },
       {
-        type: "array", 
+        type: "richtext", 
         title: "About The Work", 
         name: "about", 
-        of: [{ type: "block"}],
         validation: Rule => Rule.required()
       },
       {
@@ -51,10 +50,9 @@ export default   {
         validation: Rule => Rule.required()
       },
       {
-        type: "array", 
+        type: "richtext", 
         title: "Credits", 
         name: "credits", 
-        of: [{ type: "block"}],
         validation: Rule => Rule.required()
       },
       {
