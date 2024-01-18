@@ -15,16 +15,8 @@
 		"src/routes/current/+page.server.js",
 		"src/routes/+layout.js"
 	],
-	"/hiring": [
-		"src/routes/hiring/+page.server.js",
-		"src/routes/+layout.js"
-	],
 	"/work": [
 		"src/routes/work/+page.server.js",
-		"src/routes/+layout.js"
-	],
-	"/work/[slug]": [
-		"src/routes/work/[slug]/+page.server.js",
 		"src/routes/+layout.js"
 	]
 }

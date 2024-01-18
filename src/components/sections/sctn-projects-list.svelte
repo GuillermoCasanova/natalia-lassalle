@@ -1,13 +1,15 @@
 <script>
 import {PortableText} from '@portabletext/svelte';
+import Loader from '../loader.svelte'; 
 import ProjectMedia from '../project-media-list.svelte';
-import RichText from '../rich-text.svelte'; 
+import RichText from '../rich-text.svelte';
 import { urlFor } from '$lib/sanity';
 
 import { client } from '$lib/sanity';
 import { onMount } from 'svelte';
 
 let myData = [];
+let showMedia = false; 
 
 async function fetchData() {
   try {
@@ -31,8 +33,6 @@ async function fetchData() {
 
 let projects; 
 
-
-
 onMount(() => {
 
   let activeDrawer = null; 
@@ -40,11 +40,16 @@ onMount(() => {
   const closeDrawer = (pElem) => {
     const detailsSelector = pElem.closest('details'); 
     const projectContentContainer = detailsSelector.querySelector('[data-project-content-container]'); 
+    const mediaContainer = detailsSelector.querySelector('[data-project-media-container]'); 
 
     activeDrawer = null;
 
     projectContentContainer.style.height = 0;
     projectContentContainer.style.opacity = 0;
+    mediaContainer.style.opacity = 0; 
+    const event = new Event('closed-drawer');
+    mediaContainer.dispatchEvent(event);
+
     pElem.querySelector('summary').setAttribute('aria-expanded', false);
 
     setTimeout(() => {
@@ -63,7 +68,6 @@ onMount(() => {
     const projectContent = detailsSelector.querySelector('.project-summary-content'); 
     const projectContentContainer = detailsSelector.querySelector('[data-project-content-container]'); 
 
-
     pDrawer.setAttribute('aria-expanded', true);
 
     if (pDrawer.dataset.id == activeDrawer) {
@@ -79,7 +83,8 @@ onMount(() => {
     });
 
     pDrawer.closest('details').setAttribute('open', true);
-    toggleFading(pDrawer.closest('[data-projects-list]')); 
+    toggleFading(pDrawer.closest('[data-projects-list]'));
+    loadMedia(pDrawer); 
 
     projectContentContainer.style.height =  projectContent.offsetHeight + 'px';
     projectContentContainer.style.opacity = 1; 
@@ -118,6 +123,12 @@ onMount(() => {
           elem.style.height = 0;
           elem.style.opacity = 0; 
         });
+
+        elem
+        .querySelectorAll('[data-project-media-container]')
+        .forEach((elem) => {
+          elem.style.opacity = 0; 
+        });
     });
   }
 
@@ -133,6 +144,15 @@ onMount(() => {
     });
   }; 
 
+  const loadMedia = (pDrawer) => {
+    const detailsSelector = pDrawer.closest('details'); 
+    const mediaContainer = detailsSelector.querySelector('[data-project-media-container]'); 
+    const event = new Event('load-media');
+    mediaContainer.dispatchEvent(event);
+    setTimeout(()=> {
+      mediaContainer.style.opacity = 1; 
+    }, 10); 
+  }; 
 
   fetchData().then((response)=> {
       projects = response;
@@ -212,11 +232,15 @@ onMount(() => {
 
               <div />
 
-              <div class="project-media">
+              <div class="project-media" data-project-media-container>
+                <div class="project-media__loader" data-loader>
+                  <Loader></Loader>
+                </div>
                 {#if project.project_media}
-                  <ProjectMedia media={project.project_media} />
+                  <ProjectMedia mediaWrapper media={project.project_media}/>
                 {/if}
               </div>
+
             </details>
         </article>
       {/each} 
@@ -247,11 +271,16 @@ summary {
 }
 
 @media screen and (min-width: 900px) {
-  summary:hover {
-    border-top: var(--border-thickness) solid black;
-    background-color: black;
-    color: white;
+  summary:hover,
+  summary:focus {
+    border-top: var(--border-thickness) solid black !important;
+    background-color: black !important;
+    color: white !important;
     cursor: pointer;
+  }
+  details:hover,
+  details:focus {
+    opacity: 1 !important;
   }
 }
 
@@ -261,10 +290,10 @@ summary {
     color: var(--secondary-color);
     border-top: var(--border-thickness) solid black;
   }
-
+/* 
   details[open] .project-media {
     opacity: 1;
-  }
+  } */
 }
 
 @media screen and (min-width: 900px) {
@@ -359,9 +388,8 @@ summary::marker {
     z-index: 0;
     height: 100vh;
     overflow: auto;
-    opacity: 0;
     padding: 0; 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }
 
@@ -370,6 +398,10 @@ summary::marker {
     width: 45%;
   }
 }
+
+ .project-media__loader {
+  transition:  all .3s ease-in-out;
+} 
 
 
 
