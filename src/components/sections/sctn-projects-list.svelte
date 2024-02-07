@@ -2,6 +2,7 @@
 import {PortableText} from '@portabletext/svelte';
 import Loader from '../loader.svelte'; 
 import ProjectMedia from '../project-media-list.svelte';
+import ThumbnailsContainer from '../thumbnails-container.svelte';
 import RichText from '../rich-text.svelte';
 import { urlFor } from '$lib/sanity';
 
@@ -10,6 +11,10 @@ import { onMount } from 'svelte';
 
 let myData = [];
 let showMedia = false; 
+let thumbnailsContainer; 
+let activeThumb;
+let activeThumbInfo; 
+let projectIsOpen; 
 
 async function fetchData() {
   try {
@@ -32,6 +37,26 @@ async function fetchData() {
 }
 
 let projects; 
+
+function showThumbnail(event, pName, pMedium) {
+  if(!projectIsOpen) {
+    activeThumb = event.target.dataset.thumbImage; 
+    activeThumbInfo = {
+      name: pName,
+      medium: pMedium
+    }
+  }
+}
+
+function hideThumbnail() {
+    activeThumb = false; 
+}
+
+function getThumbURL(pMedia) {
+    if(pMedia[0]) {
+      return urlFor(pMedia[0]._type == 'image_with_figure' ? pMedia[0].image.asset : pMedia[0].asset).width(900).auto('format').url(); 
+    }
+}
 
 onMount(() => {
 
@@ -73,6 +98,7 @@ onMount(() => {
     if (pDrawer.dataset.id == activeDrawer) {
       closeDrawer(pDrawer.closest('details'));
       toggleFading(pDrawer.closest('[data-projects-list]'), true); 
+      projectIsOpen = false; 
       return;
     }
 
@@ -85,6 +111,7 @@ onMount(() => {
     pDrawer.closest('details').setAttribute('open', true);
     toggleFading(pDrawer.closest('[data-projects-list]'));
     loadMedia(pDrawer); 
+    projectIsOpen = true; 
 
     projectContentContainer.style.height =  projectContent.offsetHeight + 'px';
     projectContentContainer.style.opacity = 1; 
@@ -171,7 +198,11 @@ onMount(() => {
               <summary
               aria-expanded="false"
               aria-label="Open FAQ answer for question {index}"
-              data-id="project-{index}">
+              data-id="project-{index}"
+              data-thumb-image="{getThumbURL(project.project_media)}"
+              on:mouseenter={(event) => showThumbnail(event, project.name, project.medium)}
+              on:mouseleave={(event) => hideThumbnail()}
+              on:click="{hideThumbnail}">
                 <div class="project-summary-header">
                   <h1 class="project-column  project-name">
                     {project.name}
@@ -248,7 +279,7 @@ onMount(() => {
   </div>
 </section>
 
-<div class="project-media-area" />
+<ThumbnailsContainer bind:this={thumbnailsContainer} bind:activeThumb bind:activeThumbInfo/>
 
 <style>
 :root {
