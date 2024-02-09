@@ -379,34 +379,11 @@ summary::marker {
     #Project Media
 \*------------------------------------*/
 
-.project-media-area {
-  height: 100vw;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 40%;
-  z-index: -1;
-  display: none;
-}
-
-@media screen and (min-width: 900px) {
-  .project-media-area {
-    display: block;
-    height: 100vh;
-  }
-}
-
-@media screen and (min-width: 1400px) {
-  .project-media-area {
-    width: 50%;
-    display: block;
-  }
-}
-
 .project-media {
   background-color: black;
   color: white;
   padding: 2rem;
+  position: relative;
 }
 
 @media screen and (min-width: 900px) {
@@ -434,6 +411,19 @@ summary::marker {
   transition:  all .3s ease-in-out;
 } 
 
+@media screen and (min-width: 900px) {
+  .project-media:after {
+    content: " "; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    width: 45%;
+    z-index: 2;
+    height: 30vh;
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  }
+}
 
 
 
