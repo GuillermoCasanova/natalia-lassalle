@@ -18,5 +18,9 @@
 	"/work": [
 		"src/routes/work/+page.server.js",
 		"src/routes/+layout.js"
+	],
+	"/work/[slug]": [
+		"src/routes/work/[slug]/+page.server.js",
+		"src/routes/+layout.js"
 	]
 }

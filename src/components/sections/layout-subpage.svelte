@@ -7,6 +7,7 @@
     import SectionProjectsList from '../../components/sections/sctn-projects-list.svelte';
 	import SectionExperienceList from '../../components/sections/sctn-experience-list.svelte';
 	export let data;
+	export let seo;
 </script>
 
 <div class="subpage">
@@ -29,14 +30,14 @@
 							{/if}
 
 							{#if section._type == 'sctn_projects_list'}
-							<SectionProjectsList />
+							<SectionProjectsList bind:seo/>
 							{/if} 
 						{/each}
 					{/if}
 				</div>
 			</div>
+
 		<div class="subpage__right-content">
-			graphic
 		</div>
 	</div>
 </div>

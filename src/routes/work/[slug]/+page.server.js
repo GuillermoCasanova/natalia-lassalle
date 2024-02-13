@@ -5,15 +5,17 @@ export async function load(loadEvent) {
 
     const {params, fetch, parent} = loadEvent; 
 
+    const projHandle = params.slug.toString(); 
+
     const parentData = await parent(); 
 
-    // const request = `*[_type == 'site-settings'][0] {
-    //         seo,
-    //         analytics
-    //     }
-    //     `;
+    const request = `*[_type == 'site-settings'][0] {
+            seo,
+            analytics
+        }
+        `;
 
-    // const siteHead = await client.fetch(request, params);
+    const siteHead = await client.fetch(request, params);
 
     const page_request = `*[_type == 'page' && handle.current == 'work'][0] {
         ...,
@@ -26,7 +28,9 @@ export async function load(loadEvent) {
 
     //This is available to child components via STUFF since it is in layout
     return {
+        siteHead,
         content,
-        parentData
+        parentData,
+        projHandle
     };
 }

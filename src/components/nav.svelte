@@ -203,8 +203,8 @@ onMount(() => {
                         data-sveltekit-noscroll
                         on:click={closeMenuDrawer}
                         class="menu-drawer__link"
-                        href={navItem.navigationItemUrl.internalLink.handle
-                          .current}
+                        href="{navItem.navigationItemUrl.internalLink.handle
+                          .current}"
                         rel="internal"
                         title="Go to {navItem.text.toLowerCase()} page"
                         class:is-active={pathName == navItem.navigationItemUrl.href }
@@ -271,7 +271,7 @@ onMount(() => {
                     data-sveltekit-noscroll
                     on:click={closeMenuDrawer}
                     class="menu-list__link"
-                    href="{navItem.navigationItemUrl.internalLink.handle
+                    href="/{navItem.navigationItemUrl.internalLink.handle
                       .current}"
                     rel="internal"
                     title="Go to {navItem.text.toLowerCase()} page"

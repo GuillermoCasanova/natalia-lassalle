@@ -1,12 +1,23 @@
 <script>
-    import Nav from '../../components/nav.svelte';
+    import Nav from '../../../components/nav.svelte';
 	import { urlFor } from '$lib/sanity';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { page } from '$app/stores';
-	import LayoutSubpage from '../../components/sections/layout-subpage.svelte';
+	import LayoutSubpage from '../../../components/sections/layout-subpage.svelte';
 	export let data;
 	let seo = data.content.seo; 
+	
+	function getCurrentProject(pHandle) {
+		let projects = data.projects; 
 
+		projects.forEach((project) => {
+			if(project.handle.current == data.projHandle) {
+				seo = project.seo; 
+			}
+		}); 
+	}
+
+	getCurrentProject(data.projHandle);
 </script>
 
 <svelte:head>

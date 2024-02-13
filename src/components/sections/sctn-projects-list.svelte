@@ -5,16 +5,21 @@ import ProjectMedia from '../project-media-list.svelte';
 import ThumbnailsContainer from '../thumbnails-container.svelte';
 import RichText from '../rich-text.svelte';
 import { urlFor } from '$lib/sanity';
+import { page } from '$app/stores';
 
 import { client } from '$lib/sanity';
 import { onMount } from 'svelte';
 
+export let seo;
+
+let slug = $page.params.slug;
 let myData = [];
-let showMedia = false; 
 let thumbnailsContainer; 
 let activeThumb;
 let activeThumbInfo; 
 let projectIsOpen; 
+let projects; 
+
 
 async function fetchData() {
   try {
@@ -36,7 +41,17 @@ async function fetchData() {
   }
 }
 
-let projects; 
+function updateMetaInfo(pMetaInfo, pProjectHandle) {
+  seo = pMetaInfo; 
+  let url = new URL(window.location.href);
+
+  if(pProjectHandle == url.pathname.split('/').filter(Boolean).pop()) {
+    return
+  }
+  const newUrl = `/work/${pProjectHandle}`; // The new URL you want to navigate to
+  history.pushState({}, "", newUrl);
+}
+
 
 function showThumbnail(event, pName, pMedium) {
   if(!projectIsOpen) {
@@ -48,8 +63,9 @@ function showThumbnail(event, pName, pMedium) {
   }
 }
 
-function hideThumbnail() {
+function hideThumbnail(pSeo) {
     activeThumb = false; 
+
 }
 
 function getThumbURL(pMedia) {
@@ -59,7 +75,7 @@ function getThumbURL(pMedia) {
 }
 
 onMount(() => {
-
+  let currentState = history ? history.state : false;
   let activeDrawer = null; 
 
   const closeDrawer = (pElem) => {
@@ -87,7 +103,7 @@ onMount(() => {
     openDrawer(event.currentTarget);
   };
 
-  const openDrawer = (pDrawer) => {
+  const openDrawer = (pDrawer) => { 
 
     const detailsSelector = pDrawer.closest('details'); 
     const projectContent = detailsSelector.querySelector('.project-summary-content'); 
@@ -157,6 +173,20 @@ onMount(() => {
           elem.style.opacity = 0; 
         });
     });
+
+
+    if(slug) {
+      let projectHandle = slug; 
+
+      document.querySelectorAll('summary').forEach((elem)=> {
+            if(elem.dataset.handle == projectHandle) {
+              setTimeout(()=> {
+                openDrawer(elem); 
+              }, 100);
+            }
+      }); 
+    }
+
   }
 
   const toggleFading = (pContainer, revealAll = false) => {
@@ -181,6 +211,30 @@ onMount(() => {
     }, 10); 
   }; 
 
+  // Add an event listener for the popstate event
+  window.addEventListener('popstate', (event) => {
+    event.preventDefault(); 
+    let url = new URL(window.location.href);
+    let handle = url.pathname.split('/').filter(Boolean).pop();
+    let drawer = document.querySelector(`summary[data-handle="${handle}"]`);
+
+    let previousState = currentState;
+    currentState = history.state;
+
+    if (currentState > previousState) {
+      // User clicked the forward button
+    } else if (currentState < previousState) {
+      // User clicked the back button
+    } else {
+      // console.log('other'); 
+      // // State change due to other reasons
+      openDrawer(drawer); 
+    }
+
+    
+ 
+  });
+
   fetchData().then((response)=> {
       projects = response;
   }).then(()=> {
@@ -191,6 +245,7 @@ onMount(() => {
 
 <section class="projects-archive-container" data-projects-list>
   <div class="projects-list-container">
+
     {#if projects}
       {#each projects as project, index}
         <article class="project-line-item">
@@ -199,10 +254,14 @@ onMount(() => {
               aria-expanded="false"
               aria-label="Open FAQ answer for question {index}"
               data-id="project-{index}"
+              data-handle="{project.handle.current}"
               data-thumb-image="{getThumbURL(project.project_media)}"
               on:mouseenter={(event) => showThumbnail(event, project.name, project.medium)}
               on:mouseleave={(event) => hideThumbnail()}
-              on:click="{hideThumbnail}">
+              on:click={() => {
+                hideThumbnail();
+                updateMetaInfo(project.seo, project.handle.current);
+              }}>
                 <div class="project-summary-header">
                   <h1 class="project-column  project-name">
                     {project.name}
