@@ -100,7 +100,7 @@ onDestroy(() => {
                         <p class="thumbnail__details__name">
                             {project.name}
                         </p>
-                       <p class="thumbnail__details__medium">
+                        <p class="thumbnail__details__medium">
                             - {project.medium.title}
                         </p>
                     </div>

@@ -29,6 +29,13 @@ export default {
             title: "Show Controls (Default: False)",
             description: "Set wether  videos should show controls",
             initialVaue: false 
+        },
+        {
+            name: "featured_project",
+            title: "Featured Project",
+            type: "reference",
+            to: [{type: "project"}],
+            validation: Rule => Rule.required()
         }
     ]
 }

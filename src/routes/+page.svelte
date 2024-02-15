@@ -9,16 +9,13 @@ export let seo;
 
 </script>
 
-<section>
  {#if data.content.page_layout}
   {#each data.content.page_layout as section}
     {#if section._type == 'sctn_hero_header'}
-	HERO HEADER
       <SectionHeroHeader {section} />
     {/if}
   {/each}
 {/if}  
-</section>
 
 
 

@@ -8,8 +8,15 @@ import { onMount } from 'svelte';
 export let main_nav;
 
 let navLinks = main_nav.items;
-
 let container;
+let currentPage;
+let isHomePage = true;
+
+$: {
+  currentPage = $page.url.pathname;
+  isHomePage = currentPage.length == 1 ? true : false;
+}
+
 
 //
 // Menu Drawer JS
@@ -43,9 +50,11 @@ let openMenuDrawer = function (event, elementToFocus = false) {
   // })`;
   // drawerMenuContainer.querySelector('aside').style.top =
   //   document.querySelector('header').clientHeight + 1 + 'px';
+
   setTimeout(() => {
-    showNavItems = !showNavItems;
+    showNavItems = true
   }, 100);
+
   trapFocus(elementToFocus);
 };
 
@@ -95,14 +104,10 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
   window.requestAnimationFrame(handleAnimation);
 };
 
-onMount(() => {
-  container.querySelectorAll('a').forEach((event) => {
-    event.addEventListener('click', (e) => {});
-  });
-});
+
 </script>
 
-<header bind:this={container} class:menu-opening={navIsOpen}>
+<header bind:this={container} class:menu-opening={navIsOpen} class:is-transparent={isHomePage}>
   <div class="header__inner">
     <div class="header__logo">
       {#if pathName == '/'}
@@ -110,6 +115,7 @@ onMount(() => {
           href="/"
           title="Natalia Lassalle Morillo home"
           rel="internal"
+          on:click={closeMenuDrawer}
           data-sveltekit-noscroll
         >
           <h1 class="header__logo__inner">
@@ -125,6 +131,7 @@ onMount(() => {
           href="/"
           title="Natalia Lassalle Morillo home"
           rel="internal"
+          on:click={closeMenuDrawer}
           data-sveltekit-noscroll
         >
           <span class="visually-hidden"> Natalia Lassalle Morillo </span>
@@ -321,17 +328,31 @@ onMount(() => {
 
 header {
   z-index: 1;
-  position: relative;
   width: 100%;
   left: 0;
   right: 0;
   top: 0;
-  background-color: var(--secondary-color);
+  z-index: 10000;
+  position: relative;
+  background-color: white;
   transition: all var(--duration-default) cubic-bezier(0.5, 1, 0.89, 1);
 }
 
+header.is-transparent {
+  background-color: transparent;
+  position: absolute;
+}
+
+@media screen and (min-width: 940px) {
+  header,
+  header.is-transparent { 
+    position: relative;
+    background-color: var(--secondary-color);
+  }
+}
+
 header.menu-opening {
-  background: #fff;
+  background: transparent;
 }
 
 @media screen and (min-width: 900px) {
@@ -369,7 +390,7 @@ header.menu-opening {
 
 .header__logo {
   position: relative;
-  max-width: 13rem;
+  max-width: 15rem;
   grid-area: logo;
   justify-self: start;
   width: 100%;
@@ -406,6 +427,7 @@ header.menu-opening {
   margin-bottom: 0;
 }
 
+
 .header__logo__inner svg {
   position: absolute;
   top: 0;
@@ -416,6 +438,17 @@ header.menu-opening {
   height: 100%;
   width: 100%;
 }
+
+:global(header.is-transparent .header__logo__inner svg) {
+  fill: white;
+}
+
+@media screen and (min-width: 900px) {
+  :global(header.is-transparent .header__logo__inner svg) {
+    fill: black;
+  }
+}
+
 
 .header__menu-drawer {
   grid-area: navigation;
@@ -678,9 +711,9 @@ header.menu-opening {
   width: 100%;
 }
 
-.header__menu-icon .header__menu-icon-top-bar,
-.header__menu-icon .header__menu-icon-middle-bar,
-.header__menu-icon .header__menu-icon-bottom-bar {
+.header__menu-icon-top-bar,
+.header__menu-icon-middle-bar,
+.header__menu-icon-bottom-bar {
   width: 70%;
   height: 2px;
   display: block;
@@ -693,6 +726,23 @@ header.menu-opening {
   margin: auto;
   transition: all var(--duration-default) ease;
   will-change: transform opacity;
+}
+
+:global(header.is-transparent .header__menu-icon .header__menu-icon-top-bar),
+:global(header.is-transparent .header__menu-icon .header__menu-icon-middle-bar),
+:global(header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar) {
+  background-color: white;
+}
+
+@media screen and (min-width: 940px) {
+  :global(header.is-transparent .header__menu-icon .header__menu-icon-top-bar),
+  :global(header.is-transparent .header__menu-icon .header__menu-icon-middle-bar),
+  :global(header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar),
+  .header__menu-icon .header__menu-icon-top-bar,
+  .header__menu-icon .header__menu-icon-middle-bar,
+  .header__menu-icon .header__menu-icon-bottom-bar {
+    background-color: black;
+  }
 }
 
 .header__menu-icon .header__menu-icon-top-bar {

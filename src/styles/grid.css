@@ -3,7 +3,8 @@
 main {}
 
 .main-container {
-    padding-left: var(--level4);
-    padding-right: var(--level4);
+    padding-left: var(--level3);
+    padding-right: var(--level3);
     width: 100%;
+    position: relative;
 }

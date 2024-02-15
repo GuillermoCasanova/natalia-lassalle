@@ -13,18 +13,20 @@ export async function load({ params, fetch }) {
     const page_request = `*[_type == 'page-home'][0] {
         ...,
         page_layout[]-> {
+            ...,
+            select(_type == "sctn_hero_header") => {
                 ...,
-                select(_type == "sctn_hero_header") => {
+                video[] {
                     ...,
-                    video[] {
-                        ...,
-                        'video_file': video_file.asset-> { 
-                            ..., url, originalFilename
-                            }
-                    }
-                  
+                    'video_file': video_file.asset-> { 
+                        ..., url, originalFilename
+                        }
+                }, 
+                featured_project-> {
+                    handle
                 }
             }
+        }
     } 
     `;
 

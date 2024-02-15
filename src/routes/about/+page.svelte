@@ -1,5 +1,4 @@
 <script>
-    import Nav from '../../components/nav.svelte';
 	import { urlFor } from '$lib/sanity';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { page } from '$app/stores';

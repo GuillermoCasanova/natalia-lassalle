@@ -1,10 +1,8 @@
 <script>
 // @ts-nocheck
 
-import Nav from '../components/nav.svelte';
-import Footer from '../components/footer.svelte';
+import Nav from '../components/header.svelte';
 import SvgGraphics from '../components/svg-graphics.svelte';
-import ContactForm from '../components/contact-form.svelte';
 import { afterNavigate, beforeNavigate } from '$app/navigation';
 import { fade } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
@@ -76,8 +74,6 @@ onMount(() => {
 </main>
 
 <!-- <Footer {...data.footer} bind:showFooter="{ready}" /> -->
-
-<!-- <ContactForm /> -->
 
 <SvgGraphics />
 

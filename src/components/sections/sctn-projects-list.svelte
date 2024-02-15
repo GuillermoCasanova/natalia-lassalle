@@ -239,7 +239,7 @@ onMount(() => {
       projects = response;
   }).then(()=> {
      initDrawers(document.querySelector('[data-projects-list]'));
-});
+  });
 }); 
 </script>
 
