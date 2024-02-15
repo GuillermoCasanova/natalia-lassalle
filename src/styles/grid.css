@@ -7,4 +7,5 @@ main {}
     padding-right: var(--level3);
     width: 100%;
     position: relative;
+    height: 100%; 
 }

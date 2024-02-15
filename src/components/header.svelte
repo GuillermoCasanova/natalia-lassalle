@@ -332,7 +332,7 @@ header {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 10000;
+  z-index: 5;
   position: relative;
   background-color: white;
   transition: all var(--duration-default) cubic-bezier(0.5, 1, 0.89, 1);

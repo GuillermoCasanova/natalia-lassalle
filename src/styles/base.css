@@ -238,14 +238,14 @@ img {
 /*SMALL-UP*/
 @media screen and (min-width: 370px) {
     :root {
-        font-size: .9rem;
+        font-size: .95rem;
     }
 }
 
 /*MEDIUM-UP*/
 @media screen and (min-width: 600px) {
     :root {
-        font-size: .85rem;
+        font-size: 1rem;
     }
 }
 
@@ -253,7 +253,7 @@ img {
 /*LARGE-UP*/
 @media screen and (min-width: 900px) {
     :root {
-        font-size: .9rem;
+        font-size: 1rem;
     }
 }
 

@@ -117,22 +117,23 @@ gsap.to(fadeElement, {
 .section-hero-header {
   background-color: rgb(252, 247, 243);
   border-bottom: 2px solid white;
-  z-index: 1000;
   position: relative;
   width: 100%;
   display: flex;
   margin-bottom: var(--level4); 
   overflow: hidden;
   height: 100vh;
+  z-index: 4;
 }
 
-@media screen and (min-width: 940px) {
+@media screen and (min-width: 900px) {
   .section-hero-header {
       position: fixed;
       top: 0; 
       bottom: 0; 
       height: 100vh;
       width: 100vw;
+      z-index: 10;
       margin-bottom: 0; 
   }
 }
@@ -147,9 +148,13 @@ gsap.to(fadeElement, {
 
 }
 
-@media screen and (min-width: 940px) {
+@media screen and (min-width: 900px) {
   .section-hero-header__inner {
     padding-bottom: 0; 
+    align-items: flex-start;
+    padding-top: var(--level3);
+    padding-left: var(--level1);
+    padding-bottom: var(--level3);
   }
 }
 
@@ -157,16 +162,31 @@ gsap.to(fadeElement, {
 .section-hero-header__copy {
   z-index: 3;
   bottom: 0;
-  font-size: var(--h1); 
+}
+
+
+@media screen and (min-width: 900px) {
+  .section-hero-header__copy {
+      height: 100%; 
+  }
 }
 
 .section-hero-header__headline {
   line-height: 1;
   text-align: left;
   color: #fff;
+  font-size: var(--h1); 
 }
 
-@media screen and (min-width: 940px) {
+
+@media screen and (min-width: 768px) {
+  .section-hero-header__headline {
+    bottom: auto; 
+    font-size: var(--mega); 
+  }
+}
+
+@media screen and (min-width: 900px) {
   .section-hero-header__headline {
     bottom: auto; 
     top: var(--level3); 
@@ -188,11 +208,19 @@ gsap.to(fadeElement, {
   width: .85rem;
   position: absolute;
   right: var(--level3); 
-  bottom: 0; 
+  bottom: var(--level3); 
   z-index: 3;
   display: flex;
 }
 
+@media screen and (min-width: 900px) {
+  .section-hero-header__directional-arrow {
+    left: var(--level3); 
+    right: auto; 
+    bottom: 0; 
+  width: 1.25rem;
+  }
+}
 .section-hero-header__directional-arrow svg {
   width: 100%; 
   height: 100%;
