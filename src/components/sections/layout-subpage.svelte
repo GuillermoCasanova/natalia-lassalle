@@ -73,6 +73,8 @@
 		background-color: white;
 		z-index: 1;
 		position: relative;
+		scrollbar-color: black white;
+    	scrollbar-width: thin;
 	}
 }
 

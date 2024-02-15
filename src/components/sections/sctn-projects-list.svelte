@@ -457,6 +457,8 @@ summary::marker {
     overflow: auto;
     padding: 0; 
     transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    scrollbar-color: white black;
+    scrollbar-width: thin;
   }
 }
 

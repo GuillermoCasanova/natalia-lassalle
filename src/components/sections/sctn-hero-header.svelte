@@ -4,14 +4,6 @@ import { urlFor } from '$lib/sanity';
 import { onMount } from 'svelte';
 import { onDestroy } from 'svelte';
 import { browser } from '$app/environment';
- 
-
-
-import { gsap } from "gsap/dist/gsap";
-    
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export let section;
 let element;
@@ -167,12 +159,6 @@ function onWheel(event) {
   requestId = requestAnimationFrame(onFrame);
   }
 }
-
-
-
-
-
-
 </script>
 
 <IntersectionObserver once {element} on:observe={loadVideo}>
