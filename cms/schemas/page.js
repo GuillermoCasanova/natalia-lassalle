@@ -37,7 +37,8 @@ export default {
                   {type: 'sctn_hero_header'},
                   {type: 'sctn_projects_list'},
                   {type: 'sctn_experience_list'},
-                  {type: 'sctn_rich_text'}
+                  {type: 'sctn_rich_text'},
+                  {type: 'sctn_texts_list'}
                 ]
             }],
           }

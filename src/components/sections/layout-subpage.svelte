@@ -29,8 +29,8 @@
 							<SectionExperienceList  {section}/>
 							{/if}
 
-							{#if section._type == 'sctn_projects_list'}
-							<SectionProjectsList bind:seo/>
+							{#if section._type == 'sctn_projects_list' && data.projects}
+							<SectionProjectsList projects={data.projects} bind:seo/>
 							{/if} 
 						{/each}
 					{/if}

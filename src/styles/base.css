@@ -198,7 +198,7 @@ img {
     --h1: 2.75rem;
     --h2: 2.25rem;
     --h3: 1.95rem;
-    --h4: 1.56rem;
+    --h4: 1.25rem;
     --h5: 1.15rem;
     --h6: 1rem;
     --normal: 1rem;
@@ -274,7 +274,7 @@ img {
 
 @media screen and (min-width: 2000px) {
     :root {
-        font-size: 1.15rem;
+        font-size: 1.3rem;
     }
 }
 
@@ -410,12 +410,12 @@ button:hover {
 \*------------------------------------*/
 
 section {
-    padding-bottom: var(--level7);
+    padding-bottom: var(--level6);
 }
 
-@media only screen and (min-width: 975px) {
+@media only screen and (min-width: 900px) {
     section {
-        padding-bottom: calc(var(--level6));
+        padding-bottom: calc(var(--level7));
     }
 }
 
@@ -443,7 +443,7 @@ section.no-padding {
     }
 }
 
-@media screen and (min-width: 975px) {
+@media screen and (min-width: 900px) {
     .overflow-hidden-tablet {
         overflow: auto;
     }
@@ -462,7 +462,7 @@ section.no-padding {
     display: none;
 }
 
-@media only screen and (min-width: 975px) {
+@media only screen and (min-width: 900px) {
     .show-for-large-up {
         display: block;
     }
@@ -473,7 +473,7 @@ section.no-padding {
     display: block;
 }
 
-@media only screen and (min-width: 975px) {
+@media only screen and (min-width: 900px) {
     .hide-for-large-up {
         display: none;
     }

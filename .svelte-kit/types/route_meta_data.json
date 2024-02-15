@@ -15,6 +15,10 @@
 		"src/routes/current/+page.server.js",
 		"src/routes/+layout.js"
 	],
+	"/texts": [
+		"src/routes/texts/+page.server.js",
+		"src/routes/+layout.js"
+	],
 	"/work": [
 		"src/routes/work/+page.server.js",
 		"src/routes/+layout.js"

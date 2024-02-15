@@ -9,13 +9,17 @@
 </script>
 
 
-<PortableText
-value={section.text}
-components={{
-  marks: {
-    internalLink: internalLink,
-    externalLink: externalLink,
-    mailtoLink: mailtoLink,
-  }
-}}
-/>
+<section class="rich-text">
+  <PortableText
+  value={section.text}
+  components={{
+    marks: {
+      internalLink: internalLink,
+      externalLink: externalLink,
+      mailtoLink: mailtoLink,
+    }
+  }}
+  />
+</section>
+
+

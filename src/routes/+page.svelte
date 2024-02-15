@@ -22,7 +22,7 @@ export let seo;
 <div class="subpage">
 	<div class="subpage__inner">
 			<div class="subpage__left-content" data-left-content>
-				<div class="subpage__content-body">
+				<div class="subpage__content-body main-container">
 					<!-- <section class="no-padding">
 						<div >
 							<h1>{$page.data.content.page_title}</h1>
@@ -95,22 +95,25 @@ export let seo;
 	}
 }
 
-.subpage__content-body {
-	padding-right: var(--level1);
-	padding-left: var(--level1);
+ .subpage__content-body {
+	padding-top: var(--level4); 
 }
+
 
 @media screen and (min-width: 900px) {
 	.subpage__content-body {
-		padding-top: var(--level4);
+		padding-top: var(--level7);
 	}
 }
+
+/*
+
 @media screen and (min-width: 1400px) {
 	.subpage__content-body {
 		padding-right: var(--level8);
 		padding-left: var(--level8);
 	}
-}
+} */
 
 .subpage__right-content { 
 	display: none;

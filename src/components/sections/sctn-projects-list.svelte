@@ -11,6 +11,7 @@ import { client } from '$lib/sanity';
 import { onMount } from 'svelte';
 
 export let seo;
+export let projects; 
 
 let slug = $page.params.slug;
 let myData = [];
@@ -18,28 +19,7 @@ let thumbnailsContainer;
 let activeThumb;
 let activeThumbInfo; 
 let projectIsOpen; 
-let projects; 
 
-
-async function fetchData() {
-  try {
-    const query = `*[_type == 'project'][] {
-        ...,
-        "medium" : medium ->{
-            ...
-        },
-        "preview_videos": preview_videos[] {
-            ...,
-            "video_file": video_file.asset->
-        }
-    }`; // Adjust the query based on your schema
-    const data = await client.fetch(query);
-    myData = data;
-    return myData;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
 
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
   seo = pMetaInfo; 
@@ -235,11 +215,7 @@ onMount(() => {
  
   });
 
-  fetchData().then((response)=> {
-      projects = response;
-  }).then(()=> {
-     initDrawers(document.querySelector('[data-projects-list]'));
-  });
+  initDrawers(document.querySelector('[data-projects-list]'));
 }); 
 </script>
 

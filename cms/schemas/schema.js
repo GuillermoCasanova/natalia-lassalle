@@ -27,6 +27,7 @@ import seoHead from './seo-head'
 import siteSettings from './site-settings'
 import tag from './documents/tag'
 import video from './objects/video'
+import textsList from './page-sections/sctn-texts-list'
 
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -49,6 +50,7 @@ export default createSchema({
     sctnRichText,
     seoHead,
     siteSettings,
+    textsList,
     tag,
     imageWithFigure,
     image,
