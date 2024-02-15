@@ -1,7 +1,4 @@
 <script>
-
-let currentProject = null; 
-import { urlFor } from '$lib/sanity';
 export let activeThumb; 
 export let activeThumbInfo;
 

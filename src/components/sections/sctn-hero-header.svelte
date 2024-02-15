@@ -4,7 +4,7 @@ import { urlFor } from '$lib/sanity';
 import { onMount } from 'svelte';
 
 export let section;
-export let element;
+ let element;
 
 function loadVideo(e) {
   let video = e.detail.target;
