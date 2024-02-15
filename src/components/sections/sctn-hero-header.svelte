@@ -2,6 +2,10 @@
 import IntersectionObserver from 'svelte-intersection-observer';
 import { urlFor } from '$lib/sanity';
 import { onMount } from 'svelte';
+import { onDestroy } from 'svelte';
+import { browser } from '$app/environment';
+ 
+
 
 import { gsap } from "gsap/dist/gsap";
     
@@ -12,13 +16,14 @@ gsap.registerPlugin(ScrollTrigger);
 export let section;
 let element;
 let heroHeader;
-console.log(section); 
+let requestId = null;
+let scroller = {}
+let videoIsLoaded = false; 
 
 function loadVideo(e) {
   let video = e.detail.target;
 
-  if (e.detail.isIntersecting) {
-    console.log('intersect!');
+  if (e.detail.isIntersecting && !videoIsLoaded) {
 
     for (var source in video.children) {
       let videoSource = video.children[source];
@@ -30,6 +35,7 @@ function loadVideo(e) {
       }
     }
 
+    videoIsLoaded = true;
     video.load();
     video.classList.remove('lazy');
   }
@@ -37,35 +43,135 @@ function loadVideo(e) {
 
 onMount(()=> {
 
-  // Define the animation
-const triggerWindow = document.querySelector('window');
-const fadeElement = heroHeader;
-let currentOpacity = 1;
+   let mediaQueries = {
+      mediumUp: window.matchMedia('(min-width: 768px)'),
+      largeUp: window.matchMedia('(min-width: 900px)')
+  }
 
-gsap.to(fadeElement, {
-  opacity: () => currentOpacity,
-  scrollTrigger: {
-    trigger: triggerWindow,
-    start: 'top center',
-    end: 'bottom center',
-    onUpdate: (self) => {
-      console.log(self); 
 
-      // const velocity = ScrollTrigger.getById(self.id).getVelocity();
-      // const scrollDirection = velocity > 0 ? 1 : -1;
+  scroller = {
+    // lower values will decrease how far it moves on scroll
+    wheelMultiplier: getLineHeight(),
+    
+    // lower values will make the animation longer
+    ease: 0.01,
+    
+    speed: 0,
+    minY: 0,
+    maxY: window.innerHeight,
+    y: 0
+  };  
 
-      // // Adjust opacity based on scroll direction
-      // if (scrollDirection === 1) {
-      //   // Scrolling down
-      //   currentOpacity = Math.max(0, currentOpacity - 0.01); // Decrease opacity
-      // } else {
-      //   // Scrolling up
-      //   currentOpacity = Math.min(1, currentOpacity + 0.01); // Increase opacity
-      // }
-    },
-  },
-});
+
+  if(mediaQueries.largeUp.matches) {
+    window.addEventListener("wheel", onWheel);
+  } 
+
+  window.addEventListener("resize", throttle(()=> {
+    if(mediaQueries.largeUp.matches) {
+      window.addEventListener("wheel", onWheel);
+    } else {
+      window.removeEventListener("wheel", onWheel);
+      console.log(heroHeader); 
+      heroHeader.style.display = 'block'; 
+      heroHeader.style.opacity = 1; 
+    }
+  }), { passive: true });
+
+  function getLineHeight() {
+    var element = document.createElement("div");
+    element.style["font-size"] = "128ex";
+    document.body.appendChild(element);
+    var value = getComputedStyle(element).getPropertyValue("font-size");
+    var size = parseFloat(value) / 600;
+    document.body.removeChild(element);
+    return size;
+  }
+
+  function throttle(fn, delay) {
+  let lastCall = 0;
+  return function (...args) {
+    const now = new Date().getTime();
+    if (now - lastCall < delay) {
+      return;
+    }
+    lastCall = now;
+    return fn(...args);
+  };
+}
+
 }); 
+
+
+onDestroy(() => {
+  if (browser) {
+    window.removeEventListener("wheel", onWheel);
+ }
+});
+
+
+function removeHeroHeader() {
+  heroHeader.style.display = 'none'
+  if (browser) {
+    window.removeEventListener("wheel", onWheel);
+  }
+}
+
+
+function onFrame() {
+
+  scroller.speed += -scroller.speed * scroller.ease;
+  // scroller.y -= scroller.speed;
+  scroller.y -= Math.round(scroller.speed * 1000) / 1000;
+
+  if (scroller.y < scroller.minY) {
+    scroller.y = scroller.minY;
+    scroller.speed = 0;
+  } else if (scroller.y > scroller.maxY) {
+    scroller.y = scroller.maxY;
+    scroller.speed = 0;
+  }
+
+  var progress = scroller.y / scroller.maxY;
+
+  if(heroHeader) {
+    heroHeader.style.opacity = 1 - progress;
+  }
+
+  if(progress == 1) {
+    removeHeroHeader(); 
+  }
+
+  requestId = null;
+
+  if (scroller.speed) {
+    requestId = requestAnimationFrame(onFrame);
+  }
+}
+
+function onWheel(event) {
+
+  var normalized;  
+  var delta = event.wheelDelta;
+
+  if (delta) {
+  normalized = (delta % 120) == 0 ? delta / 120 : delta / 12;
+  } else {
+  delta = event.deltaY || event.detail || 0;
+  normalized = -(delta % 3 ? delta * 10 : delta / 3);
+  }
+
+  scroller.speed += normalized;
+
+  if (scroller.speed && !requestId) {
+  requestId = requestAnimationFrame(onFrame);
+  }
+}
+
+
+
+
+
 
 </script>
 
