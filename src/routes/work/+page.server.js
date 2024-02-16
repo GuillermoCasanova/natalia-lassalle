@@ -17,7 +17,6 @@ export async function load(loadEvent) {
 
     const projects_request =  `*[_type == 'project'][] {
         ...,
-        "date_released": substring(date_released, 0, 4),
         "medium" : medium ->{
             ...
         },
