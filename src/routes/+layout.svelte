@@ -5,6 +5,7 @@ import Nav from '../components/header.svelte';
 import SvgGraphics from '../components/svg-graphics.svelte';
 import { afterNavigate, beforeNavigate } from '$app/navigation';
 import { fade } from 'svelte/transition';
+import { cubicIn } from 'svelte/easing';
 import { cubicOut } from 'svelte/easing';
 import { onMount } from 'svelte';
 import { page } from '$app/stores';
@@ -31,8 +32,6 @@ function scrollToSection(pHash, pBehavior) {
 afterNavigate((navigation) => {
   loading = false;
 
-  console.log('after nav');
-
   if (!navigation.to.url.hash) {
     window.scrollTo({ top: 0 });
   }
@@ -44,7 +43,6 @@ afterNavigate((navigation) => {
 
 beforeNavigate(() => {
   loading = true;
-  console.log('before nav');
 });
 
 onMount(() => {
@@ -62,10 +60,19 @@ onMount(() => {
 {#if loading}
   <!-- <div
     class="loading-screen"
-    in:fade={{ duration: 500, easing: cubicOut }}
-    out:fade={{ duration: 600, easing: cubicOut }}
+    in:fade={{ duration: 500, easing: cubicIn }}
+    out:fade={{ duration: 600, easing: cubicIn }}
   /> -->
 {/if}
+
+{#if loading}
+  <div
+    class="loading-screen"
+    in:fade={{ duration: 300, easing: cubicIn }}
+    out:fade={{ duration: 350, easing: cubicOut }}
+  />
+{/if}
+
 
 <Nav {...data.navigation} />
 

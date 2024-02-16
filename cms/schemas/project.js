@@ -45,7 +45,7 @@ export default   {
         title: "Date Released", 
         name: "date_released", 
         options: {
-          dateFormat: "MMM YYYY"
+          dateFormat: "YYYY"
         },
         validation: Rule => Rule.required()
       },

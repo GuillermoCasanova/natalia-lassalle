@@ -11,6 +11,7 @@ let heroHeader;
 let requestId = null;
 let scroller = {}
 let videoIsLoaded = false; 
+let transition; 
 
 function loadVideo(e) {
   let video = e.detail.target;
@@ -33,7 +34,9 @@ function loadVideo(e) {
   }
 }
 
-onMount(()=> {
+onMount(()=> {  
+
+   transition.style.opacity = 0; 
 
    let mediaQueries = {
       mediumUp: window.matchMedia('(min-width: 768px)'),
@@ -143,6 +146,7 @@ function onFrame() {
 
 function onWheel(event) {
 
+  console.log('wheelk'); 
   var normalized;  
   var delta = event.wheelDelta;
 
@@ -160,6 +164,10 @@ function onWheel(event) {
   }
 }
 </script>
+
+<div class="transition" bind:this={transition}>
+
+</div>
 
 <IntersectionObserver once {element} on:observe={loadVideo}>
   <section class="section-hero-header" bind:this={heroHeader}>
@@ -206,6 +214,18 @@ function onWheel(event) {
 </IntersectionObserver>
 
 <style>
+
+.transition {
+    background: black;
+    width: 100vw; 
+    height: 100vh; 
+    z-index: 15;
+    top: 0; 
+    position: fixed;
+    transition: all 1s  cubic-bezier(0.33, 1, 0.68, 1);  
+    pointer-events: none;
+}
+
 .section-hero-header {
   background-color: rgb(252, 247, 243);
   border-bottom: 2px solid white;

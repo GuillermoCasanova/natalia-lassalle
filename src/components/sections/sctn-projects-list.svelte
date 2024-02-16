@@ -13,6 +13,8 @@ import { onMount } from 'svelte';
 export let seo;
 export let projects; 
 
+console.log(projects); 
+
 let slug = $page.params.slug;
 let myData = [];
 let thumbnailsContainer; 
