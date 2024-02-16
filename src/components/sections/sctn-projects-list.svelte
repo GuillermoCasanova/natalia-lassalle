@@ -13,7 +13,6 @@ import { onMount } from 'svelte';
 export let seo;
 export let projects; 
 
-console.log(projects); 
 
 let slug = $page.params.slug;
 let myData = [];
@@ -21,6 +20,11 @@ let thumbnailsContainer;
 let activeThumb;
 let activeThumbInfo; 
 let projectIsOpen; 
+
+if(projects.length > 0) {
+  console.log(projects); 
+  formatDates(projects);
+}
 
 
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
@@ -54,6 +58,22 @@ function getThumbURL(pMedia) {
     if(pMedia[0]) {
       return urlFor(pMedia[0]._type == 'image_with_figure' ? pMedia[0].image.asset : pMedia[0].asset).width(900).auto('format').url(); 
     }
+}
+
+function formatDates(pProjects) {
+  pProjects.forEach((project)=> {
+    console.log(project); 
+    project.date_released = project.date_released.substring(0, 4); 
+  }); 
+
+  pProjects.sort((a, b) => {
+  // Convert "date_released" to numbers for correct numeric sorting
+  const yearA = parseInt(a.date_released);
+  const yearB = parseInt(b.date_released);
+
+  // Sort in descending order
+  return yearB - yearA;
+});
 }
 
 onMount(() => {
