@@ -40,7 +40,7 @@ export async function load( {url: {pathname}}) {
     }`;
 
 
-    const projects_request  = `*[_type == 'project'][] {
+    const projects_request  = `*[_type == 'project' && !(_id in path('drafts.**'))][] {
         ...,
         "medium" : medium ->{
             ...

@@ -56,6 +56,19 @@ export default   {
         validation: Rule => Rule.required()
       },
       {
+        name: 'creditsList',
+        title: 'Credits',
+        type: 'array',
+        of: [
+          {
+            type: 'reference',
+            to: [{ type: 'work_credit' }]
+          }
+        ],
+        description: 'A list of credit mentions',
+        validation: Rule => Rule.required()
+      },
+      {
         name: "preview_videos", 
         type: "array", 
         title: "Preview Videos", 

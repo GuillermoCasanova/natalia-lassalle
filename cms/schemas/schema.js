@@ -28,6 +28,8 @@ import siteSettings from './site-settings'
 import tag from './documents/tag'
 import video from './objects/video'
 import textsList from './page-sections/sctn-texts-list'
+import workCredit from './documents/work-credit'
+import workType from './documents/work-type'
 
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -60,6 +62,8 @@ export default createSchema({
     navigation,
     navItem, 
     link,
-    video
+    video,
+    workCredit,
+    workType  
   ]),
 })

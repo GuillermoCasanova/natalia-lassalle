@@ -1,102 +1,109 @@
 <script>
-import {PortableText} from '@portabletext/svelte';
-import Loader from '../loader.svelte'; 
-import ProjectMedia from '../project-media-list.svelte';
-import ThumbnailsContainer from '../thumbnails-container.svelte';
-import RichText from '../rich-text.svelte';
-import { urlFor } from '$lib/sanity';
-import { page } from '$app/stores';
+import { PortableText } from "@portabletext/svelte";
+import Loader from "../loader.svelte";
+import ProjectMedia from "../project-media-list.svelte";
+import ThumbnailsContainer from "../thumbnails-container.svelte";
+import RichText from "../rich-text.svelte";
+import { urlFor } from "$lib/sanity";
+import { page } from "$app/stores";
 
-import { client } from '$lib/sanity';
-import { onMount } from 'svelte';
+import { client } from "$lib/sanity";
+import { onMount } from "svelte";
 
 export let seo;
-export let projects; 
-
+export let projects;
 
 let slug = $page.params.slug;
 let myData = [];
-let thumbnailsContainer; 
+let thumbnailsContainer;
 let activeThumb;
-let activeThumbInfo; 
-let projectIsOpen; 
+let activeThumbInfo;
+let projectIsOpen;
 
-if(projects.length > 0) {
-  console.log(projects); 
+if (projects.length > 0) {
+  console.log(projects);
   formatDates(projects);
 }
 
-
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
-  seo = pMetaInfo; 
+  seo = pMetaInfo;
   let url = new URL(window.location.href);
 
-  if(pProjectHandle == url.pathname.split('/').filter(Boolean).pop()) {
-    return
+  if (pProjectHandle == url.pathname.split("/").filter(Boolean).pop()) {
+    return;
   }
   const newUrl = `/work/${pProjectHandle}`; // The new URL you want to navigate to
   history.pushState({}, "", newUrl);
 }
 
-
 function showThumbnail(event, pName, pMedium) {
-  if(!projectIsOpen) {
-    activeThumb = event.target.dataset.thumbImage; 
+  if (!projectIsOpen) {
+    activeThumb = event.target.dataset.thumbImage;
     activeThumbInfo = {
       name: pName,
-      medium: pMedium
-    }
+      medium: pMedium,
+    };
   }
 }
 
 function hideThumbnail(pSeo) {
-    activeThumb = false; 
-
+  activeThumb = false;
 }
 
 function getThumbURL(pMedia) {
-    if(pMedia[0]) {
-      return urlFor(pMedia[0]._type == 'image_with_figure' ? pMedia[0].image.asset : pMedia[0].asset).width(900).auto('format').url(); 
-    }
+  if (pMedia[0]) {
+    return urlFor(
+      pMedia[0]._type == "image_with_figure"
+        ? pMedia[0].image.asset
+        : pMedia[0].asset
+    )
+      .width(900)
+      .auto("format")
+      .url();
+  }
 }
 
 function formatDates(pProjects) {
-  pProjects.forEach((project)=> {
-    console.log(project); 
-    project.date_released = project.date_released.substring(0, 4); 
-  }); 
+  pProjects.forEach((project) => {
+    console.log(project);
+    project.date_released = project.date_released.substring(0, 4);
+  });
 
   pProjects.sort((a, b) => {
-  // Convert "date_released" to numbers for correct numeric sorting
-  const yearA = parseInt(a.date_released);
-  const yearB = parseInt(b.date_released);
+    // Convert "date_released" to numbers for correct numeric sorting
+    const yearA = parseInt(a.date_released);
+    const yearB = parseInt(b.date_released);
 
-  // Sort in descending order
-  return yearB - yearA;
-});
+    // Sort in descending order
+    return yearB - yearA;
+  });
 }
 
 onMount(() => {
   let currentState = history ? history.state : false;
-  let activeDrawer = null; 
+  let activeDrawer = null;
 
   const closeDrawer = (pElem) => {
-    const detailsSelector = pElem.closest('details'); 
-    const projectContentContainer = detailsSelector.querySelector('[data-project-content-container]'); 
-    const mediaContainer = detailsSelector.querySelector('[data-project-media-container]'); 
+    const detailsSelector = pElem.closest("details");
+    const projectContentContainer = detailsSelector.querySelector(
+      "[data-project-content-container]"
+    );
+    const mediaContainer = detailsSelector.querySelector(
+      "[data-project-media-container]"
+    );
 
     activeDrawer = null;
 
     projectContentContainer.style.height = 0;
     projectContentContainer.style.opacity = 0;
-    mediaContainer.style.opacity = 0; 
-    const event = new Event('closed-drawer');
+    mediaContainer.style.opacity = 0;
+    const event = new Event("closed-drawer");
     mediaContainer.dispatchEvent(event);
 
-    pElem.querySelector('summary').setAttribute('aria-expanded', false);
+    pElem.querySelector("summary").setAttribute("aria-expanded", false);
 
     setTimeout(() => {
-      pElem.removeAttribute('open');
+      pElem.removeAttribute("open");
     }, 400);
   };
 
@@ -105,119 +112,123 @@ onMount(() => {
     openDrawer(event.currentTarget);
   };
 
-  const openDrawer = (pDrawer) => { 
+  const openDrawer = (pDrawer) => {
+    const detailsSelector = pDrawer.closest("details");
+    const projectContent = detailsSelector.querySelector(
+      ".project-summary-content"
+    );
+    const projectContentContainer = detailsSelector.querySelector(
+      "[data-project-content-container]"
+    );
 
-    const detailsSelector = pDrawer.closest('details'); 
-    const projectContent = detailsSelector.querySelector('.project-summary-content'); 
-    const projectContentContainer = detailsSelector.querySelector('[data-project-content-container]'); 
-
-    pDrawer.setAttribute('aria-expanded', true);
+    pDrawer.setAttribute("aria-expanded", true);
 
     if (pDrawer.dataset.id == activeDrawer) {
-      closeDrawer(pDrawer.closest('details'));
-      toggleFading(pDrawer.closest('[data-projects-list]'), true); 
-      projectIsOpen = false; 
+      closeDrawer(pDrawer.closest("details"));
+      toggleFading(pDrawer.closest("[data-projects-list]"), true);
+      projectIsOpen = false;
       return;
     }
 
-    pDrawer.closest('[data-projects-list]').querySelectorAll('details').forEach((elem) => {
-      if (elem.querySelector('summary').dataset.id !== pDrawer.dataset.id) {
-        closeDrawer(elem.closest('details'));
-      }
-    });
+    pDrawer
+      .closest("[data-projects-list]")
+      .querySelectorAll("details")
+      .forEach((elem) => {
+        if (elem.querySelector("summary").dataset.id !== pDrawer.dataset.id) {
+          closeDrawer(elem.closest("details"));
+        }
+      });
 
-    pDrawer.closest('details').setAttribute('open', true);
-    toggleFading(pDrawer.closest('[data-projects-list]'));
-    loadMedia(pDrawer); 
-    projectIsOpen = true; 
+    pDrawer.closest("details").setAttribute("open", true);
+    toggleFading(pDrawer.closest("[data-projects-list]"));
+    loadMedia(pDrawer);
+    projectIsOpen = true;
 
-    projectContentContainer.style.height =  projectContent.offsetHeight + 'px';
-    projectContentContainer.style.opacity = 1; 
+    projectContentContainer.style.height = projectContent.offsetHeight + "px";
+    projectContentContainer.style.opacity = 1;
 
     activeDrawer = pDrawer.dataset.id;
 
-    setTimeout(()=> {
-      scrollToProject(pDrawer, 0); 
-    }, 300); 
+    setTimeout(() => {
+      scrollToProject(pDrawer, 0);
+    }, 300);
   };
 
   const scrollToProject = (pElement, pOffsetPixels) => {
-      // Find the target section element by its ID
-      const targetSection = pElement;
-      // Check if the target section exists
-      if (targetSection) {
-        // Get the final scroll position
-        const scrollPosition = targetSection.offsetTop;
-        // Scroll to the target section with smooth behavior
-        document.querySelector('[data-left-content]').scrollTo({
-          top: scrollPosition - pOffsetPixels,
-          behavior: 'smooth',
-        });
-      }
-  }; 
+    // Find the target section element by its ID
+    const targetSection = pElement;
+    // Check if the target section exists
+    if (targetSection) {
+      // Get the final scroll position
+      const scrollPosition = targetSection.offsetTop;
+      // Scroll to the target section with smooth behavior
+      document.querySelector("[data-left-content]").scrollTo({
+        top: scrollPosition - pOffsetPixels,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const initDrawers = (pContainer) => {
-    pContainer.querySelectorAll('details').forEach((elem) => {
-        elem.querySelector('summary').addEventListener('click', (e) => {
+    pContainer.querySelectorAll("details").forEach((elem) => {
+      elem.querySelector("summary").addEventListener("click", (e) => {
         toggleDrawer(e);
       });
 
       elem
-        .querySelectorAll('[data-project-content-container]')
+        .querySelectorAll("[data-project-content-container]")
         .forEach((elem) => {
           elem.style.height = 0;
-          elem.style.opacity = 0; 
+          elem.style.opacity = 0;
         });
 
-        elem
-        .querySelectorAll('[data-project-media-container]')
+      elem
+        .querySelectorAll("[data-project-media-container]")
         .forEach((elem) => {
-          elem.style.opacity = 0; 
+          elem.style.opacity = 0;
         });
     });
 
+    if (slug) {
+      let projectHandle = slug;
 
-    if(slug) {
-      let projectHandle = slug; 
-
-      document.querySelectorAll('summary').forEach((elem)=> {
-            if(elem.dataset.handle == projectHandle) {
-              setTimeout(()=> {
-                openDrawer(elem); 
-              }, 100);
-            }
-      }); 
+      document.querySelectorAll("summary").forEach((elem) => {
+        if (elem.dataset.handle == projectHandle) {
+          setTimeout(() => {
+            openDrawer(elem);
+          }, 100);
+        }
+      });
     }
-
-  }
+  };
 
   const toggleFading = (pContainer, revealAll = false) => {
-
-    pContainer.querySelectorAll('details').forEach(element => {
-
-        if(!revealAll && element.getAttribute('open')  === null) {
-          element.style.opacity = .5; 
-        } else {
-          element.style.opacity = 1; 
-        }
+    pContainer.querySelectorAll("details").forEach((element) => {
+      if (!revealAll && element.getAttribute("open") === null) {
+        element.style.opacity = 0.5;
+      } else {
+        element.style.opacity = 1;
+      }
     });
-  }; 
+  };
 
   const loadMedia = (pDrawer) => {
-    const detailsSelector = pDrawer.closest('details'); 
-    const mediaContainer = detailsSelector.querySelector('[data-project-media-container]'); 
-    const event = new Event('load-media');
+    const detailsSelector = pDrawer.closest("details");
+    const mediaContainer = detailsSelector.querySelector(
+      "[data-project-media-container]"
+    );
+    const event = new Event("load-media");
     mediaContainer.dispatchEvent(event);
-    setTimeout(()=> {
-      mediaContainer.style.opacity = 1; 
-    }, 10); 
-  }; 
+    setTimeout(() => {
+      mediaContainer.style.opacity = 1;
+    }, 10);
+  };
 
   // Add an event listener for the popstate event
-  window.addEventListener('popstate', (event) => {
-    event.preventDefault(); 
+  window.addEventListener("popstate", (event) => {
+    event.preventDefault();
     let url = new URL(window.location.href);
-    let handle = url.pathname.split('/').filter(Boolean).pop();
+    let handle = url.pathname.split("/").filter(Boolean).pop();
     let drawer = document.querySelector(`summary[data-handle="${handle}"]`);
 
     let previousState = currentState;
@@ -228,68 +239,67 @@ onMount(() => {
     } else if (currentState < previousState) {
       // User clicked the back button
     } else {
-      // console.log('other'); 
+      // console.log('other');
       // // State change due to other reasons
-      openDrawer(drawer); 
+      openDrawer(drawer);
     }
-
-    
- 
   });
 
-  initDrawers(document.querySelector('[data-projects-list]'));
-}); 
+  initDrawers(document.querySelector("[data-projects-list]"));
+});
 </script>
 
 <section class="projects-archive-container" data-projects-list>
   <div class="projects-list-container">
-
     {#if projects}
       {#each projects as project, index}
         <article class="project-line-item">
-            <details>
-              <summary
+          <details>
+            <summary
               aria-expanded="false"
               aria-label="Open FAQ answer for question {index}"
               data-id="project-{index}"
-              data-handle="{project.handle.current}"
-              data-thumb-image="{getThumbURL(project.project_media)}"
-              on:mouseenter={(event) => showThumbnail(event, project.name, project.medium)}
+              data-handle={project.handle.current}
+              data-thumb-image={getThumbURL(project.project_media)}
+              on:mouseenter={(event) =>
+                showThumbnail(event, project.name, project.medium)}
               on:mouseleave={(event) => hideThumbnail()}
               on:click={() => {
                 hideThumbnail();
                 updateMetaInfo(project.seo, project.handle.current);
-              }}>
-                <div class="project-summary-header">
-                  <h1 class="project-column  project-name">
-                    {project.name}
-                  </h1>
+              }}
+            >
+              <div class="project-summary-header">
+                <h1 class="project-column project-name">
+                  {project.name}
+                </h1>
 
-                  <div class="project-column  project-publish-date">
-                    <p>
-                      {project.date_released}
-                    </p>
-                  </div>
-
-                  <div class="project-column  project-medium">
-                    <p aria-label="Project Medium">
-                      {#if project.medium}
-                        {project.medium.title}
-                      {/if}
-                    </p>
-                  </div>
+                <div class="project-column project-publish-date">
+                  <p>
+                    {project.date_released}
+                  </p>
                 </div>
-              </summary>
 
-              <div  class="project-summary-content-container" data-project-content-container>
-                <div class="project-summary-content">
+                <div class="project-column project-medium">
+                  <p aria-label="Project Medium">
+                    {#if project.medium}
+                      {project.medium.title}
+                    {/if}
+                  </p>
+                </div>
+              </div>
+            </summary>
 
+            <div
+              class="project-summary-content-container"
+              data-project-content-container
+            >
+              <div class="project-summary-content">
                 <div class="project-summary-main">
                   <h2 class="project-summary-headline">About THe Work</h2>
                   <div class="project-summary-about">
-                      
-                    <RichText text="{project.about}"/>
-                    
+                    <RichText text={project.about} />
+
                     <div class="project-summary-formats">
                       <span>{project.formats}</span>
                     </div>
@@ -312,31 +322,33 @@ onMount(() => {
 
                 <div class="project-summary-credits">
                   <h2 class="project-summary-headline">Credits</h2>
-                  <RichText text="{project.credits}"/>
+                  <RichText text={project.credits} />
                 </div>
               </div>
+            </div>
 
+            <div />
+
+            <div class="project-media" data-project-media-container>
+              <div class="project-media__loader" data-loader>
+                <Loader />
               </div>
-
-              <div />
-
-              <div class="project-media" data-project-media-container>
-                <div class="project-media__loader" data-loader>
-                  <Loader></Loader>
-                </div>
-                {#if project.project_media}
-                  <ProjectMedia mediaWrapper media={project.project_media}/>
-                {/if}
-              </div>
-
-            </details>
+              {#if project.project_media}
+                <ProjectMedia mediaWrapper media={project.project_media} />
+              {/if}
+            </div>
+          </details>
         </article>
-      {/each} 
+      {/each}
     {/if}
   </div>
 </section>
 
-<ThumbnailsContainer bind:this={thumbnailsContainer} bind:activeThumb bind:activeThumbInfo/>
+<ThumbnailsContainer
+  bind:this={thumbnailsContainer}
+  bind:activeThumb
+  bind:activeThumbInfo
+/>
 
 <style>
 :root {
@@ -378,7 +390,7 @@ summary {
     color: var(--secondary-color);
     border-top: var(--border-thickness) solid black;
   }
-/* 
+  /* 
   details[open] .project-media {
     opacity: 1;
   } */
@@ -397,9 +409,6 @@ summary::marker {
   content: none;
 }
 
-
-
-
 /*------------------------------------*\
     #Work Container
 \*------------------------------------*/
@@ -408,7 +417,7 @@ summary::marker {
   position: relative;
 }
 
-.projects-list-container{
+.projects-list-container {
   width: 100%;
   padding-top: 0.5rem;
   background-color: var(--secondary-color);
@@ -419,7 +428,7 @@ summary::marker {
     width: 100vw;
     max-width: 100vw;
     position: absolute;
-    left: 0; 
+    left: 0;
   }
   .projects-list-container {
     width: 53%;
@@ -427,10 +436,6 @@ summary::marker {
     position: relative;
   }
 }
-
-
-
-
 
 /*------------------------------------*\
     #Project Media
@@ -453,7 +458,7 @@ summary::marker {
     z-index: 0;
     height: 100vh;
     overflow: auto;
-    padding: 0; 
+    padding: 0;
     transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     scrollbar-color: white black;
     scrollbar-width: thin;
@@ -466,26 +471,27 @@ summary::marker {
   }
 }
 
- .project-media__loader {
-  transition:  all .3s ease-in-out;
-} 
+.project-media__loader {
+  transition: all 0.3s ease-in-out;
+}
 
 @media screen and (min-width: 900px) {
   .project-media:after {
-    content: " "; 
-    position: fixed; 
-    bottom: 0; 
-    right: 0; 
+    content: " ";
+    position: fixed;
+    bottom: 0;
+    right: 0;
     width: 45%;
     z-index: 2;
     height: 30vh;
-    background: rgb(0,0,0);
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 }
-
-
-
 
 /*------------------------------------*\
     #Project Line Item
@@ -502,11 +508,6 @@ summary::marker {
     margin-bottom: 0.5rem;
   }
 }
-
-
-
-
-
 
 /*------------------------------------*\
     #Project Summary
@@ -667,14 +668,14 @@ h1 {
 .project-summary-content-container {
   overflow: hidden;
   position: relative;
-  transition:  all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .project-summary-content :global(strong) {
   text-transform: uppercase;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1100px) {
   .project-summary-content {
     display: grid;
     grid-template-columns: 2.5fr max-content;
@@ -729,7 +730,7 @@ h1 {
   left: 0;
   top: 0;
   bottom: 0;
-  content: '■';
+  content: "■";
 }
 
 .project-summary-credits :global(p) {

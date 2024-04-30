@@ -41,8 +41,6 @@ export async function sendMail(pReceiver, pFormData) {
 
         const accessToken = await oAuth2Client.getAccessToken();
 
-        console.log(pFormData); 
-
      if(pFormData.message.length <= 10  || pFormData.email <= 0 || pFormData.full_name.length <= 0) {
       let error = new Error('Missing required message data.');
       // @ts-ignore

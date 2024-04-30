@@ -15,7 +15,7 @@ export async function load(loadEvent) {
 
     const content = await client.fetch(page_request, params);
 
-    const projects_request =  `*[_type == 'project'][] {
+    const projects_request =  `*[_type == 'projxxect'][] {
         ...,
         "medium" : medium ->{
             ...
