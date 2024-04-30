@@ -53,7 +53,6 @@ export default   {
         type: "richtext", 
         title: "Credits", 
         name: "credits", 
-        validation: Rule => Rule.required()
       },
       {
         name: 'creditsList',

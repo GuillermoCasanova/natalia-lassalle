@@ -322,7 +322,18 @@ onMount(() => {
 
                 <div class="project-summary-credits">
                   <h2 class="project-summary-headline">Credits</h2>
-                  <RichText text={project.credits} />
+                  <ul class="credits-list">
+                    {#each project.creditsList as credit}
+                      <li class="credit">
+                        <span class="credit__work-done">
+                          {credit.workDone}
+                        </span>
+                        <span class="credit__name">
+                          {credit.name}
+                        </span>
+                      </li>
+                    {/each}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -465,7 +476,7 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-media {
     width: 45%;
   }
@@ -578,7 +589,7 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-publish-date {
     font-size: var(--h6);
   }
@@ -606,7 +617,7 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-name {
     font-size: var(--h6);
   }
@@ -631,7 +642,7 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-medium {
   }
 }
@@ -647,14 +658,14 @@ h1 {
   font-size: var(--text-micro);
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1600px) {
   .project-summary-headline {
     font-size: var(--h6);
   }
 }
 
 .project-summary-content {
-  padding: 2rem;
+  padding: 1rem;
   padding-top: 3rem;
 }
 
@@ -675,7 +686,7 @@ h1 {
   text-transform: uppercase;
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1600px) {
   .project-summary-content {
     display: grid;
     grid-template-columns: 2.5fr max-content;
@@ -737,12 +748,49 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
+.project-summary-credits li {
+  margin-bottom: 0.75rem;
+}
+
+.credit {
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 780px) {
+  .credit {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    gap: var(--level8);
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .credit {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.credit__work-done {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 780px) {
+  .credit__name {
+    text-align: left;
+    width: 65%;
+  }
+}
+
 .project-summary-credits strong {
   font-family: var(--secondary-font-family);
   font-weight: normal;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1600px) {
   .project-summary-credits {
     font-size: var(--micro);
     max-width: 30ch;
@@ -755,14 +803,14 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-summary-credits {
     font-size: var(--mini);
     max-width: 32ch;
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-summary-main {
     width: 100%;
     max-width: 105ch;
@@ -782,7 +830,7 @@ h1 {
   width: 45%;
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   .project-preview-videos__item {
     width: 35%;
   }

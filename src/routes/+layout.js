@@ -45,9 +45,14 @@ export async function load( {url: {pathname}}) {
         "medium" : medium ->{
             ...
         },
+        
         "preview_videos": preview_videos[] {
             ...,
             "video_file": video_file.asset->
+        },
+        "creditsList": creditsList[]-> {
+            ...,
+            "workDone": workDone->name 
         }
     }
     `;

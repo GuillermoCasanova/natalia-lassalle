@@ -15,17 +15,22 @@ export async function load(loadEvent) {
 
     const content = await client.fetch(page_request, params);
 
-    const projects_request =  `*[_type == 'projxxect'][] {
+    const projects_request  = `*[_type == 'project' && !(_id in path('drafts.**'))][] {
         ...,
         "medium" : medium ->{
             ...
         },
+        
         "preview_videos": preview_videos[] {
             ...,
             "video_file": video_file.asset->
+        },
+        "creditsList": creditsList[]-> {
+            ...,
+            "workDone": workDone->name 
         }
-    }`; 
-
+    }
+    `;
 
     //This is available to child components via STUFF since it is in layout
     return {

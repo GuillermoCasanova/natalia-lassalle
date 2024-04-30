@@ -18,6 +18,19 @@ export default {
             name: "figure",
             title: "Figure"
         }
-    ]
+    ],
+    preview: {
+        select: {
+          image: "image",
+          title: "figure",
+        },
+        prepare(selection) {
+          const { image, title } = selection;
+          return {
+            title: title || "Image With Figure",
+            media: image,
+          };
+        },
+      }
 }
 
