@@ -290,63 +290,65 @@ onMount(() => {
               </div>
             </summary>
 
-            <div
-              class="project-summary-content-container"
-              data-project-content-container
-            >
-              <div class="project-summary-content">
-                <div class="project-summary-main">
-                  <h2 class="project-summary-headline">About THe Work</h2>
-                  <div class="project-summary-about">
-                    <RichText text={project.about} />
+            <div>
+              <div
+                class="project-summary-content-container"
+                data-project-content-container
+              >
+                <div class="project-summary-content">
+                  <div class="project-summary-main">
+                    <h2 class="project-summary-headline">About THe Work</h2>
+                    <div class="project-summary-about">
+                      <RichText text={project.about} />
 
-                    <div class="project-summary-formats">
-                      <span>{project.formats}</span>
+                      <div class="project-summary-formats">
+                        <span>{project.formats}</span>
+                      </div>
                     </div>
+
+                    {#if project.preview_videos}
+                      <ul class="project-preview-videos">
+                        {#each project.preview_videos as video}
+                          <li class="project-preview-videos__item">
+                            <div
+                              class="project-preview-videos__video-container"
+                            >
+                              <video poster={urlFor(video.video_poster.asset)}>
+                                <source src={video.video_file.url} />
+                              </video>
+                            </div>
+                          </li>
+                        {/each}
+                      </ul>
+                    {/if}
                   </div>
 
-                  {#if project.preview_videos}
-                    <ul class="project-preview-videos">
-                      {#each project.preview_videos as video}
-                        <li class="project-preview-videos__item">
-                          <div class="project-preview-videos__video-container">
-                            <video poster={urlFor(video.video_poster.asset)}>
-                              <source src={video.video_file.url} />
-                            </video>
-                          </div>
+                  <div class="project-summary-credits">
+                    <h2 class="project-summary-headline">Credits</h2>
+                    <ul class="credits-list">
+                      {#each project.creditsList as credit}
+                        <li class="credit">
+                          <span class="credit__work-done">
+                            {credit.workDone}
+                          </span>
+                          <span class="credit__name">
+                            {credit.name}
+                          </span>
                         </li>
                       {/each}
                     </ul>
-                  {/if}
-                </div>
-
-                <div class="project-summary-credits">
-                  <h2 class="project-summary-headline">Credits</h2>
-                  <ul class="credits-list">
-                    {#each project.creditsList as credit}
-                      <li class="credit">
-                        <span class="credit__work-done">
-                          {credit.workDone}
-                        </span>
-                        <span class="credit__name">
-                          {credit.name}
-                        </span>
-                      </li>
-                    {/each}
-                  </ul>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div />
-
-            <div class="project-media" data-project-media-container>
-              <div class="project-media__loader" data-loader>
-                <Loader />
+              <div class="project-media" data-project-media-container>
+                <div class="project-media__loader" data-loader>
+                  <Loader />
+                </div>
+                {#if project.project_media}
+                  <ProjectMedia mediaWrapper media={project.project_media} />
+                {/if}
               </div>
-              {#if project.project_media}
-                <ProjectMedia mediaWrapper media={project.project_media} />
-              {/if}
             </div>
           </details>
         </article>
@@ -444,6 +446,8 @@ summary::marker {
   .projects-list-container {
     width: 53%;
     left: 1%;
+    height: 93vh;
+    overflow-x: auto;
     position: relative;
   }
 }
