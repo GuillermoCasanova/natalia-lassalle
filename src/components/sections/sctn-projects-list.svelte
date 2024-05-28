@@ -586,7 +586,7 @@ summary::marker {
     margin-bottom: 0;
     padding-bottom: 0;
     padding-top: 0;
-    font-size: var(--micro);
+    font-size: var(--normal);
     height: auto;
     width: 14%;
     border-top: 0;
@@ -615,7 +615,7 @@ summary::marker {
     width: 59%;
     padding-left: 1rem;
     text-overflow: ellipsis;
-    font-size: var(--micro);
+    font-size: var(--normal);
     font-weight: bold;
     border-top: 0;
   }
@@ -634,7 +634,7 @@ summary::marker {
   max-width: 100%;
   grid-row-start: 2;
   border-top: var(--border-thickness) solid black;
-  font-size: var(--micro);
+  font-size: var(--normal);
 }
 
 @media screen and (min-width: 900px) {
@@ -673,6 +673,12 @@ h1 {
   padding-top: 3rem;
 }
 
+@media screen and (min-width: 900px) {
+  .project-summary-content {
+    padding-top: var(--level5);
+  }
+}
+
 .project-summary-content :global(em) {
   text-transform: uppercase;
   font-family: var(--secondary-font-family);
@@ -683,7 +689,7 @@ h1 {
 .project-summary-content-container {
   overflow: hidden;
   position: relative;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .project-summary-content :global(strong) {
@@ -784,7 +790,7 @@ h1 {
 
 @media screen and (min-width: 1600px) {
   .project-summary-credits {
-    font-size: var(--micro);
+    font-size: var(--normal);
     max-width: 30ch;
     opacity: 0.4;
     transition: all 0.2s ease-in-out;

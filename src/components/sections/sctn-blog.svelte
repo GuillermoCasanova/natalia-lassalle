@@ -36,7 +36,7 @@ onMount(() => {
 
     setTimeout(() => {
       pElem.removeAttribute("open");
-    }, 400);
+    }, 1050);
   };
 
   const toggleDrawer = (event) => {
@@ -80,7 +80,7 @@ onMount(() => {
   };
 
   const initDrawers = (pContainer) => {
-    pContainer.querySelectorAll("details").forEach((elem) => {
+    pContainer.querySelectorAll("details").forEach((elem, index) => {
       elem.querySelector("summary").addEventListener("click", (e) => {
         toggleDrawer(e);
       });
@@ -89,6 +89,12 @@ onMount(() => {
         elem.style.width = 0;
         elem.style.opacity = 0;
       });
+
+      setTimeout(() => {
+        if (index == 0) {
+          openDrawer(elem.querySelector("summary"));
+        }
+      }, 300);
     });
   };
 
@@ -138,6 +144,7 @@ onMount(() => {
               sizes="calc(100vw - 3.5rem)"
               loading="lazy"
               decoding="async"
+              class="responsive-image"
               alt={post.featured_image.alt_text}
             />
           </div>
@@ -225,6 +232,11 @@ onMount(() => {
                     },
                   }}
                 />
+                <div class="post__author">
+                  Written by: <a href="/texts" rel="author"
+                    >Natalia Lassalle Morillo</a
+                  >
+                </div>
               </div>
             </article>
           </div>
@@ -235,7 +247,11 @@ onMount(() => {
 </div>
 
 <style>
-@media screen and (min-width: 768px) {
+/*------------------------------------*\
+    	#Blog Container
+\*------------------------------------*/
+
+@media screen and (min-width: 900px) {
   .blog-container {
     background-color: black;
     height: 100%;
@@ -250,25 +266,30 @@ onMount(() => {
   display: none;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   .desktop-blog {
     display: flex;
+    margin-left: -1px;
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   .mobile-blog {
     display: none;
   }
 }
 
 [data-details-content] {
-  transition: all 0.3s ease-in-out;
+  transition: all 1s ease-in-out;
   height: 100vh;
   overflow: auto;
   scrollbar-color: black white;
   scrollbar-width: thin;
 }
+
+/*------------------------------------*\
+    	#Desktop Blog Post
+\*------------------------------------*/
 
 .desktop-blog__post {
   position: relative;
@@ -283,7 +304,7 @@ onMount(() => {
   border-right: 2px solid black;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   details {
     position: relative;
     width: auto;
@@ -302,17 +323,35 @@ onMount(() => {
     right: 0;
     left: auto;
     grid-column: 2;
-    width: 4rem;
+    width: 3.5rem;
     display: flex;
     justify-content: center;
     padding-top: 2rem;
     height: 100%;
+    transition: all 0.1s ease-in;
   }
 
   .desktop-blog__post summary:hover {
     cursor: pointer;
     background-color: black !important;
     color: white !important;
+  }
+
+  details[open] summary {
+    cursor: pointer;
+    background-color: black !important;
+    color: white !important;
+  }
+
+  details:after {
+    background-color: white;
+  }
+  details[open]:after {
+    content: "";
+    background-color: black;
+    right: 0;
+    z-index: 0;
+    width: 3.5rem;
   }
 }
 
@@ -321,6 +360,7 @@ onMount(() => {
   height: 100%;
   text-wrap: nowrap;
   writing-mode: vertical-rl;
+  z-index: 2;
 }
 
 .desktop-blog-post__summary-text h3 {
@@ -331,14 +371,25 @@ onMount(() => {
   font-family: var(--secondary-font-family);
 }
 
-@media screen and (min-width: 768px) {
+/*------------------------------------*\
+    	#Article/Post
+\*------------------------------------*/
+
+article {
+  padding-bottom: var(--level5);
+  margin-bottom: var(--level10);
+  border-bottom: 2px solid black;
+}
+
+@media screen and (min-width: 900px) {
   article {
-    width: 100ch;
-    max-width: 58rem;
-    padding-left: var(--level5);
-    padding-right: var(--level5);
+    width: 105ch;
+    max-width: 66rem;
+    padding-left: var(--level6);
+    padding-right: var(--level8);
     padding-bottom: 10rem;
     padding-top: var(--level5);
+    border-bottom: 0;
   }
 }
 
@@ -362,14 +413,29 @@ onMount(() => {
 .post__title {
   font-family: var(--secondary-font-family);
   line-height: 1.2;
-  font-size: var(--h1);
+  font-size: var(--h2);
   margin-bottom: var(--level5);
 }
+@media screen and (min-width: 900px) {
+  .post__title {
+    font-size: var(--h1);
+  }
+}
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   .post__body {
     padding-left: var(--level7);
     padding-right: var(--level7);
   }
+}
+
+.post__author a {
+  font-family: var(--secondary-font-family);
+  text-decoration: underline;
+}
+
+.post__author a:hover,
+.post__author a:focus {
+  text-decoration: none;
 }
 </style>

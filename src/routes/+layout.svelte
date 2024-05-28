@@ -1,14 +1,14 @@
 <script>
 // @ts-nocheck
 
-import Nav from '../components/header.svelte';
-import SvgGraphics from '../components/svg-graphics.svelte';
-import { afterNavigate, beforeNavigate } from '$app/navigation';
-import { fade } from 'svelte/transition';
-import { cubicIn } from 'svelte/easing';
-import { cubicOut } from 'svelte/easing';
-import { onMount } from 'svelte';
-import { page } from '$app/stores';
+import Nav from "../components/header.svelte";
+import SvgGraphics from "../components/svg-graphics.svelte";
+import { afterNavigate, beforeNavigate } from "$app/navigation";
+import { fade } from "svelte/transition";
+import { cubicIn } from "svelte/easing";
+import { cubicOut } from "svelte/easing";
+import { onMount } from "svelte";
+import { page } from "$app/stores";
 
 export let data;
 
@@ -19,7 +19,7 @@ $: pathName = $page.url.pathname;
 
 function scrollToSection(pHash, pBehavior) {
   let element = document.querySelector(pHash);
-  let headerOffset = document.querySelector('header').offsetHeight - 5;
+  let headerOffset = document.querySelector("header").offsetHeight - 5;
   let elemPosition = element.getBoundingClientRect().top;
   let offsetPosition = elemPosition + window.pageYOffset - headerOffset;
 
@@ -37,7 +37,7 @@ afterNavigate((navigation) => {
   }
 
   if ($page.url.hash) {
-    scrollToSection($page.url.hash, 'auto');
+    scrollToSection($page.url.hash, "auto");
   }
 });
 
@@ -47,10 +47,10 @@ beforeNavigate(() => {
 
 onMount(() => {
   document.querySelectorAll('a[href^="/#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      if (pathName === '/') {
+    anchor.addEventListener("click", function (e) {
+      if (pathName === "/") {
         e.preventDefault();
-        scrollToSection(this.getAttribute('href').replace('/', ''), 'smooth');
+        scrollToSection(this.getAttribute("href").replace("/", ""), "smooth");
       }
     });
   });
@@ -69,10 +69,9 @@ onMount(() => {
   <div
     class="loading-screen"
     in:fade={{ duration: 300, easing: cubicIn }}
-    out:fade={{ duration: 350, easing: cubicOut }}
+    out:fade={{ duration: 300, easing: cubicOut }}
   />
 {/if}
-
 
 <Nav {...data.navigation} />
 
@@ -85,8 +84,8 @@ onMount(() => {
 <SvgGraphics />
 
 <style>
-@import '../styles/base.css';
-@import '../styles/grid.css';
+@import "../styles/base.css";
+@import "../styles/grid.css";
 
 .loading-screen {
   position: fixed;
