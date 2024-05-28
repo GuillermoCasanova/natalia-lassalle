@@ -319,6 +319,14 @@ onMount(() => {
   writing-mode: vertical-rl;
 }
 
+.desktop-blog-post__summary-text h3 {
+  font-size: var(--h5);
+  text-align: left;
+  padding-top: 2vh;
+  font-weight: normal;
+  font-family: var(--secondary-font-family);
+}
+
 @media screen and (min-width: 768px) {
   article {
     width: 100ch;
@@ -327,6 +335,11 @@ onMount(() => {
     padding-right: var(--level5);
     padding-bottom: 10rem;
   }
+}
+
+.post__title {
+  font-family: var(--secondary-font-family);
+  line-height: 1.2;
 }
 
 .post__featured-image {
