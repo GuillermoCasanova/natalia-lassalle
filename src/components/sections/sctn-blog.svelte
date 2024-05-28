@@ -117,7 +117,7 @@ onMount(() => {
           {post.title}
         </h1>
         <div class="post__featured-image">
-          <div class="post-featured-image__inner">
+          <div class="post__featured-image__inner">
             <img
               src=""
               srcset="{urlFor(post.featured_image.asset)
@@ -175,41 +175,45 @@ onMount(() => {
           </summary>
           <div data-details-content>
             <article class="post">
-              <div class="post__data">
+              <div class="post__date">
                 {new Date(post._createdAt).toLocaleDateString(
                   "en-US",
                   dateOptions
                 )}
               </div>
+
               <h1 class="post__title">
                 {post.title}
               </h1>
+
               <div class="post__featured-image">
-                <div class="post-featured-image__inner">
+                <div class="post__featured-image__inner">
                   <img
                     src=""
                     srcset="{urlFor(post.featured_image.asset)
                       .width(400)
                       .auto('format')} 400w,
-                                {urlFor(post.featured_image.asset)
+                                    {urlFor(post.featured_image.asset)
                       .width(600)
                       .auto('format')} 600w,
-                                {urlFor(post.featured_image.asset)
+                                    {urlFor(post.featured_image.asset)
                       .width(800)
                       .auto('format')} 800w  
-                                {urlFor(post.featured_image.asset)
+                                    {urlFor(post.featured_image.asset)
                       .width(1200)
                       .auto('format')} 1200w,
-                                {urlFor(post.featured_image.asset)
+                                    {urlFor(post.featured_image.asset)
                       .width(1600)
                       .auto('format')} 1600w"
                     sizes="calc(100vw - 3.5rem)"
                     loading="lazy"
                     decoding="async"
+                    class="responsive-image"
                     alt={post.featured_image.alt_text}
                   />
                 </div>
               </div>
+
               <div class="post__body">
                 <PortableText
                   value={post.content}
@@ -334,16 +338,32 @@ onMount(() => {
     padding-left: var(--level5);
     padding-right: var(--level5);
     padding-bottom: 10rem;
+    padding-top: var(--level5);
   }
+}
+
+.post__featured-image {
+  position: relative;
+  margin-bottom: var(--level5);
+}
+
+.post__featured-image__inner {
+  position: relative;
+  padding-bottom: 52.6%;
+  overflow: hidden;
+}
+
+.post__date {
+  margin-bottom: var(--level2);
+  text-transform: uppercase;
+  font-size: var(--h5);
 }
 
 .post__title {
   font-family: var(--secondary-font-family);
   line-height: 1.2;
-}
-
-.post__featured-image {
-  margin-bottom: var(--level6);
+  font-size: var(--h1);
+  margin-bottom: var(--level5);
 }
 
 @media screen and (min-width: 768px) {
