@@ -80,12 +80,12 @@ export let seo;
 }
 
 .subpage__content-body {
-  padding-right: var(--level1);
-  padding-left: var(--level1);
 }
 
 @media screen and (min-width: 900px) {
   .subpage__content-body {
+    padding-right: var(--level1);
+    padding-left: var(--level1);
     padding-top: var(--level4);
   }
 }

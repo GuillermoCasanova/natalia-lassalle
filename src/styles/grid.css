@@ -9,3 +9,18 @@ main {}
     position: relative;
     height: 100%; 
 }
+
+.blog-container {
+    padding-left: var(--level3);
+    padding-right: var(--level3);
+    width: 100%;
+    position: relative;
+    height: 100%; 
+}
+
+@media screen and (min-width: 768px) {
+    .blog-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

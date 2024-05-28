@@ -7,7 +7,6 @@ import RichText from "../rich-text.svelte";
 import { urlFor } from "$lib/sanity";
 import { page } from "$app/stores";
 
-import { client } from "$lib/sanity";
 import { onMount } from "svelte";
 
 export let seo;
@@ -300,10 +299,6 @@ onMount(() => {
                     <h2 class="project-summary-headline">About THe Work</h2>
                     <div class="project-summary-about">
                       <RichText text={project.about} />
-
-                      <div class="project-summary-formats">
-                        <span>{project.formats}</span>
-                      </div>
                     </div>
 
                     {#if project.preview_videos}
@@ -313,9 +308,7 @@ onMount(() => {
                             <div
                               class="project-preview-videos__video-container"
                             >
-                              <video poster={urlFor(video.video_poster.asset)}>
-                                <source src={video.video_file.url} />
-                              </video>
+                              {@html video.html}
                             </div>
                           </li>
                         {/each}
@@ -381,15 +374,23 @@ details {
 summary {
   border-bottom: var(--border-thickness) solid white;
   border-top: var(--border-thickness) solid transparent;
+  padding-left: var(--level1);
+  padding-right: var(--level1);
 }
 
 @media screen and (min-width: 900px) {
+  summary {
+    padding-left: 0;
+    padding-right: 0;
+  }
   summary:hover,
   summary:focus {
     border-top: var(--border-thickness) solid black !important;
     background-color: black !important;
     color: white !important;
     cursor: pointer;
+    padding-left: 0;
+    padding-right: 0;
   }
   details:hover,
   details:focus {
@@ -459,7 +460,6 @@ summary::marker {
 .project-media {
   background-color: black;
   color: white;
-  padding: 2rem;
   position: relative;
 }
 
@@ -723,18 +723,6 @@ h1 {
   }
 }
 
-.project-summary-formats {
-  font-size: var(--h6);
-  margin-bottom: 1.25rem;
-}
-
-@media screen and (min-width: 900px) {
-  .project-summary-formats {
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-  }
-}
-
 .project-summary-formats span {
   position: relative;
   padding-left: 1rem;
@@ -828,19 +816,26 @@ h1 {
   overflow: auto;
   display: flex;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
-.project-preview-videos__item {
-  width: 45%;
-}
-
-@media screen and (min-width: 1600px) {
-  .project-preview-videos__item {
-    width: 35%;
+@media screen and (min-width: 1200px) {
+  .project-preview-videos {
+    column-gap: 2rem;
   }
 }
 
-@media screen and (min-width: 1800px) {
+.project-preview-videos__item {
+  width: 100%;
+}
+
+@media screen and (min-width: 1200px) {
+  .project-preview-videos__item {
+    width: 46%;
+  }
+}
+
+@media screen and (min-width: 1600px) {
   .project-preview-videos__item {
     width: 45%;
   }
@@ -853,7 +848,7 @@ h1 {
   padding-bottom: 60.6%;
 }
 
-.project-preview-videos__video-container video {
+:global(.project-preview-videos__video-container iframe) {
   position: absolute;
   width: 100%;
   object-fit: cover;

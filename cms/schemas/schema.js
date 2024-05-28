@@ -30,6 +30,7 @@ import video from './objects/video'
 import textsList from './page-sections/sctn-texts-list'
 import workCredit from './documents/work-credit'
 import workType from './documents/work-type'
+import iframe from './objects/iframe'; 
 
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -44,6 +45,7 @@ export default createSchema({
     sctnHeroHeader,
     richtext,
     expertiseExample,
+    iframe,
     sctnExperienceList,
     post,
     project,

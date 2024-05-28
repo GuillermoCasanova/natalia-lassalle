@@ -71,7 +71,7 @@ export default   {
         name: "preview_videos", 
         type: "array", 
         title: "Preview Videos", 
-        of:[{type:"project_video_break"}],
+        of:[{type:"iframe"}],
       },
       {
         name: "medium", 
