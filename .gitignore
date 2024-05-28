@@ -1,6 +1,8 @@
 .tmp
 .sass-cache
 .stylelintrc
+.svelte-kit/ambient.d.ts
+.svelte-kit/generated/server/internal.js
 dist
 client/bower_components
 materials
