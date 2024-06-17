@@ -20,7 +20,6 @@ let activeThumbInfo;
 let projectIsOpen;
 
 if (projects.length > 0) {
-  console.log(projects);
   formatDates(projects);
 }
 
@@ -64,7 +63,6 @@ function getThumbURL(pMedia) {
 
 function formatDates(pProjects) {
   pProjects.forEach((project) => {
-    console.log(project);
     project.date_released = project.date_released.substring(0, 4);
   });
 
@@ -238,7 +236,6 @@ onMount(() => {
     } else if (currentState < previousState) {
       // User clicked the back button
     } else {
-      // console.log('other');
       // // State change due to other reasons
       openDrawer(drawer);
     }
@@ -296,7 +293,9 @@ onMount(() => {
               >
                 <div class="project-summary-content">
                   <div class="project-summary-main">
-                    <h2 class="project-summary-headline">About THe Work</h2>
+                    <h2 class="project-summary-headline visually-hidden">
+                      About THe Work
+                    </h2>
                     <div class="project-summary-about">
                       <RichText text={project.about} />
                     </div>
@@ -433,7 +432,7 @@ summary::marker {
 
 .projects-list-container {
   width: 100%;
-  padding-top: 0.5rem;
+  padding-top: var(--level3);
   background-color: var(--secondary-color);
 }
 
@@ -696,7 +695,7 @@ h1 {
   text-transform: uppercase;
 }
 
-@media screen and (min-width: 1600px) {
+/* @media screen and (min-width: 1600px) {
   .project-summary-content {
     display: grid;
     grid-template-columns: 2.5fr max-content;
@@ -704,7 +703,7 @@ h1 {
     padding-right: 1rem;
     column-gap: 2rem;
   }
-}
+} */
 
 @media screen and (min-width: 1800px) {
   .project-summary-content {
@@ -724,8 +723,9 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1600px) {
   .project-summary-about {
+    font-size: var(--h5);
   }
 }
 
@@ -750,6 +750,10 @@ h1 {
   margin-bottom: 0.75rem;
 }
 
+.project-summary-credits {
+  font-size: var(--h6);
+}
+
 .credit {
   display: flex;
   flex-direction: column;
@@ -764,12 +768,12 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1600px) {
+/* @media screen and (min-width: 1600px) {
   .credit {
     flex-direction: column;
     gap: 0;
   }
-}
+} */
 
 .credit__work-done {
   font-weight: bold;
@@ -788,7 +792,7 @@ h1 {
   font-weight: normal;
 }
 
-@media screen and (min-width: 1600px) {
+/* @media screen and (min-width: 1600px) {
   .project-summary-credits {
     font-size: var(--normal);
     max-width: 30ch;
@@ -799,19 +803,17 @@ h1 {
   .project-summary-credits:hover {
     opacity: 1;
   }
-}
+} */
 
 @media screen and (min-width: 1600px) {
   .project-summary-credits {
-    font-size: var(--mini);
-    max-width: 32ch;
+    font-size: var(--micro);
   }
 }
 
 @media screen and (min-width: 1600px) {
   .project-summary-main {
     width: 100%;
-    max-width: 105ch;
     line-height: 1.5;
   }
 }
@@ -851,7 +853,6 @@ h1 {
   position: relative;
   overflow: hidden;
   border-radius: 12px;
-  padding-bottom: 60.6%;
 }
 
 :global(.project-preview-videos__video-container iframe) {

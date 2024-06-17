@@ -100,7 +100,7 @@ onDestroy(() => {
                     class="responsive-image"
                   />
                 </div>
-                <div class="thumbnail__details">
+                <div class="thumbnail__details visually-hidden">
                   <p class="thumbnail__details__name">
                     {project.name}
                   </p>

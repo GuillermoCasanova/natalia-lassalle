@@ -11,6 +11,10 @@
 	"/api/send-mail": [
 		"src/routes/api/send-mail/+server.js"
 	],
+	"/contact": [
+		"src/routes/contact/+page.server.js",
+		"src/routes/+layout.js"
+	],
 	"/current": [
 		"src/routes/current/+page.server.js",
 		"src/routes/+layout.js"

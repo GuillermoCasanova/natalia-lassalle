@@ -16,6 +16,17 @@ let dateOptions = {
 
 let projectIsOpen = true;
 
+function formatDates(pProjects) {
+  pProjects.sort((a, b) => {
+    const dateA = new Date(a._createdAt);
+    const dateB = new Date(b._createdAt);
+
+    return dateB - dateA;
+  });
+}
+
+formatDates(posts);
+
 onMount(() => {
   let activeDrawer = null;
 
@@ -116,7 +127,7 @@ onMount(() => {
   <div class="mobile-blog">
     {#each posts as post}
       <article class="post">
-        <div class="post__data">
+        <div class="post__data visually-hidden">
           {new Date(post._createdAt).toLocaleDateString("en-US", dateOptions)}
         </div>
         <h1 class="post__title">
