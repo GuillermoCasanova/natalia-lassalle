@@ -806,30 +806,28 @@ body:not(:-moz-handler-blocked) fieldset {
     position: relative;
     scrollbar-color: black white;
     scrollbar-width: thin;
-  }
-}
-
-@media screen and (min-width: 900px) {
-  .subpage__inner .subpage__left-content {
+    overflow: auto;
     width: 55%;
     padding-right: var(--level3);
     padding-left: var(--level3);
+
   }
 }
 
 .subpage__content-body {
+    padding-top: var(--level6); 
 }
 
 @media screen and (min-width: 900px) {
   .subpage__content-body {
     padding-right: var(--level1);
-    padding-left: var(--level1);
+    padding-left: var(--level1); 
   }
 }
 @media screen and (min-width: 1400px) {
   .subpage__content-body {
-    padding-right: var(--level8);
-    padding-left: var(--level8);
+    /* padding-right: var(--level8);
+    padding-left: var(--level8); */
   }
 }
 

@@ -168,8 +168,9 @@ function onWheel(event) {
       >
         <div class="main-container">
           <div class="section-hero-header__headline">
-            <h2 class="visually-hidden">Featured Project</h2>
-            <p>2020 EN PARÁBOLA / CONVERSATIONS ON TRAGEDY</p>
+            <span style="text-transform: uppercase;"
+              >Natalia Lassalle-Morillo</span
+            >
           </div>
           <div class="section-hero-header__directional-arrow">
             <svg

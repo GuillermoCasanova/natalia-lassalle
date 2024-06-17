@@ -432,7 +432,6 @@ summary::marker {
 
 .projects-list-container {
   width: 100%;
-  padding-top: var(--level3);
   background-color: var(--secondary-color);
 }
 
@@ -444,10 +443,11 @@ summary::marker {
     left: 0;
   }
   .projects-list-container {
-    width: 53%;
+    width: 53.5%;
     left: 1%;
     height: 93vh;
     overflow-x: auto;
+    padding-right: 1rem;
     position: relative;
   }
 }
