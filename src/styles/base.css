@@ -323,7 +323,7 @@ h6 {
 body {
     font-family: var(--primary-font-family);
     font-size: var(--h5);
-    line-height: 1.5;
+    line-height: 1.4;
     font-display: fallback;
     color: black;
 }
@@ -343,7 +343,7 @@ a:focus {
 \*------------------------------------*/
 
 p {
-    margin-bottom: var(--level3);
+    margin-bottom: var(--level4);
 }
 
 

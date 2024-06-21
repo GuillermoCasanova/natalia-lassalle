@@ -1,5 +1,8 @@
 <script>
+// @ts-nocheck
+
 import { PortableText } from "@portabletext/svelte";
+import normalList from "$lib/components/custom-blocks/normal-list.svelte";
 import internalLink from "../custom-marks/internal-link.svelte";
 import externalLink from "../custom-marks/external-link.svelte";
 import mailtoLink from "../custom-marks/mailto-link.svelte";
@@ -16,8 +19,8 @@ let dateOptions = {
 
 let projectIsOpen = true;
 
-function formatDates(pProjects) {
-  pProjects.sort((a, b) => {
+function formatDates(pTexts) {
+  pTexts.sort((a, b) => {
     const dateA = new Date(a._createdAt);
     const dateB = new Date(b._createdAt);
 
@@ -25,7 +28,17 @@ function formatDates(pProjects) {
   });
 }
 
+function placeFeaturedFirst(pTexts) {
+  pTexts.sort((a, b) => {
+    if (a.featured === b.featured) {
+      return 0;
+    }
+    return a.featured ? -1 : 1;
+  });
+}
+
 formatDates(posts);
+placeFeaturedFirst(posts);
 
 onMount(() => {
   let activeDrawer = null;
@@ -193,13 +206,6 @@ onMount(() => {
           </summary>
           <div data-details-content>
             <article class="post">
-              <div class="post__date">
-                {new Date(post._createdAt).toLocaleDateString(
-                  "en-US",
-                  dateOptions
-                )}
-              </div>
-
               <h1 class="post__title">
                 {post.title}
               </h1>
@@ -240,6 +246,9 @@ onMount(() => {
                       internalLink: internalLink,
                       externalLink: externalLink,
                       mailtoLink: mailtoLink,
+                    },
+                    listItem: {
+                      normal: normalList,
                     },
                   }}
                 />
