@@ -37,5 +37,5 @@ export default () =>
                         .documentId('page-home')
                 ),
                 ...S.documentTypeListItems()
-                .filter(item => !['site-settings', 'page-home', 'footer-settings' ,'sctn_hero_header', 'sctn_experience_list', 'sctn_projects_list', 'sctn_rich_text', 'sctn_texts_list'].includes(item.getId()))
+                .filter(item => !['site-settings', 'page-home', 'footer-settings' ,'sctn_hero_header', 'sctn_experience_list', 'sctn_projects_list', 'sctn_rich_text', 'sctn_texts_list', 'iframe', 'work_credit'].includes(item.getId()))
         ]);

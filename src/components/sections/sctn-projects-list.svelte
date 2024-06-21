@@ -21,6 +21,7 @@ let projectIsOpen;
 
 if (projects.length > 0) {
   formatDates(projects);
+  placeFeaturedFirst(projects);
 }
 
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
@@ -59,6 +60,15 @@ function getThumbURL(pMedia) {
       .auto("format")
       .url();
   }
+}
+
+function placeFeaturedFirst(pProjects) {
+  pProjects.sort((a, b) => {
+    if (a.featured === b.featured) {
+      return 0;
+    }
+    return a.featured ? -1 : 1;
+  });
 }
 
 function formatDates(pProjects) {
