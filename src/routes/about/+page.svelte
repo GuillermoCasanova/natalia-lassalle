@@ -63,10 +63,6 @@ export let seo;
             {#if section._type == "sctn_experience_list"}
               <SectionExperienceList {section} />
             {/if}
-
-            {#if section._type == "sctn_projects_list"}
-              <SectionProjectsList bind:seo />
-            {/if}
           {/each}
         {/if}
       </div>

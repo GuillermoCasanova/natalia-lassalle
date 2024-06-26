@@ -48,12 +48,7 @@ export let seo;
 <div class="subpage">
   <div class="subpage__inner">
     <div class="subpage__left-content" data-left-content>
-      <div class="subpage__content-body">
-        <!-- <section class="no-padding">
-						<div >
-							<h1>{$page.data.content.page_title}</h1>
-						</div>
-					</section> -->
+      <div class="subpage__content-body main-container">
         {#if data.content.page_layout}
           {#each data.content.page_layout as section}
             {#if section._type == "sctn_rich_text"}
@@ -62,10 +57,6 @@ export let seo;
 
             {#if section._type == "sctn_experience_list"}
               <SectionExperienceList {section} />
-            {/if}
-
-            {#if section._type == "sctn_projects_list"}
-              <SectionProjectsList bind:seo />
             {/if}
           {/each}
         {/if}
@@ -77,3 +68,11 @@ export let seo;
     </div>
   </div>
 </div>
+
+<style>
+@media screen and (min-width: 900px) {
+  .main-container {
+    padding-top: var(--level6);
+  }
+}
+</style>

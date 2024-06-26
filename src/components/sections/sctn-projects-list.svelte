@@ -373,14 +373,6 @@ onMount(() => {
 />
 
 <style>
-:global(.subpage__left-content) {
-  overflow: visible !important;
-}
-
-:global(.subpage) {
-  overflow: visible !important;
-}
-
 :root {
   --border-thickness: 1px;
 }

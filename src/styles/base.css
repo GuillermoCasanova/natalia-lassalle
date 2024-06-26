@@ -542,15 +542,8 @@ p a {
 }
 
 
-p a:before {
-    content: ' ';
-    position: absolute;
-    bottom: -2px;
-    right: 0;
-    width: 100%;
-    background-color: var(--accent-color);
-    height: 2px;
-    pointer-events: none;
+p a {
+    text-decoration: underline;
 }
 
 p a:hover:before,
@@ -806,11 +799,10 @@ body:not(:-moz-handler-blocked) fieldset {
     position: relative;
     scrollbar-color: black white;
     scrollbar-width: thin;
-    overflow: auto;
     width: 55%;
     padding-right: var(--level3);
     padding-left: var(--level3);
-
+    overflow: auto;
   }
 }
 

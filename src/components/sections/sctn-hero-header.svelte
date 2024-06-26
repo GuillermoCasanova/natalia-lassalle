@@ -284,19 +284,12 @@ function onWheel(event) {
   display: none;
 }
 
-@media screen and (min-width: 768px) {
-  .section-hero-header__headline {
-    bottom: auto;
-    font-size: var(--mega);
-    display: block;
-  }
-}
-
 @media screen and (min-width: 900px) {
   .section-hero-header__headline {
     bottom: auto;
     top: var(--level3);
     font-size: var(--mega);
+    display: block;
   }
 }
 
@@ -312,7 +305,6 @@ function onWheel(event) {
 .section-hero-header__directional-arrow {
   width: 0.85rem;
   position: absolute;
-  right: var(--level3);
   bottom: var(--level3);
   z-index: 3;
   display: flex;
