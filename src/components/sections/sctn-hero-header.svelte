@@ -281,12 +281,14 @@ function onWheel(event) {
   text-align: left;
   color: #fff;
   font-size: var(--h1);
+  display: none;
 }
 
 @media screen and (min-width: 768px) {
   .section-hero-header__headline {
     bottom: auto;
     font-size: var(--mega);
+    display: block;
   }
 }
 
