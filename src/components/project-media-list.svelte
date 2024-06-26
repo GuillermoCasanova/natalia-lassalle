@@ -1,55 +1,53 @@
 <script>
-import { urlFor } from '$lib/sanity';
-import { onMount } from 'svelte';
+import { urlFor } from "$lib/sanity";
+import { onMount } from "svelte";
 export let media;
 
-export let mediaWrapper; 
+export let mediaWrapper;
 
-
-onMount(()=> {
+onMount(() => {
   let imagesLoaded = 0;
   let totalImages = 0;
   let imagesHaveBeenLoaded = false;
 
-  const container = mediaWrapper.closest('[data-project-media-container]');
-  const loader = container.querySelector('[data-loader]'); 
-  const images = container.querySelectorAll('img');
+  const container = mediaWrapper.closest("[data-project-media-container]");
+  const loader = container.querySelector("[data-loader]");
+  const images = container.querySelectorAll("img");
 
   totalImages = images.length;
 
-  loader.style.opacity = 0; 
-  images.forEach((elem, index)=> {
-    elem.style.opacity = 0; 
-    elem.style.transitionDelay = (index * .1) + 's'; 
-  })
+  loader.style.opacity = 0;
+  images.forEach((elem, index) => {
+    elem.style.opacity = 0;
+    elem.style.transitionDelay = index * 0.1 + "s";
+  });
 
-  container.addEventListener('load-media', function(event) {
-    loader.style.opacity = 1; 
+  container.addEventListener("load-media", function (event) {
+    loader.style.opacity = 1;
 
-    if(imagesHaveBeenLoaded) {
-      setTimeout(()=> {
-        loader.style.opacity = 0;  
-      }, 300); 
+    if (imagesHaveBeenLoaded) {
+      setTimeout(() => {
+        loader.style.opacity = 0;
+      }, 300);
 
       animateImages(images);
-      return
+      return;
     }
-    
+
     images.forEach((image, index) => {
       if (image.complete) {
         imageLoaded();
       } else {
-        image.addEventListener('load', imageLoaded);
+        image.addEventListener("load", imageLoaded);
       }
     });
+  });
 
-  }); 
+  container.addEventListener("closed-drawer", function (event) {
+    resetAnimation(images);
+  });
 
-  container.addEventListener('closed-drawer', function(event) {
-    resetAnimation(images); 
-  }); 
-
-  if(imagesHaveBeenLoaded) {
+  if (imagesHaveBeenLoaded) {
     return;
   }
 
@@ -57,46 +55,44 @@ onMount(()=> {
     imagesLoaded += 1;
 
     if (imagesLoaded === totalImages) {
-      imagesHaveBeenLoaded = true; 
+      imagesHaveBeenLoaded = true;
       animateImages(images);
-    } 
-
+    }
   }
 
   function animateImages(pImages) {
-    setTimeout(()=> {
-    loader.style.opacity = 0;  
-      pImages.forEach((elem)=> {
-      elem.style.opacity = 1; 
-    }); 
-    }, 300); 
+    setTimeout(() => {
+      loader.style.opacity = 0;
+      pImages.forEach((elem) => {
+        elem.style.opacity = 1;
+      });
+    }, 300);
   }
 
   function resetAnimation(pImages) {
-    pImages.forEach((elem, index)=> {
-    elem.style.opacity = 0; 
-  })
-  }; 
+    pImages.forEach((elem, index) => {
+      elem.style.opacity = 0;
+    });
+  }
 });
-
 </script>
 
-<div class="media-container" bind:this={mediaWrapper} > 
+<div class="media-container" bind:this={mediaWrapper}>
   {#each media as media}
-    {#if media._type == 'default_image'}
+    {#if media._type == "default_image"}
       <div>
         <img
-          src={urlFor(media.asset).width(900).auto('format').url()}
+          src={urlFor(media.asset).width(900).auto("format").url()}
           alt={media.alt_text}
           loading="lazy"
         />
       </div>
     {/if}
 
-    {#if media._type == 'image_with_figure' && media.figure}
+    {#if media._type == "image_with_figure" && media.figure}
       <figure>
         <img
-          src={urlFor(media.image.asset).width(900).auto('format').url()}
+          src={urlFor(media.image.asset).width(900).auto("format").url()}
           alt={media.alt_text}
           loading="lazy"
         />
@@ -107,14 +103,13 @@ onMount(()=> {
 </div>
 
 <style>
-  .media-container {
-  transition:  all .2s ease-in-out;
- }  
+.media-container {
+  transition: all 0.2s ease-in-out;
+}
 
 img {
   border: 1px solid rgb(31, 30, 30);
-  box-shadow: 1px 10px 80px rgba(255, 255, 255, 0.1);
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 caption {
@@ -124,14 +119,14 @@ caption {
   width: 100%;
   display: block;
   margin-bottom: 3rem;
-  font-size: var(--mini); 
+  font-size: var(--mini);
 }
 
 figure {
-  margin: 0; 
+  margin: 0;
 }
 figure img {
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 @media screen and (min-width: 900px) {

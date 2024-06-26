@@ -48,7 +48,7 @@ export let seo;
 <div class="subpage">
   <div class="subpage__inner">
     <div class="subpage__left-content" data-left-content>
-      <div class="subpage__content-body">
+      <div class="subpage__content-body main-container">
         <!-- <section class="no-padding">
 						<div >
 							<h1>{$page.data.content.page_title}</h1>
@@ -77,3 +77,11 @@ export let seo;
     </div>
   </div>
 </div>
+
+<style>
+@media screen and (min-width: 900px) {
+  .main-container {
+    padding-top: var(--level6);
+  }
+}
+</style>

@@ -48,3 +48,11 @@ export let seo;
     </div>
   </div>
 </div>
+
+<style>
+@media screen and (min-width: 900px) {
+  .main-container {
+    padding-top: var(--level6);
+  }
+}
+</style>

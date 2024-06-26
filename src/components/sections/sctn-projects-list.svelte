@@ -157,19 +157,26 @@ onMount(() => {
     activeDrawer = pDrawer.dataset.id;
 
     setTimeout(() => {
-      scrollToProject(pDrawer, 0);
-    }, 300);
+      scrollToProject(pDrawer, 20);
+    }, 500);
   };
 
   const scrollToProject = (pElement, pOffsetPixels) => {
     // Find the target section element by its ID
     const targetSection = pElement;
+    const scrollPosition = targetSection.offsetTop;
+
+    if (window.innerWidth < 900) {
+      window.scrollTo({
+        top: scrollPosition - pOffsetPixels,
+        behavior: "smooth",
+      });
+      return;
+    }
     // Check if the target section exists
     if (targetSection) {
-      // Get the final scroll position
-      const scrollPosition = targetSection.offsetTop;
       // Scroll to the target section with smooth behavior
-      document.querySelector("[data-left-content]").scrollTo({
+      document.querySelector(".projects-archive-container").scrollTo({
         top: scrollPosition - pOffsetPixels,
         behavior: "smooth",
       });
@@ -303,7 +310,7 @@ onMount(() => {
               >
                 <div class="project-summary-content">
                   <div class="project-summary-main">
-                    <h2 class="project-summary-headline visually-hidden">
+                    <h2 class="project-summary__headline visually-hidden">
                       About THe Work
                     </h2>
                     <div class="project-summary-about">
@@ -326,7 +333,7 @@ onMount(() => {
                   </div>
 
                   <div class="project-summary-credits">
-                    <h2 class="project-summary-headline">Credits</h2>
+                    <h2 class="project-summary__headline">Credits</h2>
                     <ul class="credits-list">
                       {#each project.creditsList as credit}
                         <li class="credit">
@@ -366,6 +373,14 @@ onMount(() => {
 />
 
 <style>
+:global(.subpage__left-content) {
+  overflow: visible !important;
+}
+
+:global(.subpage) {
+  overflow: visible !important;
+}
+
 :root {
   --border-thickness: 1px;
 }
@@ -438,6 +453,7 @@ summary::marker {
 
 .projects-archive-container {
   position: relative;
+  overflow: hidden;
 }
 
 .projects-list-container {
@@ -451,14 +467,19 @@ summary::marker {
     max-width: 100vw;
     position: absolute;
     left: 0;
+    overflow: auto;
+    height: 100vh;
+    padding-top: var(--level4);
   }
   .projects-list-container {
     width: 53.5%;
     left: 1%;
-    height: 93vh;
-    overflow-x: auto;
+    height: auto;
     padding-right: 1rem;
+    padding-bottom: var(--level10);
     position: relative;
+    top: 0;
+    height: auto;
   }
 }
 
@@ -497,24 +518,6 @@ summary::marker {
 
 .project-media__loader {
   transition: all 0.3s ease-in-out;
-}
-
-@media screen and (min-width: 900px) {
-  .project-media:after {
-    content: " ";
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 45%;
-    z-index: 2;
-    height: 30vh;
-    background: rgb(0, 0, 0);
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
 }
 
 /*------------------------------------*\
@@ -655,25 +658,20 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1600px) {
-  .project-medium {
-  }
-}
-
 p,
 h1 {
   margin-bottom: 0;
 }
 
-.project-summary-headline {
+.project-summary__headline {
   text-transform: uppercase;
   font-weight: bold;
   font-size: var(--text-micro);
 }
 
-@media screen and (min-width: 1600px) {
-  .project-summary-headline {
-    font-size: var(--h6);
+@media screen and (min-width: 1000px) {
+  .project-summary__headline {
+    font-size: var(--h4);
   }
 }
 
@@ -704,16 +702,6 @@ h1 {
 .project-summary-content :global(strong) {
   text-transform: uppercase;
 }
-
-/* @media screen and (min-width: 1600px) {
-  .project-summary-content {
-    display: grid;
-    grid-template-columns: 2.5fr max-content;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    column-gap: 2rem;
-  }
-} */
 
 @media screen and (min-width: 1800px) {
   .project-summary-content {
@@ -752,6 +740,10 @@ h1 {
   content: "■";
 }
 
+.project-summary-main {
+  margin-bottom: var(--level8);
+}
+
 .project-summary-credits :global(p) {
   margin-bottom: 0.5rem;
 }
@@ -762,6 +754,13 @@ h1 {
 
 .project-summary-credits {
   font-size: var(--h6);
+  margin-bottom: var(--level5);
+}
+
+@media screen and (min-width: 1600px) {
+  .project-summary-credits {
+    font-size: var(--h5);
+  }
 }
 
 .credit {
@@ -800,25 +799,6 @@ h1 {
 .project-summary-credits strong {
   font-family: var(--secondary-font-family);
   font-weight: normal;
-}
-
-/* @media screen and (min-width: 1600px) {
-  .project-summary-credits {
-    font-size: var(--normal);
-    max-width: 30ch;
-    opacity: 0.4;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .project-summary-credits:hover {
-    opacity: 1;
-  }
-} */
-
-@media screen and (min-width: 1600px) {
-  .project-summary-credits {
-    font-size: var(--micro);
-  }
 }
 
 @media screen and (min-width: 1600px) {
