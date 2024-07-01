@@ -216,6 +216,7 @@ function onWheel(event) {
   overflow: hidden;
   height: 100vh;
   z-index: 4;
+  max-height: 60rem;
 }
 
 @media screen and (min-width: 900px) {
@@ -227,6 +228,7 @@ function onWheel(event) {
     width: 100vw;
     z-index: 10;
     margin-bottom: 0;
+    max-height: 100vh;
   }
 }
 

@@ -394,6 +394,10 @@ summary {
   padding-right: var(--level1);
 }
 
+summary:hover {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 900px) {
   summary {
     padding-left: 0;
@@ -537,8 +541,8 @@ summary::marker {
   align-items: center;
   grid-template-rows: 1fr 1fr;
   grid-template-columns:
-    1fr
-    1fr;
+    0.15fr
+    1.85fr;
 }
 
 @media screen and (min-width: 900px) {
@@ -582,7 +586,8 @@ summary::marker {
   border-top: var(--border-thickness) solid black;
   justify-self: flex-start;
   margin-bottom: 0;
-  height: 100%;
+  grid-row-start: 2;
+  grid-column-start: 1;
 }
 
 @media screen and (min-width: 900px) {
@@ -607,9 +612,11 @@ summary::marker {
   font-size: var(--h5);
   font-weight: normal;
   grid-row-start: 2;
+  grid-column-start: 2;
+  grid-column-end: 4;
   max-width: 100%;
+  width: 100%;
   border-top: var(--border-thickness) solid black;
-  border-left: var(--border-thickness) solid black;
 }
 
 @media screen and (min-width: 900px) {
@@ -636,9 +643,16 @@ summary::marker {
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
-  grid-row-start: 2;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  grid-column-start: 3;
+  grid-column-end: 3;
+  border-left: var(--border-thickness) solid black;
   border-top: var(--border-thickness) solid black;
   font-size: var(--normal);
+  width: fit-content;
+  height: fit-content;
+  align-self: flex-end;
 }
 
 @media screen and (min-width: 900px) {
@@ -647,6 +661,8 @@ summary::marker {
     font-size: var(--h6);
     width: 35%;
     border-top: 0;
+    border-left: 0;
+    height: auto;
   }
 }
 
