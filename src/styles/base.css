@@ -324,8 +324,9 @@ body {
     font-family: var(--primary-font-family);
     font-size: var(--h5);
     line-height: 1.4;
-    font-display: fallback;
+    font-display: swap;
     color: black;
+    background-color: black;
 }
 
 
@@ -770,6 +771,9 @@ body:not(:-moz-handler-blocked) fieldset {
 
 
 
+.subpage {
+    background-color: white;
+}
 @media screen and (min-width: 900px) {
   .subpage {
     position: fixed;

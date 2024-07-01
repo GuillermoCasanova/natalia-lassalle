@@ -58,14 +58,6 @@ onMount(() => {
 </script>
 
 {#if loading}
-  <!-- <div
-    class="loading-screen"
-    in:fade={{ duration: 500, easing: cubicIn }}
-    out:fade={{ duration: 600, easing: cubicIn }}
-  /> -->
-{/if}
-
-{#if loading}
   <div
     class="loading-screen"
     in:fade={{ duration: 300, easing: cubicIn }}
@@ -79,8 +71,6 @@ onMount(() => {
   <slot />
 </main>
 
-<!-- <Footer {...data.footer} bind:showFooter="{ready}" /> -->
-
 <SvgGraphics />
 
 <style>
@@ -89,7 +79,7 @@ onMount(() => {
 
 .loading-screen {
   position: fixed;
-  background-color: #fff;
+  background-color: #000000;
   width: 100%;
   height: 100%;
   top: 0;

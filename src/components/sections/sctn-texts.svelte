@@ -136,8 +136,8 @@ onMount(() => {
 });
 </script>
 
-<div class="blog-container">
-  <div class="mobile-blog">
+<div class="texts-container">
+  <div class="mobile-texts main-container">
     {#each posts as post}
       <article class="post">
         <div class="post__data visually-hidden">
@@ -189,16 +189,16 @@ onMount(() => {
     {/each}
   </div>
 
-  <div class="desktop-blog" data-articles-list>
+  <div class="desktop-texts" data-articles-list>
     {#each posts as post, index}
-      <div class="desktop-blog__post">
+      <div class="desktop-texts__post">
         <details>
           <summary
             aria-label="Open full article number {index}"
             aria-expanded="false"
             data-id="project-{index}"
           >
-            <div class="desktop-blog-post__summary-text">
+            <div class="desktop-texts-post__summary-text">
               <h3>
                 {post.title}
               </h3>
@@ -268,11 +268,14 @@ onMount(() => {
 
 <style>
 /*------------------------------------*\
-    	#Blog Container
+    	#texts Container
 \*------------------------------------*/
 
+.texts-container {
+  background-color: white;
+}
 @media screen and (min-width: 900px) {
-  .blog-container {
+  .texts-container {
     background-color: black;
     height: 100%;
     overflow: hidden;
@@ -282,19 +285,19 @@ onMount(() => {
   }
 }
 
-.desktop-blog {
+.desktop-texts {
   display: none;
 }
 
 @media screen and (min-width: 900px) {
-  .desktop-blog {
+  .desktop-texts {
     display: flex;
     margin-left: -1px;
   }
 }
 
 @media screen and (min-width: 900px) {
-  .mobile-blog {
+  .mobile-texts {
     display: none;
   }
 }
@@ -308,10 +311,10 @@ onMount(() => {
 }
 
 /*------------------------------------*\
-    	#Desktop Blog Post
+    	#Desktop texts Post
 \*------------------------------------*/
 
-.desktop-blog__post {
+.desktop-texts__post {
   position: relative;
   border: 2px solid black;
   background-color: white;
@@ -320,7 +323,7 @@ onMount(() => {
   overflow: hidden;
 }
 
-.desktop-blog .desktop-blog__post:last-child {
+.desktop-texts .desktop-texts__post:last-child {
   border-right: 2px solid black;
 }
 
@@ -338,7 +341,7 @@ onMount(() => {
   details:hover {
     opacity: 1 !important;
   }
-  .desktop-blog__post summary {
+  .desktop-texts__post summary {
     position: relative;
     right: 0;
     left: auto;
@@ -351,7 +354,7 @@ onMount(() => {
     transition: all 0.1s ease-in;
   }
 
-  .desktop-blog__post summary:hover {
+  .desktop-texts__post summary:hover {
     cursor: pointer;
     background-color: black !important;
     color: white !important;
@@ -375,7 +378,7 @@ onMount(() => {
   }
 }
 
-.desktop-blog-post__summary-text {
+.desktop-texts-post__summary-text {
   position: absolute;
   height: 100%;
   text-wrap: nowrap;
@@ -383,7 +386,7 @@ onMount(() => {
   z-index: 2;
 }
 
-.desktop-blog-post__summary-text h3 {
+.desktop-texts-post__summary-text h3 {
   font-size: var(--h5);
   text-align: left;
   padding-top: 2vh;

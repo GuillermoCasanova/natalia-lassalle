@@ -42,15 +42,10 @@ onMount(() => {
   };
 
   scroller = {
-    // lower values will decrease how far it moves on scroll
-    wheelMultiplier: getLineHeight(),
-
-    // lower values will make the animation longer
-    ease: 0.01,
-
-    speed: 0,
-    minY: 0,
-    maxY: window.innerHeight,
+    ease: 0.001,
+    speed: 100,
+    minY: 0.1,
+    maxY: window.innerHeight * 2,
     y: 0,
   };
 
@@ -65,22 +60,14 @@ onMount(() => {
         window.addEventListener("wheel", onWheel);
       } else {
         window.removeEventListener("wheel", onWheel);
-        heroHeader.style.display = "block";
-        heroHeader.style.opacity = 1;
+        if (heroHeader) {
+          heroHeader.style.display = "block";
+          heroHeader.style.opacity = 1;
+        }
       }
     }),
     { passive: true }
   );
-
-  function getLineHeight() {
-    var element = document.createElement("div");
-    element.style["font-size"] = "128ex";
-    document.body.appendChild(element);
-    var value = getComputedStyle(element).getPropertyValue("font-size");
-    var size = parseFloat(value) / 600;
-    document.body.removeChild(element);
-    return size;
-  }
 
   function throttle(fn, delay) {
     let lastCall = 0;
@@ -111,7 +98,7 @@ function removeHeroHeader() {
 function onFrame() {
   scroller.speed += -scroller.speed * scroller.ease;
   // scroller.y -= scroller.speed;
-  scroller.y -= Math.round(scroller.speed * 1000) / 1000;
+  scroller.y -= Math.round(scroller.speed * 10) / 10;
 
   if (scroller.y < scroller.minY) {
     scroller.y = scroller.minY;
@@ -204,7 +191,6 @@ function onWheel(event) {
         >
           <source data-src={section.video[0].video_file.url} type="video/mp4" />
         </video>
-        <!-- <img src={urlFor(section.video[0].video_poster.asset)} alt="" class="responsive-image"> -->
       </div>
     </div>
   </section>
@@ -224,11 +210,9 @@ function onWheel(event) {
 
 .section-hero-header {
   background-color: rgb(252, 247, 243);
-  border-bottom: 2px solid white;
   position: relative;
   width: 100%;
   display: flex;
-  margin-bottom: var(--level4);
   overflow: hidden;
   height: 100vh;
   z-index: 4;
