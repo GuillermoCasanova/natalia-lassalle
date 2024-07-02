@@ -26,7 +26,6 @@
     "svelte-check": "^2.7.1",
     "svelte-intersection-observer": "^0.10.0",
     "svelte-meta-tags": "^2.6.3",
-    "swiper": "^8.4.7",
     "vite": "^4.0.0"
   },
   "type": "module",
@@ -41,6 +40,7 @@
     "googleapis": "^107.0.0",
     "gsap": "^3.12.5",
     "nodemailer": "^6.7.8",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "swiper": "^11.1.4"
   }
 }

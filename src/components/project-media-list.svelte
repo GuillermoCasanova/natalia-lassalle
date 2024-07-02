@@ -1,109 +1,266 @@
 <script>
+import Swiper from "swiper";
+import {
+  Autoplay,
+  Pagination,
+  EffectFade,
+  Navigation,
+  A11y,
+} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
 import { urlFor } from "$lib/sanity";
 import { onMount } from "svelte";
-export let media;
+import { compute_rest_props } from "svelte/internal";
 
+export let media;
 export let mediaWrapper;
+let imagesWrapper;
 
 onMount(() => {
-  let imagesLoaded = 0;
-  let totalImages = 0;
-  let imagesHaveBeenLoaded = false;
+  let mediaQueries = {
+    mediumUp: window.matchMedia("(min-width: 768px)"),
+    largeUp: window.matchMedia("(min-width: 900px)"),
+  };
 
-  const container = mediaWrapper.closest("[data-project-media-container]");
-  const loader = container.querySelector("[data-loader]");
-  const images = container.querySelectorAll("img");
+  initSlideshow(imagesWrapper, mediaQueries, "largeUp");
 
-  totalImages = images.length;
+  function initSlideshow(pWrapper, pMediaQueries, pDisableOn) {
+    const imagesWrapper = pWrapper;
 
-  loader.style.opacity = 0;
-  images.forEach((elem, index) => {
-    elem.style.opacity = 0;
-    elem.style.transitionDelay = index * 0.1 + "s";
-  });
+    const slideshow = {
+      originalHtml: null,
+      swiper: null,
+      container: pWrapper.closest("[data-project-media-container]"),
+      saveOriginalHtml() {
+        this.originalHtml = Array.from(imagesWrapper.children).map((child) =>
+          child.cloneNode(true)
+        );
+      },
 
-  container.addEventListener("load-media", function (event) {
-    loader.style.opacity = 1;
+      generateSlides() {
+        const slides = Array.from(imagesWrapper.children)
+          .map((child) => `<div class="swiper-slide">${child.outerHTML}</div>`)
+          .join("");
+        return slides;
+      },
 
-    if (imagesHaveBeenLoaded) {
-      setTimeout(() => {
-        loader.style.opacity = 0;
-      }, 300);
+      setUpHtml() {
+        this.saveOriginalHtml();
+        const slides = this.generateSlides();
 
-      animateImages(images);
-      return;
-    }
+        imagesWrapper.innerHTML = `
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            ${slides}
+          </div>
+          <div class="swiper-button-next">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 40.27 12">
+              <path style="fill: currentColor" d="m40.03,6.56c.32-.32.32-.83,0-1.15,0,0,0,0,0,0L34.85.22c-.33-.31-.84-.29-1.15.04-.29.31-.29.8,0,1.12l4.61,4.61-4.61,4.61c-.33.31-.34.82-.04,1.15.31.33.82.34,1.15.04.01-.01.02-.02.04-.04l5.19-5.18ZM.81,6.8h38.64v-1.63H.81c-.45,0-.81.36-.81.81h0c0,.45.36.82.81.82Z"/>
+            </svg>
+          </div>
+          <div class="swiper-button-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 40.27 12">
+              <path style="fill: currentColor" d="m39.45,5.2H2.78l3.79-3.79c.33-.31.34-.82.04-1.15s-.82-.34-1.15-.04c-.01.01-.02.02-.04.04L.24,5.44c-.32.32-.32.83,0,1.15,0,0,0,0,0,0l5.18,5.19c.33.31.84.29,1.15-.04.29-.31.29-.8,0-1.12l-3.79-3.8h36.67c.45,0,.82-.36.82-.82s-.36-.82-.82-.82Z"/>
+            </svg>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      `;
+      },
 
-    images.forEach((image, index) => {
-      if (image.complete) {
-        imageLoaded();
-      } else {
-        image.addEventListener("load", imageLoaded);
-      }
-    });
-  });
+      setUpMediaQueries(pMediaQueries, pDisableOn) {
+        const mediaQueryList = pMediaQueries[pDisableOn];
+        this.disableOn = pDisableOn;
 
-  container.addEventListener("closed-drawer", function (event) {
-    resetAnimation(images);
-  });
+        mediaQueryList.addEventListener("change", (event) => {
+          if (event.matches) {
+            this.destroySwiper();
+            this.resetOriginalHtml();
+          } else {
+            this.setUpHtml();
+            this.initSwiper();
+            this.loadImages();
+          }
+        });
+      },
 
-  if (imagesHaveBeenLoaded) {
-    return;
-  }
+      loadImages() {
+        const event = new Event("load-media");
+        setTimeout(() => {
+          this.container.dispatchEvent(event);
+          this.container.style.opacity = 1;
+        }, 200);
+      },
+      resetOriginalHtml() {
+        // Remove current children
+        while (imagesWrapper.firstChild) {
+          imagesWrapper.removeChild(imagesWrapper.firstChild);
+        }
 
-  function imageLoaded(event) {
-    imagesLoaded += 1;
+        this.originalHtml.forEach((child) => {
+          imagesWrapper.appendChild(child.cloneNode(true));
+        });
+      },
 
-    if (imagesLoaded === totalImages) {
-      imagesHaveBeenLoaded = true;
-      animateImages(images);
-    }
-  }
+      destroySwiper() {
+        if (this.swiper) {
+          this.swiper.detachEvents();
+          this.swiper.destroy(true, true);
+          this.swiper = null;
+        }
+      },
 
-  function animateImages(pImages) {
-    setTimeout(() => {
-      loader.style.opacity = 0;
-      pImages.forEach((elem) => {
-        elem.style.opacity = 1;
-      });
-    }, 300);
-  }
+      initSwiper() {
+        this.swiper = new Swiper(
+          imagesWrapper.querySelector(".swiper-container"),
+          {
+            modules: [Navigation, A11y],
+            effect: "slide",
+            loop: false,
+            slidesPerView: "auto",
+            centeredSlides: true,
+            autoHeight: true,
+            spaceBetween: 20,
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          }
+        );
+      },
 
-  function resetAnimation(pImages) {
-    pImages.forEach((elem, index) => {
-      elem.style.opacity = 0;
-    });
+      init() {
+        if (window.innerWidth < 900) {
+          this.setUpHtml();
+          this.initSwiper();
+          this.loadImages();
+        }
+
+        this.setUpMediaQueries(pMediaQueries, pDisableOn);
+      },
+    };
+
+    const ImageAnimation = {
+      imagesLoaded: 0,
+      totalImages: 0,
+      imagesHaveBeenLoaded: false,
+      container: null,
+      loader: null,
+      images: null,
+
+      init() {
+        this.imagesLoaded = 0;
+        this.totalImages = 0;
+        this.imagesHaveBeenLoaded = false;
+        this.container = pWrapper.closest("[data-project-media-container]");
+        this.loader = this.container.querySelector("[data-loader]");
+        this.images = this.container.querySelectorAll("img");
+        this.totalImages = this.images.length;
+
+        this.loader.style.opacity = 0;
+
+        this.resetAnimation();
+
+        this.container.addEventListener("load-media", (event) => {
+          this.loader.style.opacity = 1;
+
+          if (this.imagesHaveBeenLoaded) {
+            setTimeout(() => {
+              this.loader.style.opacity = 0;
+            }, 300);
+
+            this.animateImages();
+            return;
+          }
+
+          this.images.forEach((image, index) => {
+            if (image.complete) {
+              this.imageLoaded();
+            } else {
+              image.addEventListener("load", this.imageLoaded.bind(this));
+            }
+          });
+        });
+
+        this.container.addEventListener("closed-drawer", (event) => {
+          this.resetAnimation();
+        });
+      },
+
+      imageLoaded(event) {
+        this.imagesLoaded += 1;
+
+        if (this.imagesLoaded === this.totalImages) {
+          this.imagesHaveBeenLoaded = true;
+          this.animateImages();
+        }
+      },
+
+      animateImages() {
+        let latestImages = this.container.querySelectorAll("img");
+
+        setTimeout(() => {
+          this.loader.style.opacity = 0;
+          latestImages.forEach((elem) => {
+            elem.style.opacity = 1;
+          });
+        }, 300);
+      },
+
+      resetAnimation() {
+        let latestImages = this.container.querySelectorAll("img");
+        latestImages.forEach((elem, index) => {
+          elem.style.opacity = 0;
+          elem.style.transitionDelay = index * 0.1 + "s";
+        });
+      },
+    };
+
+    slideshow.init();
+    ImageAnimation.init();
   }
 });
 </script>
 
 <div class="media-container" bind:this={mediaWrapper}>
-  {#each media as media}
-    {#if media._type == "default_image"}
-      <div>
-        <img
-          src={urlFor(media.asset).width(900).auto("format").url()}
-          alt={media.alt_text}
-          loading="lazy"
-        />
-      </div>
-    {/if}
+  <div
+    class="media-container__inner"
+    data-project-media-slideshow
+    bind:this={imagesWrapper}
+  >
+    {#each media as media}
+      {#if media._type == "default_image"}
+        <div>
+          <img
+            src={urlFor(media.asset).width(900).auto("format").url()}
+            alt={media.alt_text}
+            loading="lazy"
+          />
+        </div>
+      {/if}
 
-    {#if media._type == "image_with_figure" && media.figure}
-      <figure>
-        <img
-          src={urlFor(media.image.asset).width(900).auto("format").url()}
-          alt={media.alt_text}
-          loading="lazy"
-        />
-        <caption>{media.figure}</caption>
-      </figure>
-    {/if}
-  {/each}
+      {#if media._type == "image_with_figure" && media.figure}
+        <figure>
+          <img
+            src={urlFor(media.image.asset).width(900).auto("format").url()}
+            alt={media.alt_text}
+            loading="lazy"
+          />
+          <caption>{media.figure}</caption>
+        </figure>
+      {/if}
+    {/each}
+  </div>
 </div>
 
 <style>
 .media-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: var(--level9);
+  padding-top: var(--level5);
   transition: all 0.2s ease-in-out;
 }
 
@@ -140,5 +297,24 @@ figure img {
   img {
     margin-bottom: var(--level2);
   }
+}
+
+:global(.media-container .swiper-slide) {
+  max-width: 88vw;
+}
+:global(.media-container .swiper-button-next),
+:global(.media-container .swiper-button-prev) {
+  position: absolute;
+  z-index: 2;
+  bottom: 1rem;
+  width: 15%;
+}
+
+:global(.media-container .swiper-button-prev) {
+  left: 1rem;
+}
+
+:global(.media-container .swiper-button-next) {
+  right: 1rem;
 }
 </style>

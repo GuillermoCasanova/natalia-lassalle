@@ -1,6 +1,7 @@
 <script>
 import { urlFor } from "$lib/sanity";
-import Swiper, { Autoplay, Pagination, EffectFade } from "swiper";
+import Swiper from "swiper";
+import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { onMount } from "svelte";

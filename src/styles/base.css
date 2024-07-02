@@ -771,11 +771,22 @@ body:not(:-moz-handler-blocked) fieldset {
 
 
 
+/*------------------------------------*\
+    #Rich Text 
+\*------------------------------------*/
 .rich-text h1, 
 .rich-text h2 {
     text-transform: uppercase;
     font-size: var(--h4)
 }
+
+
+
+
+
+/*------------------------------------*\
+    #Subpage 
+\*------------------------------------*/
 
 .subpage {
     background-color: white;
