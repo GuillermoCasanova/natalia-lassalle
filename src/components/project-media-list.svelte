@@ -80,7 +80,6 @@ onMount(() => {
           } else {
             this.setUpHtml();
             this.initSwiper();
-            this.loadImages();
           }
         });
       },
@@ -307,7 +306,7 @@ figure img {
   position: absolute;
   z-index: 2;
   bottom: 1rem;
-  width: 15%;
+  width: 8%;
 }
 
 :global(.media-container .swiper-button-prev) {

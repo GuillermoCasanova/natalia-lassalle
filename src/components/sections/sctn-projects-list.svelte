@@ -233,9 +233,10 @@ onMount(() => {
     );
     const event = new Event("load-media");
     mediaContainer.dispatchEvent(event);
+
     setTimeout(() => {
       mediaContainer.style.opacity = 1;
-    }, 10);
+    }, 20);
   };
 
   // Add an event listener for the popstate event
@@ -304,6 +305,14 @@ onMount(() => {
             </summary>
 
             <div>
+              <div class="project-media" data-project-media-container>
+                <div class="project-media__loader" data-loader>
+                  <Loader />
+                </div>
+                {#if project.project_media}
+                  <ProjectMedia mediaWrapper media={project.project_media} />
+                {/if}
+              </div>
               <div
                 class="project-summary-content-container"
                 data-project-content-container
@@ -348,15 +357,6 @@ onMount(() => {
                     </ul>
                   </div>
                 </div>
-              </div>
-
-              <div class="project-media" data-project-media-container>
-                <div class="project-media__loader" data-loader>
-                  <Loader />
-                </div>
-                {#if project.project_media}
-                  <ProjectMedia mediaWrapper media={project.project_media} />
-                {/if}
               </div>
             </div>
           </details>
@@ -833,11 +833,13 @@ h1 {
 
 .project-preview-videos__item {
   width: 100%;
+  margin-bottom: var(--level4);
 }
 
 @media screen and (min-width: 1200px) {
   .project-preview-videos__item {
     width: 46%;
+    margin-bottom: 0;
   }
 }
 
