@@ -42,8 +42,10 @@ afterNavigate((navigation) => {
   }
 });
 
-beforeNavigate(() => {
-  loading = true;
+beforeNavigate(({ to }) => {
+  if (to.route.id) {
+    loading = true;
+  }
 });
 
 onMount(() => {
