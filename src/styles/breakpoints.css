@@ -1,9 +1,10 @@
 :root {
     --grid-xsmall: 357px;
     --grid-small: 767px;
-    --grid-medium: 768px;
-    --grid-large: 1000px;
-    --grid-xlarge: 1600px;
+    --grid-medium: 780px;
+    --grid-large: 900px;
+    --grid-x-large: 1200px;
+    --grid-xx-large: 1800px;
     --grid-widescreen: 2000px;
 
     --xsmall: min-width: 0;

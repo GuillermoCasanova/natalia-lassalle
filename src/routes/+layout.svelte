@@ -9,6 +9,7 @@ import { cubicIn } from "svelte/easing";
 import { cubicOut } from "svelte/easing";
 import { onMount } from "svelte";
 import { page } from "$app/stores";
+import Loader from "$lib/components/loader.svelte";
 
 export let data;
 
@@ -62,7 +63,9 @@ onMount(() => {
     class="loading-screen"
     in:fade={{ duration: 300, easing: cubicIn }}
     out:fade={{ duration: 300, easing: cubicOut }}
-  />
+  >
+    <Loader />
+  </div>
 {/if}
 
 <Nav {...data.navigation} />

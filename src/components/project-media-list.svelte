@@ -1,17 +1,10 @@
 <script>
 import Swiper from "swiper";
-import {
-  Autoplay,
-  Pagination,
-  EffectFade,
-  Navigation,
-  A11y,
-} from "swiper/modules";
+import { Navigation, A11y } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { urlFor } from "$lib/sanity";
 import { onMount } from "svelte";
-import { compute_rest_props } from "svelte/internal";
 
 export let media;
 export let mediaWrapper;
@@ -67,6 +60,13 @@ onMount(() => {
           <div class="swiper-pagination"></div>
         </div>
       `;
+
+        let latestImages = imagesWrapper.querySelectorAll("img");
+        latestImages.forEach((elem, index) => {
+          elem.style.opacity = 0;
+          elem.style.transitionDelay = index * 0.1 + "s";
+          elem.removeAttribute("loading");
+        });
       },
 
       setUpMediaQueries(pMediaQueries, pDisableOn) {
@@ -84,13 +84,6 @@ onMount(() => {
         });
       },
 
-      loadImages() {
-        const event = new Event("load-media");
-        setTimeout(() => {
-          this.container.dispatchEvent(event);
-          this.container.style.opacity = 1;
-        }, 200);
-      },
       resetOriginalHtml() {
         // Remove current children
         while (imagesWrapper.firstChild) {
@@ -133,7 +126,6 @@ onMount(() => {
         if (window.innerWidth < 900) {
           this.setUpHtml();
           this.initSwiper();
-          this.loadImages();
         }
 
         this.setUpMediaQueries(pMediaQueries, pDisableOn);
@@ -154,15 +146,13 @@ onMount(() => {
         this.imagesHaveBeenLoaded = false;
         this.container = pWrapper.closest("[data-project-media-container]");
         this.loader = this.container.querySelector("[data-loader]");
-        this.images = this.container.querySelectorAll("img");
-        this.totalImages = this.images.length;
-
+        this.images, this.totalImages;
         this.loader.style.opacity = 0;
-
-        this.resetAnimation();
 
         this.container.addEventListener("load-media", (event) => {
           this.loader.style.opacity = 1;
+          this.images = this.container.querySelectorAll("img");
+          this.totalImages = this.images.length;
 
           if (this.imagesHaveBeenLoaded) {
             setTimeout(() => {
@@ -183,6 +173,7 @@ onMount(() => {
         });
 
         this.container.addEventListener("closed-drawer", (event) => {
+          this.container.classList.remove("is-visible");
           this.resetAnimation();
         });
       },

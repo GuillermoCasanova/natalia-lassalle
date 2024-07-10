@@ -1,6 +1,6 @@
 <script>
 import { PortableText } from "@portabletext/svelte";
-import Loader from "../loader.svelte";
+import Loader from "$lib/components/loader.svelte";
 import ProjectMedia from "../project-media-list.svelte";
 import ThumbnailsContainer from "../thumbnails-container.svelte";
 import RichText from "../rich-text.svelte";
@@ -98,13 +98,12 @@ onMount(() => {
     const mediaContainer = detailsSelector.querySelector(
       "[data-project-media-container]"
     );
+    const event = new Event("closed-drawer");
 
     activeDrawer = null;
-
     projectContentContainer.style.height = 0;
     projectContentContainer.style.opacity = 0;
-    mediaContainer.style.opacity = 0;
-    const event = new Event("closed-drawer");
+
     mediaContainer.dispatchEvent(event);
 
     pElem.querySelector("summary").setAttribute("aria-expanded", false);
@@ -199,7 +198,7 @@ onMount(() => {
       elem
         .querySelectorAll("[data-project-media-container]")
         .forEach((elem) => {
-          elem.style.opacity = 0;
+          elem.classList.remove("is-visible");
         });
     });
 
@@ -233,10 +232,7 @@ onMount(() => {
     );
     const event = new Event("load-media");
     mediaContainer.dispatchEvent(event);
-
-    setTimeout(() => {
-      mediaContainer.style.opacity = 1;
-    }, 20);
+    mediaContainer.classList.add("is-visible");
   };
 
   // Add an event listener for the popstate event
@@ -271,7 +267,7 @@ onMount(() => {
           <details>
             <summary
               aria-expanded="false"
-              aria-label="Open FAQ answer for question {index}"
+              aria-label="Open to view project info for {project.name}"
               data-id="project-{index}"
               data-handle={project.handle.current}
               data-thumb-image={getThumbURL(project.project_media)}
@@ -487,11 +483,12 @@ summary::marker {
   background-color: black;
   color: white;
   position: relative;
+  opacity: 1;
 }
 
 @media screen and (min-width: 900px) {
   .project-media {
-    width: 40%;
+    width: 45%;
     background-color: black;
     position: fixed;
     right: 0;
@@ -503,12 +500,11 @@ summary::marker {
     transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     scrollbar-color: white black;
     scrollbar-width: thin;
+    opacity: 0;
   }
-}
 
-@media screen and (min-width: 1600px) {
-  .project-media {
-    width: 45%;
+  :global(.project-media.is-visible) {
+    opacity: 1 !important;
   }
 }
 
@@ -602,7 +598,7 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1200px) {
   .project-publish-date {
     font-size: var(--h6);
   }
@@ -632,7 +628,7 @@ summary::marker {
   }
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1200px) {
   .project-name {
     font-size: var(--h6);
   }
@@ -729,7 +725,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1200px) {
   .project-summary-about {
     font-size: var(--h5);
   }
@@ -765,7 +761,7 @@ h1 {
   margin-bottom: var(--level5);
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1200px) {
   .project-summary-credits {
     font-size: var(--h5);
   }
@@ -785,7 +781,7 @@ h1 {
   }
 }
 
-/* @media screen and (min-width: 1600px) {
+/* @media screen and (min-width: 1200px) {
   .credit {
     flex-direction: column;
     gap: 0;
@@ -809,7 +805,7 @@ h1 {
   font-weight: normal;
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1200px) {
   .project-summary-main {
     width: 100%;
     line-height: 1.5;
@@ -843,7 +839,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1200px) {
   .project-preview-videos__item {
     width: 45%;
   }
