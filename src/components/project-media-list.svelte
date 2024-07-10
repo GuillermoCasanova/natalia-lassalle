@@ -148,6 +148,7 @@ onMount(() => {
         this.loader = this.container.querySelector("[data-loader]");
         this.images, this.totalImages;
         this.loader.style.opacity = 0;
+        this.resetAnimation();
 
         this.container.addEventListener("load-media", (event) => {
           this.loader.style.opacity = 1;

@@ -1,9 +1,8 @@
 <script>
-import { trapFocus, removeTrapFocus } from '$lib/trapFocus';
-import { page } from '$app/stores';
-import ModalTrigger from './modal-trigger.svelte';
-import { onMount } from 'svelte';
-
+import { trapFocus, removeTrapFocus } from "$lib/trapFocus";
+import { page } from "$app/stores";
+import ModalTrigger from "./modal-trigger.svelte";
+import { onMount } from "svelte";
 
 export let main_nav;
 
@@ -17,12 +16,11 @@ $: {
   isHomePage = currentPage.length == 1 ? true : false;
 }
 
-
 //
 // Menu Drawer JS
 //
 let navIsOpen = false;
-let toggleText = 'Open Menu';
+let toggleText = "Open Menu";
 let drawerMenuContainer;
 let menuDrawerToggle;
 let showNavItems = false;
@@ -52,7 +50,7 @@ let openMenuDrawer = function (event, elementToFocus = false) {
   //   document.querySelector('header').clientHeight + 1 + 'px';
 
   setTimeout(() => {
-    showNavItems = true
+    showNavItems = true;
   }, 100);
 
   trapFocus(elementToFocus);
@@ -68,14 +66,14 @@ let closeMenuDrawer = function (event, elementToFocus = false) {
 };
 
 let onKeyUp = (event) => {
-  if (event.code.toUpperCase() !== 'ESCAPE') return;
+  if (event.code.toUpperCase() !== "ESCAPE") return;
 
-  const openDetailsElement = event.target.closest('details[open]');
+  const openDetailsElement = event.target.closest("details[open]");
   if (!openDetailsElement) return;
 
   openDetailsElement === drawerMenuContainer
     ? closeMenuDrawer(event, menuDrawerToggle)
-    : false
+    : false;
 };
 
 let menuDrawerCloseAnim = function (pDetailsElement) {
@@ -91,11 +89,11 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
     if (elapsedTime < 400) {
       window.requestAnimationFrame(handleAnimation);
     } else {
-      pDetailsElement.removeAttribute('open');
-      if (pDetailsElement.closest('details[open]')) {
+      pDetailsElement.removeAttribute("open");
+      if (pDetailsElement.closest("details[open]")) {
         trapFocus(
-          pDetailsElement.closest('details[open]'),
-          pDetailsElement.querySelector('summary')
+          pDetailsElement.closest("details[open]"),
+          pDetailsElement.querySelector("summary")
         );
       }
     }
@@ -103,14 +101,16 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
 
   window.requestAnimationFrame(handleAnimation);
 };
-
-
 </script>
 
-<header bind:this={container} class:menu-opening={navIsOpen} class:is-transparent={isHomePage}>
+<header
+  bind:this={container}
+  class:menu-opening={navIsOpen}
+  class:is-transparent={isHomePage}
+>
   <div class="header__inner">
     <div class="header__logo">
-      {#if pathName == '/'}
+      {#if pathName == "/"}
         <a
           href="/"
           title="Natalia Lassalle Morillo home"
@@ -187,41 +187,40 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                     class="menu-drawer__item"
                     style="transition-delay: {0.1 * index + 's'}"
                   >
-                    {#if navItem.navigationItemUrl.linkType == 'external'}
+                    {#if navItem.navigationItemUrl.linkType == "external"}
                       <a
                         on:click={closeMenuDrawer}
                         class="menu-drawer__link"
                         href={navItem.navigationItemUrl.href}
                         target={navItem.navigationItemUrl.blank
-                          ? '_blank'
+                          ? "_blank"
                           : null}
                         rel="external"
                         title="Go to external link at {navItem.navigationItemUrl
                           .href}"
-                         
                       >
-                      
                         {navItem.text}
                       </a>
                     {/if}
 
-                    {#if navItem.navigationItemUrl.linkType == 'internal'}
+                    {#if navItem.navigationItemUrl.linkType == "internal"}
                       <a
                         data-sveltekit-noscroll
                         on:click={closeMenuDrawer}
                         class="menu-drawer__link"
-                        href="{navItem.navigationItemUrl.internalLink.handle
-                          .current}"
+                        href={navItem.navigationItemUrl.internalLink.handle
+                          .current}
                         rel="internal"
                         title="Go to {navItem.text.toLowerCase()} page"
-                        class:is-active={pathName == navItem.navigationItemUrl.href }
+                        class:is-active={pathName ==
+                          navItem.navigationItemUrl.href}
                       >
                         {navItem.text}
                       </a>
                     {/if}
 
-                    {#if navItem.navigationItemUrl.linkType == 'anchor'}
-                      {#if 'contact us'.indexOf(navItem.text.toLowerCase()) >= 0}
+                    {#if navItem.navigationItemUrl.linkType == "anchor"}
+                      {#if "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
                         <ModalTrigger
                           bind:buttonText={navItem.text}
                           modalId="contact-modal"
@@ -258,22 +257,21 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                 class="menu-list__item"
                 style="transition-delay: {0.1 * index + 's'}"
               >
-                {#if navItem.navigationItemUrl.linkType == 'external'}
+                {#if navItem.navigationItemUrl.linkType == "external"}
                   <a
                     on:click={closeMenuDrawer}
                     class="menu-list__link"
                     href={navItem.navigationItemUrl.href}
-                    target={navItem.navigationItemUrl.blank ? '_blank' : null}
+                    target={navItem.navigationItemUrl.blank ? "_blank" : null}
                     rel="external"
                     title="Go to external link at {navItem.navigationItemUrl
                       .href}"
-
                   >
                     {navItem.text}
                   </a>
                 {/if}
 
-                {#if navItem.navigationItemUrl.linkType == 'internal'}
+                {#if navItem.navigationItemUrl.linkType == "internal"}
                   <a
                     data-sveltekit-noscroll
                     on:click={closeMenuDrawer}
@@ -282,18 +280,20 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                       .current}"
                     rel="internal"
                     title="Go to {navItem.text.toLowerCase()} page"
-                    aria-current={pathName == "/" + navItem.navigationItemUrl.internalLink.handle
-                    .current ? 'page' : false || null}
-                    class:is-active={pathName == "/" + navItem.navigationItemUrl.internalLink.handle
-                      .current }
-
+                    aria-current={pathName ==
+                    "/" + navItem.navigationItemUrl.internalLink.handle.current
+                      ? "page"
+                      : false || null}
+                    class:is-active={pathName ==
+                      "/" +
+                        navItem.navigationItemUrl.internalLink.handle.current}
                   >
                     {navItem.text}
                   </a>
                 {/if}
 
-                {#if navItem.navigationItemUrl.linkType == 'anchor'}
-                  {#if 'contact us'.indexOf(navItem.text.toLowerCase()) >= 0}
+                {#if navItem.navigationItemUrl.linkType == "anchor"}
+                  {#if "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
                     <ModalTrigger
                       bind:buttonText={navItem.text}
                       modalId="contact-modal"
@@ -345,7 +345,7 @@ header.is-transparent {
 
 @media screen and (min-width: 940px) {
   header,
-  header.is-transparent { 
+  header.is-transparent {
     position: relative;
     background-color: var(--secondary-color);
   }
@@ -367,10 +367,10 @@ header.menu-opening {
 
 .header__inner {
   display: grid;
-  grid-template-areas: 'logo navigation';
+  grid-template-areas: "logo navigation";
   grid-template-columns: 2fr 1fr;
   margin-bottom: 0;
-  padding-left: var(--level2); 
+  padding-left: var(--level2);
   padding-right: var(--level2);
   padding-top: var(--level2);
   padding-bottom: var(--level2);
@@ -380,7 +380,7 @@ header.menu-opening {
   .header__inner {
     margin-right: auto;
     margin-left: auto;
-    padding-left: var(--level4); 
+    padding-left: var(--level4);
     padding-right: var(--level4);
     grid-template-columns: 1fr 2fr;
     padding-top: var(--level1);
@@ -406,7 +406,7 @@ header.menu-opening {
 }
 
 :global(header.menu-opening .header__logo svg) {
-  fill: #FFF; 
+  fill: #fff;
 }
 
 .header__logo a {
@@ -426,7 +426,6 @@ header.menu-opening {
   width: 100%;
   margin-bottom: 0;
 }
-
 
 .header__logo__inner svg {
   position: absolute;
@@ -449,7 +448,6 @@ header.menu-opening {
   }
 }
 
-
 .header__menu-drawer {
   grid-area: navigation;
   justify-self: end;
@@ -460,8 +458,6 @@ header.menu-opening {
     display: none;
   }
 }
-
-
 
 /*------------------------------------*\
     	#Menu Drawer  
@@ -504,14 +500,15 @@ header.menu-opening {
 
 .header-menu-drawer {
   position: absolute;
-  width: 100vw;
+  width: 100%;
+  overflow: hidden;
   left: 0;
   right: 0;
   background: black;
   z-index: 0;
   height: 100vh;
   opacity: 0;
-  top: 0; 
+  top: 0;
   will-change: opacity;
 }
 
@@ -549,12 +546,10 @@ header.menu-opening {
   line-height: 1;
 }
 
-
 .menu-drawer__link:hover,
 .menu-drawer__link:focus {
   color: black;
 }
-
 
 :global(button.menu-drawer__link) {
   padding-top: var(--level1);
@@ -568,9 +563,9 @@ header.menu-opening {
 }
 
 :global(.menu-drawer__link):before {
-  content: ' ';
+  content: " ";
   width: 100%;
-  height: 100%; 
+  height: 100%;
   background: white;
   left: 0;
   bottom: 0;
@@ -584,10 +579,6 @@ header.menu-opening {
 :global(.menu-drawer__link):focus:before {
   opacity: 1;
 }
-
-
-
-
 
 /*------------------------------------*\
     	#Menu List 
@@ -641,7 +632,7 @@ header.menu-opening {
 .menu-list__link {
   padding-left: var(--level1);
   padding-right: var(--level1);
-  padding-bottom: .15rem;
+  padding-bottom: 0.15rem;
   font-size: var(--h5);
   position: relative;
   background: transparent;
@@ -651,14 +642,14 @@ header.menu-opening {
 }
 
 :global(.menu-list__link):before {
-  content: ' ';
+  content: " ";
   width: 1.5rem;
-  height: 2px; 
+  height: 2px;
   background: black;
   left: 0;
   bottom: -1px;
-  right: 0; 
-  margin: auto; 
+  right: 0;
+  margin: auto;
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -671,12 +662,8 @@ header.menu-opening {
 }
 
 :global(.menu-list__link)[aria-current]:before {
- opacity: 1;
+  opacity: 1;
 }
-
-
-
-
 
 /*------------------------------------*\
     	#Menu Drawer  Icon
@@ -730,14 +717,20 @@ header.menu-opening {
 
 :global(header.is-transparent .header__menu-icon .header__menu-icon-top-bar),
 :global(header.is-transparent .header__menu-icon .header__menu-icon-middle-bar),
-:global(header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar) {
+:global(
+    header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar
+  ) {
   background-color: white;
 }
 
 @media screen and (min-width: 940px) {
   :global(header.is-transparent .header__menu-icon .header__menu-icon-top-bar),
-  :global(header.is-transparent .header__menu-icon .header__menu-icon-middle-bar),
-  :global(header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar),
+  :global(
+      header.is-transparent .header__menu-icon .header__menu-icon-middle-bar
+    ),
+  :global(
+      header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar
+    ),
   .header__menu-icon .header__menu-icon-top-bar,
   .header__menu-icon .header__menu-icon-middle-bar,
   .header__menu-icon .header__menu-icon-bottom-bar {
@@ -753,21 +746,21 @@ header.menu-opening {
   transform: translateY(0.6rem);
 }
 
-.header__menu-icon[aria-expanded='true'] {
+.header__menu-icon[aria-expanded="true"] {
 }
 
-.header__menu-icon[aria-expanded='true'] .header__menu-icon-middle-bar {
+.header__menu-icon[aria-expanded="true"] .header__menu-icon-middle-bar {
   opacity: 0;
   background: white;
 }
 
-.header__menu-icon[aria-expanded='true'] .header__menu-icon-top-bar {
+.header__menu-icon[aria-expanded="true"] .header__menu-icon-top-bar {
   transform: rotate(45deg);
   top: 0;
   background: white;
 }
 
-.header__menu-icon[aria-expanded='true'] .header__menu-icon-bottom-bar {
+.header__menu-icon[aria-expanded="true"] .header__menu-icon-bottom-bar {
   transform: rotate(-45deg);
   top: 0;
   background: white;
