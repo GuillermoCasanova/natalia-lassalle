@@ -6,6 +6,7 @@ import ThumbnailsContainer from "../thumbnails-container.svelte";
 import RichText from "../rich-text.svelte";
 import { urlFor } from "$lib/sanity";
 import { page } from "$app/stores";
+import { goto } from "$app/navigation";
 
 import { onMount } from "svelte";
 
@@ -13,11 +14,11 @@ export let seo;
 export let projects;
 
 let slug = $page.params.slug;
-let myData = [];
 let thumbnailsContainer;
 let activeThumb;
 let activeThumbInfo;
 let projectIsOpen;
+let workIndexSeo = { ...seo };
 
 if (projects.length > 0) {
   formatDates(projects);
@@ -86,6 +87,11 @@ function formatDates(pProjects) {
   });
 }
 
+function goToWorkHome() {
+  seo = workIndexSeo;
+  goto("/work");
+}
+
 onMount(() => {
   let currentState = history ? history.state : false;
   let activeDrawer = null;
@@ -119,6 +125,9 @@ onMount(() => {
   };
 
   const openDrawer = (pDrawer) => {
+    if (pDrawer == null) {
+      return;
+    }
     const detailsSelector = pDrawer.closest("details");
     const projectContent = detailsSelector.querySelector(
       ".project-summary-content"
@@ -133,6 +142,7 @@ onMount(() => {
       closeDrawer(pDrawer.closest("details"));
       toggleFading(pDrawer.closest("[data-projects-list]"), true);
       projectIsOpen = false;
+      goToWorkHome();
       return;
     }
 
