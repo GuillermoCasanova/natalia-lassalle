@@ -308,6 +308,9 @@ onMount(() => {
   overflow: auto;
   scrollbar-color: black white;
   scrollbar-width: thin;
+  top: -100vh;
+  position: relative;
+  margin-left: 4rem;
 }
 
 /*------------------------------------*\
@@ -392,6 +395,13 @@ onMount(() => {
   padding-top: 2vh;
   font-weight: normal;
   font-family: var(--secondary-font-family);
+}
+
+@media screen and (min-width: 900px) {
+  .desktop-texts-post__summary-text h3 {
+    font-size: 1.5rem;
+    font-family: var(--primary-font-family);
+  }
 }
 
 /*------------------------------------*\
