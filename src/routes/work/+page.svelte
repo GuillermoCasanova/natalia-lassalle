@@ -13,14 +13,14 @@ let seo = data.content.seo;
 <MetaTags
   title={seo.title}
   description={seo.description}
-  canonical="https://www.canonical.ie/"
+  canonical={seo.canonical}
   openGraph={{
-    url: "https://www.url.ie/a",
+    url: seo.canonical,
     title: seo.title,
     description: seo.description,
     images: [
       {
-        url: urlFor(seo.banner_image.asset),
+        url: seo.banner_image.url + "?auto=format&width=1200",
         width: 800,
         height: 600,
         alt: seo.banner_image.alt_text
@@ -36,7 +36,7 @@ let seo = data.content.seo;
     cardType: "summary_large_image",
     title: seo.title,
     description: seo.description,
-    image: urlFor(seo.banner_image.asset),
+    image: seo.banner_image.url + "?auto=format&width=1200",
     imageAlt: seo.banner_image.alt_text
       ? seo.banner_image.alt_text
       : "Missing Alt Text",

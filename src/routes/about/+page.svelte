@@ -3,7 +3,6 @@ import { urlFor } from "$lib/sanity";
 import { MetaTags } from "svelte-meta-tags";
 import { page } from "$app/stores";
 import SectionRichText from "../../components/sections/sctn-rich-text.svelte";
-import SectionProjectsList from "../../components/sections/sctn-projects-list.svelte";
 import SectionExperienceList from "../../components/sections/sctn-experience-list.svelte";
 import FeaturedProjectsSlideshow from "../../components/featured-projects-slideshow.svelte";
 export let data;
@@ -14,14 +13,15 @@ export let seo;
   <MetaTags
     title={$page.data.content.seo.title}
     description={$page.data.content.seo.description}
-    canonical="https://www.canonical.ie/"
+    canonical="https://natalialassallemorillo.com/about"
     openGraph={{
-      url: "https://www.url.ie/a",
+      url: "https://natalialassallemorillo.com/about",
       title: $page.data.content.seo.title,
       description: $page.data.content.seo.description,
       images: [
         {
-          url: urlFor($page.data.content.seo.banner_image.asset),
+          url:
+            $page.data.content.seo.banner_image.url + "?auto=format&width=1200",
           width: 800,
           height: 600,
           alt: $page.data.content.seo.banner_image.alt_text
@@ -37,7 +37,8 @@ export let seo;
       cardType: "summary_large_image",
       title: $page.data.content.seo.title,
       description: $page.data.content.seo.description,
-      image: urlFor($page.data.content.seo.banner_image.asset),
+      image:
+        $page.data.content.seo.banner_image.url + "?auto=format&width=1200",
       imageAlt: $page.data.content.seo.banner_image.alt_text
         ? $page.data.content.seo.banner_image.alt_text
         : "Missing Alt Text",

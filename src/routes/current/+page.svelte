@@ -10,14 +10,15 @@ export let data;
   <MetaTags
     title={$page.data.content.seo.title}
     description={$page.data.content.seo.description}
-    canonical="https://www.canonical.ie/"
+    canonical="https://natalialassallemorillo.com/current"
     openGraph={{
-      url: "https://www.url.ie/a",
+      url: "https://natalialassallemorillo.com/current",
       title: $page.data.content.seo.title,
       description: $page.data.content.seo.description,
       images: [
         {
-          url: urlFor($page.data.content.seo.banner_image.asset),
+          url:
+            $page.data.content.seo.banner_image.url + "?auto=format&width=1200",
           width: 800,
           height: 600,
           alt: $page.data.content.seo.banner_image.alt_text
@@ -33,7 +34,8 @@ export let data;
       cardType: "summary_large_image",
       title: $page.data.content.seo.title,
       description: $page.data.content.seo.description,
-      image: urlFor($page.data.content.seo.banner_image.asset),
+      image:
+        $page.data.content.seo.banner_image.url + "?auto=format&width=1200",
       imageAlt: $page.data.content.seo.banner_image.alt_text
         ? $page.data.content.seo.banner_image.alt_text
         : "Missing Alt Text",

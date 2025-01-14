@@ -26,7 +26,10 @@ if (projects.length > 0) {
 }
 
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
-  seo = pMetaInfo;
+  let newSeo = pMetaInfo;
+  newSeo.canonical =
+    "https://natalialassallemorillo.com/work/" + pProjectHandle;
+  seo = newSeo;
   let url = new URL(window.location.href);
 
   if (pProjectHandle == url.pathname.split("/").filter(Boolean).pop()) {
