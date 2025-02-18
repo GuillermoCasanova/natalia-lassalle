@@ -329,7 +329,7 @@ onMount(() => {
                 <div class="project-summary-content">
                   <div class="project-summary-main">
                     <h2 class="project-summary__headline visually-hidden">
-                      About THe Work
+                      About The Work
                     </h2>
                     <div class="project-summary-about">
                       <RichText text={project.about} />
@@ -351,7 +351,9 @@ onMount(() => {
                   </div>
 
                   <div class="project-summary-credits">
-                    <h2 class="project-summary__headline">Credits</h2>
+                    {#if project.creditsList.length > 0}
+                      <h2 class="project-summary__headline">Credits</h2>
+                    {/if}
                     <ul class="credits-list">
                       {#each project.creditsList as credit}
                         <li class="credit">

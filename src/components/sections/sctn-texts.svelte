@@ -10,7 +10,6 @@ import { urlFor } from "$lib/sanity";
 import { onMount } from "svelte";
 
 export let posts;
-export let section;
 let dateOptions = {
   day: "2-digit",
   year: "numeric",
@@ -51,16 +50,19 @@ onMount(() => {
 
     activeDrawer = null;
 
-    projectContentContainer.style.width = 0;
+    // projectContentContainer.style.width = 0;
     projectContentContainer.style.opacity = 0;
+    detailsSelector.style.width =
+      detailsSelector.querySelector("summary").offsetWidth + "px";
     const event = new Event("closed-drawer");
 
     pElem.querySelector("summary").setAttribute("aria-expanded", false);
-    detailsSelector.style.opacity = 0.5;
 
     setTimeout(() => {
       pElem.removeAttribute("open");
-    }, 1050);
+      console.log("remove open");
+      toggleFading(pElem.closest("[data-articles-list]"));
+    }, 1100);
   };
 
   const toggleDrawer = (event) => {
@@ -79,7 +81,7 @@ onMount(() => {
 
     if (pDrawer.dataset.id == activeDrawer) {
       closeDrawer(pDrawer.closest("details"));
-      toggleFading(pDrawer.closest("[data-articles-list]"), true);
+      // toggleFading(pDrawer.closest("[data-articles-list]"), true);
       projectIsOpen = false;
       return;
     }
@@ -94,11 +96,14 @@ onMount(() => {
       });
 
     pDrawer.closest("details").setAttribute("open", true);
-    toggleFading(pDrawer.closest("[data-articles-list]"));
+
     projectIsOpen = true;
 
-    projectContentContainer.style.width = projectContent.offsetWidth + "px";
+    // projectContentContainer.style.width = projectContent.offsetWidth + "px";
+
     projectContentContainer.style.opacity = 1;
+
+    detailsSelector.style.width = projectContent.offsetWidth + "px";
 
     activeDrawer = pDrawer.dataset.id;
   };
@@ -110,7 +115,7 @@ onMount(() => {
       });
 
       elem.querySelectorAll("[data-details-content]").forEach((elem) => {
-        elem.style.width = 0;
+        // elem.style.width = 0;
         elem.style.opacity = 0;
       });
 
@@ -123,12 +128,14 @@ onMount(() => {
   };
 
   const toggleFading = (pContainer, revealAll = false) => {
-    pContainer.querySelectorAll("details").forEach((element) => {
-      if (!revealAll && element.getAttribute("open") === null) {
-        element.style.opacity = 0.5;
-      } else {
-        element.style.opacity = 1;
-      }
+    setTimeout(() => {
+      pContainer.querySelectorAll("details").forEach((element) => {
+        if (!revealAll && element.getAttribute("open") === null) {
+          element.style.opacity = 0.2;
+        } else {
+          element.style.opacity = 1;
+        }
+      }, 200);
     });
   };
 
@@ -292,6 +299,7 @@ onMount(() => {
 @media screen and (min-width: 900px) {
   .desktop-texts {
     display: flex;
+    height: 100vh;
     margin-left: -1px;
   }
 }
@@ -308,9 +316,7 @@ onMount(() => {
   overflow: auto;
   scrollbar-color: black white;
   scrollbar-width: thin;
-  top: -100vh;
   position: relative;
-  margin-left: 4rem;
 }
 
 /*------------------------------------*\
@@ -325,36 +331,50 @@ onMount(() => {
   border-top: 0;
   overflow: hidden;
 }
+/* 
+.desktop-texts__post:hover,
+.desktop-texts__post:focus {
+  background-color: black;
+  color: white !important;
+} */
+
+.desktop-texts__post:hover details {
+  opacity: 1 !important;
+}
 
 .desktop-texts .desktop-texts__post:last-child {
   border-right: 2px solid black;
 }
 
 @media screen and (min-width: 900px) {
+  [data-details-content] {
+    grid-column: 1;
+  }
   details {
     position: relative;
     width: auto;
     left: 0;
     display: grid;
-    height: 100vh;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr max-content;
+    transition: width 1s ease-in-out;
+    width: 3.5rem;
   }
 
   details:hover {
     opacity: 1 !important;
   }
   .desktop-texts__post summary {
-    position: relative;
-    right: 0;
-    left: auto;
-    grid-column: 2;
+    position: absolute;
+    left: 0;
+    margin-top: 0.5rem;
+    grid-column: 1;
     width: 3.5rem;
     display: flex;
     justify-content: center;
-    padding-top: 2rem;
-    height: 100%;
     transition: all 0.1s ease-in;
+    background-color: white;
+    height: 100vh;
   }
 
   .desktop-texts__post summary:hover {
@@ -363,10 +383,28 @@ onMount(() => {
     color: white !important;
   }
 
-  details[open] summary {
+  /* details[open] summary:after {
+    content: " ";
     cursor: pointer;
     background-color: black !important;
     color: white !important;
+  } */
+
+  details summary:after {
+    content: " ";
+    cursor: pointer;
+    color: white;
+    height: 100vh;
+    position: absolute;
+    width: 3.5rem;
+  }
+
+  details summary:hover:after {
+    background-color: black;
+  }
+
+  details summary:hover .desktop-texts-post__summary-text:before {
+    opacity: 1;
   }
 
   details:after {
@@ -375,9 +413,28 @@ onMount(() => {
   details[open]:after {
     content: "";
     background-color: black;
+    left: 0;
+    right: auto;
+    z-index: 0;
+    width: 3.5rem;
+    position: absolute;
+    height: 100vh;
+  }
+
+  details {
+    height: 100%;
+  }
+
+  details:after {
+    content: " ";
     right: 0;
     z-index: 0;
     width: 3.5rem;
+  }
+
+  details[open] summary {
+    color: white;
+    background-color: black;
   }
 }
 
@@ -387,6 +444,18 @@ onMount(() => {
   text-wrap: nowrap;
   writing-mode: vertical-rl;
   z-index: 2;
+}
+.desktop-texts-post__summary-text:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: -1;
+  width: 4rem;
+  right: -1.2rem;
+  left: 0;
+  opacity: 0;
 }
 
 .desktop-texts-post__summary-text h3 {
@@ -399,7 +468,8 @@ onMount(() => {
 
 @media screen and (min-width: 900px) {
   .desktop-texts-post__summary-text h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    padding-top: 2rem;
     font-family: var(--primary-font-family);
   }
 }
@@ -412,17 +482,22 @@ article {
   padding-bottom: var(--level5);
   margin-bottom: var(--level10);
   border-bottom: 2px solid black;
+  background-color: white;
+  color: black;
 }
 
 @media screen and (min-width: 900px) {
   article {
     width: 105ch;
-    max-width: 66rem;
+    max-width: 68rem;
     padding-left: var(--level6);
     padding-right: var(--level8);
     padding-bottom: 10rem;
     padding-top: var(--level5);
     border-bottom: 0;
+    margin: auto;
+    padding-left: 6rem;
+    background-color: transparent;
   }
 }
 
@@ -435,12 +510,6 @@ article {
   position: relative;
   padding-bottom: 52.6%;
   overflow: hidden;
-}
-
-.post__date {
-  margin-bottom: var(--level2);
-  text-transform: uppercase;
-  font-size: var(--h5);
 }
 
 .post__title {
