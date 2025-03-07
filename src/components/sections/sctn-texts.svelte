@@ -16,6 +16,7 @@ let dateOptions = {
   month: "long",
 };
 
+console.log(posts);
 let projectIsOpen = true;
 
 function formatDates(pTexts) {
@@ -259,11 +260,20 @@ onMount(() => {
                     },
                   }}
                 />
-                <div class="post__author">
-                  Written by: <a href="/texts" rel="author"
-                    >Natalia Lassalle Morillo</a
-                  >
-                </div>
+                {#if post.authors}
+                  <div class="post__author">
+                    Written by:
+                    {#each post.authors as author}
+                      {#if author.website}
+                        <a href={author.website} rel="author" target="_blank"
+                          >{author.name}</a
+                        >
+                      {:else}
+                        <span rel="author">{author.name}</span>
+                      {/if}
+                    {/each}
+                  </div>
+                {/if}
               </div>
             </article>
           </div>

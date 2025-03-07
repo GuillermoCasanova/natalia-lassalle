@@ -38,6 +38,12 @@ export default {
             validation: Rule => Rule.required()
         },
         {
+            name: "authors",
+            title: "Authors",
+            type: "array",
+            of: [{ type: "reference", to: { type: "post_author" } }]
+        },
+        {
             name: "seo",
             title: "Page SEO",
             type: "seo_head"

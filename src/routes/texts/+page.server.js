@@ -14,7 +14,8 @@ export async function load(loadEvent) {
     `;
 
     const posts_request = `*[_type == 'post'  && !(_id in path('drafts.**'))][] {
-        ...
+        ...,
+        authors[]->
     } 
     `;
 
