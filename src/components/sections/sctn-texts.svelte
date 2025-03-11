@@ -8,6 +8,7 @@ import externalLink from "../custom-marks/external-link.svelte";
 import mailtoLink from "../custom-marks/mailto-link.svelte";
 import { urlFor } from "$lib/sanity";
 import { onMount } from "svelte";
+import RichText from "../rich-text.svelte";
 
 export let posts;
 let dateOptions = {
@@ -182,16 +183,7 @@ onMount(() => {
           </div>
         </div>
         <div class="post__body">
-          <PortableText
-            value={post.content}
-            components={{
-              marks: {
-                internalLink: internalLink,
-                externalLink: externalLink,
-                mailtoLink: mailtoLink,
-              },
-            }}
-          />
+          <RichText text={post.content} />
         </div>
       </article>
     {/each}
@@ -247,19 +239,8 @@ onMount(() => {
               </div>
 
               <div class="post__body">
-                <PortableText
-                  value={post.content}
-                  components={{
-                    marks: {
-                      internalLink: internalLink,
-                      externalLink: externalLink,
-                      mailtoLink: mailtoLink,
-                    },
-                    listItem: {
-                      normal: normalList,
-                    },
-                  }}
-                />
+                <RichText text={post.content} />
+
                 {#if post.authors}
                   <div class="post__author">
                     Written by:
