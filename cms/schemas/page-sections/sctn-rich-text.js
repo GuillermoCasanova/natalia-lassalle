@@ -5,12 +5,21 @@ export default {
     description: "Section composed of a richtext.",
     fields: [
         {
-            type: "array", 
-            title: "Text", 
-            name: "text", 
-            of: [{ type: "block"}],
+            type: "string", 
+            title: "Title", 
+            name: "title", 
             validation: Rule => Rule.required()
         },
-
-    ]
+        {
+            type: "richtext", 
+            title: "Rich Text", 
+            name: "about", 
+            validation: Rule => Rule.required()
+          },
+    ],
+    preview: {
+        select: {
+            title: "title"
+        }
+    }
 }
