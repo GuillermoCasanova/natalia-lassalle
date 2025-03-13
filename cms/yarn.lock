@@ -1322,7 +1322,7 @@
     get-random-values-esm "^1.0.0"
     lodash "^4.17.21"
 
-"@sanity/client@^3.3.0", "@sanity/client@^3.3.3":
+"@sanity/client@^3.3.3", "@sanity/client@^3.4.1":
   version "3.4.1"
   resolved "https://registry.npmjs.org/@sanity/client/-/client-3.4.1.tgz"
   integrity sha512-WSvnroCHqboUeyY0nl71vDPKmfurXI0mtqdNDb5u8MW00CAHRyCt1+Sgy39D/g+6R35FYniV31vTSTo3ofim0A==
@@ -3875,6 +3875,11 @@ csstype@^3.0.2:
   version "3.1.1"
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.1.tgz"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
+
+csv-parser@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/csv-parser/-/csv-parser-3.2.0.tgz"
+  integrity sha512-fgKbp+AJbn1h2dcAHKIdKNSSjfp43BZZykXsCjzALjKy80VXQNHPFJ6T9Afwdzoj24aMkq8GwDS7KGcDPpejrA==
 
 cuint@^0.2.2:
   version "0.2.2"

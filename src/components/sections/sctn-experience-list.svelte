@@ -1,6 +1,4 @@
 <script>
-import { onMount } from "svelte";
-
 export let section;
 </script>
 
@@ -8,7 +6,7 @@ export let section;
   <div class="experience-list">
     <div class="experience-list__inner">
       <h2 class="experience-list__headline">{section.title}</h2>
-      {#if section.elements.length > 0}
+      {#if section.elements && section.elements.length > 0}
         <ul>
           {#each section.elements as experience}
             <li class="experience-list__item">
@@ -44,7 +42,7 @@ export let section;
 }
 
 .experience-list__item {
-  margin-bottom: var(--level3);
+  margin-bottom: var(--level2);
   display: grid;
   grid-template-columns: 0.15fr 1fr;
 }
