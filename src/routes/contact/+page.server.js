@@ -16,7 +16,7 @@ export async function load({ params, fetch }) {
             ...,
             _type == "sctn_rich_text" => {
                 ...,
-                about[] {
+                "text": text[] {
                     ...,
                     markDefs[] {
                         ...,
@@ -36,8 +36,7 @@ export async function load({ params, fetch }) {
                 }
             }
         }
-    } 
-    `;
+    }`
 
 
     const content = await client.fetch(page_request, params);

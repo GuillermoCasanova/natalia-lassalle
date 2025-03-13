@@ -16,7 +16,7 @@ export async function load({ params, fetch }) {
             ...,
             _type == "sctn_rich_text" => {
                 ...,
-                about[] {
+                "text": text[] {
                     ...,
                     markDefs[] {
                         ...,

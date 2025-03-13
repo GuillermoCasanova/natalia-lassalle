@@ -5,5 +5,5 @@ export let section;
 </script>
 
 <section class="rich-text">
-  <RichText text={section.about} />
+  <RichText text={section.text} />
 </section>
