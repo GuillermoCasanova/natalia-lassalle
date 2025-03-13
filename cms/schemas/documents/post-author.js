@@ -1,9 +1,11 @@
-// work_credit.js
+
+import { FiUser } from 'react-icons/fi';
 
 export default {
     name: 'post_author',
     title: 'Post Author',
     type: 'document',
+    icon: FiUser,
     fields: [
       {
         name: 'name',
