@@ -13,7 +13,7 @@ export default {
         {
             type: "richtext", 
             title: "Rich Text", 
-            name: "about", 
+            name: "text", 
             validation: Rule => Rule.required()
           },
     ],
