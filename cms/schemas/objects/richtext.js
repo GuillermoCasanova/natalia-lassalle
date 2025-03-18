@@ -26,7 +26,8 @@ export default {
                                 name: 'page', 
                                 type: 'reference', 
                                 to: [
-                                    {type: "page"}
+                                    {type: "page"},
+                                    {type: "project"}
                                 ]
                             }
                         ]

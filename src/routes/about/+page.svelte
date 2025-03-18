@@ -1,5 +1,4 @@
 <script>
-import { urlFor } from "$lib/sanity";
 import { MetaTags } from "svelte-meta-tags";
 import { page } from "$app/stores";
 import SectionRichText from "../../components/sections/sctn-rich-text.svelte";
@@ -7,11 +6,6 @@ import SectionExperienceList from "../../components/sections/sctn-experience-lis
 import FeaturedProjectsSlideshow from "../../components/featured-projects-slideshow.svelte";
 export let data;
 export let seo;
-import { onMount } from "svelte";
-
-onMount(() => {
-  console.log(data);
-});
 </script>
 
 <svelte:head>

@@ -96,6 +96,7 @@ function goToWorkHome() {
 }
 
 onMount(() => {
+  console.log(projects);
   let currentState = history ? history.state : false;
   let activeDrawer = null;
 

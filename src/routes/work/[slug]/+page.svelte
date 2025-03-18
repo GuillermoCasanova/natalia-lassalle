@@ -1,8 +1,6 @@
 <script>
-import Nav from "../../../components/header.svelte";
 import { urlFor } from "$lib/sanity";
 import { MetaTags } from "svelte-meta-tags";
-import { page } from "$app/stores";
 import SectionRichText from "../../../components/sections/sctn-rich-text.svelte";
 import SectionProjectsList from "../../../components/sections/sctn-projects-list.svelte";
 import SectionExperienceList from "../../../components/sections/sctn-experience-list.svelte";
@@ -10,7 +8,12 @@ export let data;
 let seo = data.content.seo;
 
 function getCurrentProject(pHandle) {
-  let projects = data.projects;
+  let projects = data.projects; // Use optional chaining
+
+  if (!projects) {
+    console.error("Projects data is missing");
+    return;
+  }
 
   projects.forEach((project) => {
     if (project.handle.current == data.projHandle) {
@@ -59,11 +62,6 @@ getCurrentProject(data.projHandle);
   <div class="subpage__inner">
     <div class="subpage__left-content is-projects-page" data-left-content>
       <div class="subpage__content-body">
-        <!-- <section class="no-padding">
-						  <div >
-							  <h1>{$page.data.content.page_title}</h1>
-						  </div>
-					  </section> -->
         {#if data.content.page_layout}
           {#each data.content.page_layout as section}
             {#if section._type == "sctn_rich_text"}

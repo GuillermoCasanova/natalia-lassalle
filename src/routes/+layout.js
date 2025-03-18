@@ -40,32 +40,13 @@ export async function load( {url: {pathname}}) {
     }`;
 
 
-    const projects_request  = `*[_type == 'project' && !(_id in path('drafts.**'))][] {
-        ...,
-        "medium" : medium ->{
-            ...
-        },
-        
-        "preview_videos": preview_videos[] {
-            ...,
-            "video_file": video_file.asset->
-        },
-        "creditsList": creditsList[]-> {
-            ...,
-            "workDone": workDone->name 
-        }
-    }
-    `;
-    
 
     const navigation = await client.fetch(mainNavRequest); 
     const footer = await client.fetch(footerRequest); 
-    const projects = await client.fetch(projects_request);
     
     return {
         navigation,
         footer,
-        projects,
         pathname
     };
 }
