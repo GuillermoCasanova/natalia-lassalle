@@ -5,8 +5,8 @@ import {languageFilter} from '@sanity/language-filter'
 import {schema} from './schemas'
 
 export default defineConfig({
-  name: 'natalia-cms',
-  title: 'natalia-website',
+  name: 'default',
+  title: 'Natalia Lassalle',
   projectId: '43ajij5z',
   dataset: 'production',
   plugins: [

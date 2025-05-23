@@ -16,6 +16,7 @@ async function migrateLocalization() {
 
     // Process each project
     for (const project of projects) {
+      // Create localized versions of the fields
       const updates = {
         name: {
           en: project.name || '',
@@ -25,7 +26,10 @@ async function migrateLocalization() {
           en: project.about || '',
           es: project.about || ''
         },
-        credits: project.creditsList || [], // Keep the original creditsList structure
+        credits: {
+          en: project.credits || '',
+          es: project.credits || ''
+        },
         creditsList: project.creditsList || [] // Keep the original creditsList structure
       }
 

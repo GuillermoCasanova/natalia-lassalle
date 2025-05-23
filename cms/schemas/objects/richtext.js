@@ -16,10 +16,8 @@ export default {
                         name: "internalLink", 
                         type: "object", 
                         title: "Internal Link", 
-                        blockEditor: {
-                            icon: FaPaperclip,
-                            render: InternalLinkRenderer
-                        }, 
+                        icon: FaPaperclip,
+                        component: InternalLinkRenderer,
                         fields: [
                             {
                                 name: 'page', 
@@ -35,10 +33,8 @@ export default {
                         name: "externalLink", 
                         type: "object", 
                         title: "External Link", 
-                        blockEditor: {
-                            icon: FaExternalLinkAlt,
-                            render: ExternalLinkRender
-                        }, 
+                        icon: FaExternalLinkAlt,
+                        component: ExternalLinkRender,
                         fields: [
                             {
                                 title: "URL", 
@@ -61,10 +57,8 @@ export default {
                         name: "mailtoLink", 
                         type: "object", 
                         title: "Mailto: Link", 
-                        blockEditor: {
-                            icon: FaRegEnvelope,
-                            render: InternalLinkRenderer
-                        }, 
+                        icon: FaRegEnvelope,
+                        component: InternalLinkRenderer,
                         fields: [
                             {
                                 title: "email", 

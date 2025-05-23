@@ -270,6 +270,10 @@ onMount(() => {
   });
 
   initDrawers(document.querySelector("[data-projects-list]"));
+
+  onMount(() => {
+    console.log(projects);
+  });
 });
 </script>
 
@@ -437,9 +441,9 @@ summary:hover {
     border-top: var(--border-thickness) solid black;
   }
   /* 
-  details[open] .project-media {
-    opacity: 1;
-  } */
+    details[open] .project-media {
+      opacity: 1;
+    } */
 }
 
 @media screen and (min-width: 900px) {
@@ -456,8 +460,8 @@ summary::marker {
 }
 
 /*------------------------------------*\
-    #Work Container
-\*------------------------------------*/
+      #Work Container
+  \*------------------------------------*/
 
 .projects-archive-container {
   position: relative;
@@ -492,8 +496,8 @@ summary::marker {
 }
 
 /*------------------------------------*\
-    #Project Media
-\*------------------------------------*/
+      #Project Media
+  \*------------------------------------*/
 
 .project-media {
   background-color: black;
@@ -529,8 +533,8 @@ summary::marker {
 }
 
 /*------------------------------------*\
-    #Project Line Item
-\*------------------------------------*/
+      #Project Line Item
+  \*------------------------------------*/
 
 .project-line-item {
   padding: 0;
@@ -545,8 +549,8 @@ summary::marker {
 }
 
 /*------------------------------------*\
-    #Project Summary
-\*------------------------------------*/
+      #Project Summary
+  \*------------------------------------*/
 
 .project-summary-header {
   display: grid;
@@ -798,11 +802,11 @@ h1 {
 }
 
 /* @media screen and (min-width: 1200px) {
-  .credit {
-    flex-direction: column;
-    gap: 0;
-  }
-} */
+    .credit {
+      flex-direction: column;
+      gap: 0;
+    }
+  } */
 
 .credit__work-done {
   font-weight: bold;

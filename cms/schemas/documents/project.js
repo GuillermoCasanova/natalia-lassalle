@@ -8,8 +8,22 @@ export default {
     fields: [
         {
             name: "name", 
-            type: "string", 
+            type: "object", 
             title: 'Name',
+            fields: [
+                {
+                    name: "en",
+                    type: "string",
+                    title: "English",
+                    validation: Rule => Rule.required()
+                },
+                {
+                    name: "es",
+                    type: "string",
+                    title: "Spanish",
+                    validation: Rule => Rule.required()
+                }
+            ],
             validation: Rule => Rule.required()
         },
         {
@@ -17,7 +31,7 @@ export default {
             type: "slug", 
             title: 'Project Handle',
             options: {
-                source: "name",
+                source: "name.en",
                 maxLength: 100
             }
         },
@@ -40,9 +54,23 @@ export default {
             description: 'Mark as featured project, this will place it at the top of the list it is in. Only one can be featured at a time.'
         },
         {
-            type: "richtext", 
+            type: "object", 
             title: "About The Work", 
-            name: "about", 
+            name: "about",
+            fields: [
+                {
+                    name: "en",
+                    type: "richtext",
+                    title: "English",
+                    validation: Rule => Rule.required()
+                },
+                {
+                    name: "es",
+                    type: "richtext",
+                    title: "Spanish",
+                    validation: Rule => Rule.required()
+                }
+            ],
             validation: Rule => Rule.required()
         },
         {
@@ -54,11 +82,23 @@ export default {
             },
             validation: Rule => Rule.required()
         },
-        {
-            type: "richtext", 
-            title: "Credits", 
-            name: "credits"
-        },
+        // {
+        //     type: "object", 
+        //     title: "Credits", 
+        //     name: "credits",
+        //     fields: [
+        //         {
+        //             name: "en",
+        //             type: "richtext",
+        //             title: "English"
+        //         },
+        //         {
+        //             name: "es",
+        //             type: "richtext",
+        //             title: "Spanish"
+        //         }
+        //     ]
+        // },
         {
             name: 'creditsList',
             title: 'Credits',
@@ -95,7 +135,7 @@ export default {
     ],
     preview: {
         select: {
-            title: 'name',
+            title: 'name.en',
             media: 'thumbnail'
         }
     }

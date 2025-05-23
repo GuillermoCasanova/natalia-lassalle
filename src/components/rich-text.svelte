@@ -1,22 +1,22 @@
-
-
 <script>
-    import {PortableText} from '@portabletext/svelte';
-	import internalLink from './custom-marks/internal-link.svelte';
-	import externalLink from './custom-marks/external-link.svelte';
-	import mailtoLink from './custom-marks/mailto-link.svelte';
+import { PortableText } from "@portabletext/svelte";
+import { page } from "$app/stores";
+import InternalLinkRenderer from "./custom-marks/internal-link.svelte";
+import ExternalLinkRenderer from "./custom-marks/external-link.svelte";
+import MailtoLinkRenderer from "./custom-marks/mailto-link.svelte";
 
-    export let text;
+export let text;
+let language = $page.data.language || "en";
+
+const components = {
+  marks: {
+    internalLink: InternalLinkRenderer,
+    link: ExternalLinkRenderer,
+    mailtoLink: MailtoLinkRenderer,
+  },
+};
 </script>
 
-
-<PortableText
-value={text}
-components={{
-  marks: {
-    internalLink: internalLink,
-    externalLink: externalLink,
-    mailtoLink: mailtoLink,
-  }
-}}
-/>
+{#if text}
+  <PortableText value={text} {components} />
+{/if}

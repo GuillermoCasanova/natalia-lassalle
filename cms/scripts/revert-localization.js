@@ -10,17 +10,30 @@ const client = createClient({
 
 async function revertLocalization() {
   try {
-    // Fetch all projects
-    const projects = await client.fetch('*[_type == "project"]')
-    console.log(`Found ${projects.length} projects to revert`)
+    // First, fetch the current live data from Sanity
+    const liveProjects = await client.fetch(`
+      *[_type == "project"] {
+        _id,
+        name,
+        about,
+        credits,
+        "creditsList": creditsList[] {
+          _type,
+          _ref,
+          _key
+        }
+      }
+    `)
+    console.log(`Found ${liveProjects.length} projects to revert`)
 
     // Process each project
-    for (const project of projects) {
+    for (const project of liveProjects) {
+      // Keep the original structure exactly as it was
       const updates = {
-        name: project.name?.en || project.name || '',
-        about: project.about?.en || project.about || '',
-        credits: project.creditsList || [], // Keep the original creditsList structure
-        creditsList: project.creditsList || [] // Keep the original creditsList structure
+        name: project.name || '',
+        about: project.about || '',
+        credits: project.credits || [],
+        creditsList: project.creditsList || []
       }
 
       // Update the project
@@ -29,7 +42,7 @@ async function revertLocalization() {
         .set(updates)
         .commit()
 
-      console.log(`Reverted project: ${project.name?.en || project.name}`)
+      console.log(`Reverted project: ${project.name}`)
     }
 
     console.log('Revert completed successfully')

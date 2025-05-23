@@ -1,9 +1,9 @@
-/** @type {import('./$types').PageLoad} */
+/** @type {import('./$types').PageServerLoad} */
 import { client } from '$lib/sanity';
 
-export async function load(loadEvent) {
-    console.log("Work index page server running");
-    const {params, fetch, parent} = loadEvent; 
+export async function load({ params, url }) {
+    // Get language from query param, route param, or default to 'en'
+    const language = url.searchParams.get('lang') || 'en';
 
     const page_request = `*[_type == 'page' && handle.current == 'work'][0] {
         ...,
@@ -36,7 +36,8 @@ export async function load(loadEvent) {
 
     const projects_request = `*[_type == 'project' && !(_id in path('drafts.**'))] {
         ...,
-        about[] {
+        "name": coalesce(name.${language}, name.en),
+        "about": coalesce(about.${language}, about.en)[] {
             ...,
             markDefs[] {
                 ...,
@@ -63,8 +64,11 @@ export async function load(loadEvent) {
             "video_file": video_file.asset->
         },
         "creditsList": creditsList[]-> {
-            ...,
-            "workDone": workDone->name 
+            _type,
+            _ref,
+            _key,
+            "workDone": coalesce(workDone->name.${language}, workDone->name.en),
+            "name": coalesce(name.${language}, name.en)
         }
     }`;
 
