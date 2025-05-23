@@ -3,8 +3,10 @@ import { client } from '$lib/sanity';
 
 export async function load(loadEvent) {
     console.log("Work slug page server running");
-    const {params, fetch, parent} = loadEvent; 
+    const {params, fetch, parent, url} = loadEvent; 
     const parentData = await parent();
+        // Get language from query param, route param, or default to 'en'
+        const language = url.searchParams.get('lang') || 'en';
     console.log("Parent data in slug:", parentData);
 
     const projHandle = params.slug.toString(); 
@@ -28,7 +30,8 @@ export async function load(loadEvent) {
 
     const projects_request = `*[_type == 'project' && !(_id in path('drafts.**'))] {
         ...,
-        about[] {
+        "name": coalesce(name.${language}, name.en),
+        "about": coalesce(about.${language}, about.en)[] {
             ...,
             markDefs[] {
                 ...,
@@ -55,8 +58,11 @@ export async function load(loadEvent) {
             "video_file": video_file.asset->
         },
         "creditsList": creditsList[]-> {
-            ...,
-            "workDone": workDone->name 
+            _type,
+            _ref,
+            _key,
+            "workDone": workDone->name,
+            "name": name
         }
     }`;
 

@@ -64,11 +64,11 @@ export async function load({ params, url }) {
             "video_file": video_file.asset->
         },
         "creditsList": creditsList[]-> {
-            _type,
+          _type,
             _ref,
             _key,
-            "workDone": coalesce(workDone->name.${language}, workDone->name.en),
-            "name": coalesce(name.${language}, name.en)
+            "workDone": workDone->name,
+            "name": name
         }
     }`;
 
