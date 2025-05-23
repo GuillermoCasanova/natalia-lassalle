@@ -1,6 +1,7 @@
+
 import {FaPaperclip, FaRegEnvelope, FaExternalLinkAlt,  FaStickyNote, FaCode} from 'react-icons/fa';
-import InternalLinkRenderer from '../renderers/InternalLinkRenderer.jsx'; 
-import ExternalLinkRender from '../renderers/ExternalLinkRenderer.jsx'; 
+import InternalLinkRenderer from '../renderers/InternalLinkRenderer'; 
+import ExternalLinkRender from '../renderers/ExternalLinkRenderer'; 
 
 
 export default {
@@ -71,7 +72,7 @@ export default {
                                 name: "mailto", 
                                 type: "string",
                                 validation: (Rule) =>
-                                    Rule.regex(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).warning("Please enter a valid email address.")
+                                    Rule.regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).warning("Please enter a valid email address.")
                             }
                         ]
                     }

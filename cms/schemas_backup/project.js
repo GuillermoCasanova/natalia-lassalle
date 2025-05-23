@@ -1,3 +1,4 @@
+
 import sanityClient from '@sanity/client';
 
 
@@ -18,12 +19,6 @@ export default   {
     type: 'document', 
     title: 'Projects',
     icon: FiBriefcase, 
-    preview: {
-        select: {
-            title: 'name',
-            media: 'thumbnail'
-        }
-    },
     fields: [
 
       {

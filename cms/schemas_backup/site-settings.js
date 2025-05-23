@@ -39,6 +39,6 @@ export default {
             type: 'reference',
             to: {type: 'navigation'},
             validation: Rule => Rule.required()
-        }
+          }
     ]
-} 
+}

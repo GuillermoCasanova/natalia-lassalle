@@ -1,5 +1,5 @@
 {
-  "name": "Natalia Website",
+  "name": "natalia-website",
   "version": "1.0.0",
   "scripts": {
     "start": "node build/index.js",
@@ -31,8 +31,10 @@
   "type": "module",
   "dependencies": {
     "@portabletext/svelte": "^2.0.0",
+    "@sanity/cli": "^3.89.0",
     "@sanity/client": "^3.4.1",
     "@sanity/image-url": "^1.0.1",
+    "@sanity/vision": "^3.89.0",
     "csv-parser": "^3.2.0",
     "datejs": "^1.0.0-rc3",
     "dotenv": "^16.0.1",
@@ -42,6 +44,8 @@
     "gsap": "^3.12.5",
     "nodemailer": "^6.7.8",
     "normalize.css": "^8.0.1",
+    "rxjs": "^7.8.2",
+    "sanity": "^3.89.0",
     "swiper": "^11.1.4"
   }
 }
