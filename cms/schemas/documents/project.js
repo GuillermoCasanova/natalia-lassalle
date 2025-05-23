@@ -1,108 +1,102 @@
+import {FiBriefcase} from 'react-icons/fi'
+
 export default {
     name: 'project',
     title: 'Project',
     type: 'document',
+    icon: FiBriefcase,
     fields: [
         {
-            name: 'title',
-            title: 'Title',
-            type: 'object',
-            fields: [
-                {
-                    name: 'en',
-                    title: 'English',
-                    type: 'string'
-                },
-                {
-                    name: 'es',
-                    title: 'Spanish',
-                    type: 'string'
-                }
-            ],
+            name: "name", 
+            type: "string", 
+            title: 'Name',
             validation: Rule => Rule.required()
         },
         {
-            name: 'description',
-            title: 'Description',
-            type: 'object',
-            fields: [
-                {
-                    name: 'en',
-                    title: 'English',
-                    type: 'text'
-                },
-                {
-                    name: 'es',
-                    title: 'Spanish',
-                    type: 'text'
-                }
-            ],
-            validation: Rule => Rule.required()
-        },
-        {
-            name: 'slug',
-            title: 'Slug',
-            type: 'slug',
+            name: "handle", 
+            type: "slug", 
+            title: 'Project Handle',
             options: {
-                source: 'title.en',
-                maxLength: 96
+                source: "name",
+                maxLength: 100
+            }
+        },
+        {
+            name: "seo",
+            type: "seo_head",
+            title: "Page SEO"
+        },
+        {
+            name: "thumbnail",
+            type: "default_image", 
+            title: "Thumbnail",
+            description: "An image used for the project thumbnail. Image is cropped to be 1x1 in most devices.",
+            validation: Rule => Rule.required()
+        },
+        {
+            name: 'featured',
+            title: 'Featured Project',
+            type: 'boolean',
+            description: 'Mark as featured project, this will place it at the top of the list it is in. Only one can be featured at a time.'
+        },
+        {
+            type: "richtext", 
+            title: "About The Work", 
+            name: "about", 
+            validation: Rule => Rule.required()
+        },
+        {
+            type: "date", 
+            title: "Date Released", 
+            name: "date_released", 
+            options: {
+                dateFormat: "YYYY"
             },
             validation: Rule => Rule.required()
         },
         {
-            name: 'mainImage',
-            title: 'Main image',
-            type: 'image',
-            options: {
-                hotspot: true
-            }
+            type: "richtext", 
+            title: "Credits", 
+            name: "credits"
         },
         {
-            name: 'categories',
-            title: 'Categories',
+            name: 'creditsList',
+            title: 'Credits',
             type: 'array',
-            of: [{type: 'reference', to: {type: 'work_type'}}]
-        },
-        {
-            name: 'publishedAt',
-            title: 'Published at',
-            type: 'datetime'
-        },
-        {
-            name: 'body',
-            title: 'Body',
-            type: 'object',
-            fields: [
+            of: [
                 {
-                    name: 'en',
-                    title: 'English',
-                    type: 'array',
-                    of: [
-                        {type: 'block'},
-                        {type: 'image'},
-                        {type: 'video'},
-                        {type: 'iframe'}
-                    ]
-                },
-                {
-                    name: 'es',
-                    title: 'Spanish',
-                    type: 'array',
-                    of: [
-                        {type: 'block'},
-                        {type: 'image'},
-                        {type: 'video'},
-                        {type: 'iframe'}
-                    ]
+                    type: 'reference',
+                    to: [{ type: 'work_credit' }]
                 }
-            ]
+            ],
+            description: 'A list of credit mentions',
+            validation: Rule => Rule.required()
+        },
+        {
+            name: "preview_videos", 
+            type: "array", 
+            title: "Preview Videos", 
+            of: [{type: "iframe"}]
+        },
+        {
+            name: "medium", 
+            type: "reference", 
+            title: "Medium", 
+            to: [{type: 'tag'}],
+            validation: Rule => Rule.required()
+        },
+        {
+            name: "project_media", 
+            type: "array", 
+            title: "Media Images", 
+            of: [{type: 'default_image'}, {type: 'image_with_figure'}],
+            validation: Rule => Rule.required()
         }
     ],
     preview: {
         select: {
-            title: 'title.en',
-            author: 'author.name',
-            media: 'mainImage'
+            title: 'name',
+            media: 'thumbnail'
         }
     }
 } 
