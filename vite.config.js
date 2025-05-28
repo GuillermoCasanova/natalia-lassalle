@@ -22,7 +22,7 @@ const config = {
     exclude: ['@sveltejs/kit']
   },
   ssr: {
-    noExternal: ['nodemailer', 'googleapis', 'dotenv']
+    noExternal: ['nodemailer', 'googleapis', 'dotenv', '@sanity/client']
   },
   build: {
     target: 'esnext',
@@ -30,7 +30,6 @@ const config = {
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      external: ['@sanity/client'],
       output: {
         manualChunks: {
           vendor: [
@@ -40,7 +39,8 @@ const config = {
             'svelte/transition',
             'svelte/animate'
           ],
-          email: ['nodemailer', 'googleapis', 'dotenv']
+          email: ['nodemailer', 'googleapis', 'dotenv'],
+          sanity: ['@sanity/client', '@sanity/image-url']
         }
       }
     }

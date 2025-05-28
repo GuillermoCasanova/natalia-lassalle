@@ -35,6 +35,7 @@ declare module '$env/static/private' {
 	export const TMPDIR: string;
 	export const npm_config_global_prefix: string;
 	export const TERM_PROGRAM_VERSION: string;
+	export const NODE_OPTIONS: string;
 	export const ZDOTDIR: string;
 	export const CURSOR_TRACE_ID: string;
 	export const ORIGINAL_XDG_CURRENT_DESKTOP: string;
@@ -84,6 +85,7 @@ declare module '$env/static/private' {
 	export const GIT_ASKPASS: string;
 	export const INFOPATH: string;
 	export const HOMEBREW_CELLAR: string;
+	export const npm_config_node_options: string;
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
 	export const COLORTERM: string;
@@ -128,6 +130,7 @@ declare module '$env/dynamic/private' {
 		TMPDIR: string;
 		npm_config_global_prefix: string;
 		TERM_PROGRAM_VERSION: string;
+		NODE_OPTIONS: string;
 		ZDOTDIR: string;
 		CURSOR_TRACE_ID: string;
 		ORIGINAL_XDG_CURRENT_DESKTOP: string;
@@ -177,6 +180,7 @@ declare module '$env/dynamic/private' {
 		GIT_ASKPASS: string;
 		INFOPATH: string;
 		HOMEBREW_CELLAR: string;
+		npm_config_node_options: string;
 		npm_node_execpath: string;
 		npm_config_prefix: string;
 		COLORTERM: string;
