@@ -1,11 +1,1 @@
-import { c as create_ssr_component, s as subscribe, e as escape } from "../../chunks/ssr.js";
-import { p as page } from "../../chunks/stores.js";
-const Error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $page, $$unsubscribe_page;
-  $$unsubscribe_page = subscribe(page, (value) => $page = value);
-  $$unsubscribe_page();
-  return `<h1>${escape($page.status)}</h1> <p>${escape($page.error?.message)}</p>`;
-});
-export {
-  Error as default
-};
+import{c as s,s as r,e}from"../../chunks/vendor.js";import{p as t}from"../../chunks/stores.js";const o=s(((s,o,a,p)=>{let m,n;return n=r(t,(s=>m=s)),n(),`<h1>${e(m.status)}</h1> <p>${e(m.error?.message)}</p>`}));export{o as default};

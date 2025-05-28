@@ -8,6 +8,10 @@
       "_hooks.server.js"
     ]
   },
+  "_email.js": {
+    "file": "chunks/email.js",
+    "name": "email"
+  },
   "_exports.js": {
     "file": "chunks/exports.js",
     "name": "exports"
@@ -16,7 +20,7 @@
     "file": "chunks/featured-projects-slideshow.js",
     "name": "featured-projects-slideshow",
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_sanity.js",
       "_sctn-experience-list.js"
     ],
@@ -28,14 +32,14 @@
     "file": "chunks/hooks.server.js",
     "name": "hooks.server",
     "imports": [
-      "_ssr.js"
+      "_vendor.js"
     ]
   },
   "_loader.js": {
     "file": "chunks/loader.js",
     "name": "loader",
     "imports": [
-      "_ssr.js"
+      "_vendor.js"
     ],
     "css": [
       "_app/immutable/assets/loader.D9AmVt5-.css"
@@ -49,7 +53,7 @@
     "file": "chunks/rich-text.js",
     "name": "rich-text",
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_stores.js"
     ],
     "css": [
@@ -64,7 +68,7 @@
     "file": "chunks/sctn-experience-list.js",
     "name": "sctn-experience-list",
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_rich-text.js"
     ],
     "css": [
@@ -75,7 +79,7 @@
     "file": "chunks/sctn-projects-list.js",
     "name": "sctn-projects-list",
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_loader.js",
       "_sctn-experience-list.js",
       "_sanity.js",
@@ -90,17 +94,17 @@
     "file": "_app/immutable/assets/sctn-projects-list.BTlgs0Lp.css",
     "src": "_sctn-projects-list.svelte_svelte_type_style_lang.js"
   },
-  "_ssr.js": {
-    "file": "chunks/ssr.js",
-    "name": "ssr"
-  },
   "_stores.js": {
     "file": "chunks/stores.js",
     "name": "stores",
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_exports.js"
     ]
+  },
+  "_vendor.js": {
+    "file": "chunks/vendor.js",
+    "name": "vendor"
   },
   "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
@@ -108,7 +112,7 @@
     "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/error.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_stores.js"
     ]
   },
@@ -120,7 +124,7 @@
     "imports": [
       "_hooks.server.js",
       "_exports.js",
-      "_ssr.js"
+      "_vendor.js"
     ]
   },
   "src/routes/+layout.js": {
@@ -138,7 +142,7 @@
     "src": "src/routes/+layout.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_stores.js",
       "_loader.js"
     ],
@@ -161,7 +165,7 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
@@ -188,7 +192,7 @@
     "src": "src/routes/about/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
@@ -202,7 +206,10 @@
     "file": "entries/endpoints/api/send-mail/_server.js",
     "name": "entries/endpoints/api/send-mail/_server",
     "src": "src/routes/api/send-mail/+server.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_email.js"
+    ]
   },
   "src/routes/contact/+page.server.js": {
     "file": "entries/pages/contact/_page.server.js",
@@ -219,7 +226,7 @@
     "src": "src/routes/contact/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_sanity.js",
       "_rich-text.js",
       "_stores.js",
@@ -247,7 +254,7 @@
     "src": "src/routes/current/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_sanity.js",
       "_rich-text.js",
       "_stores.js",
@@ -270,7 +277,7 @@
     "src": "src/routes/cv/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_sanity.js",
       "_rich-text.js",
       "_stores.js",
@@ -296,7 +303,7 @@
     "src": "src/routes/texts/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_rich-text.js",
       "_sanity.js"
     ],
@@ -319,7 +326,7 @@
     "src": "src/routes/work/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_sanity.js",
       "_rich-text.js",
       "_sctn-experience-list.js",
@@ -344,7 +351,7 @@
     "src": "src/routes/work/[slug]/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_vendor.js",
       "_sanity.js",
       "_rich-text.js",
       "_sctn-experience-list.js",

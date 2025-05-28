@@ -49,7 +49,6 @@ declare module '$env/static/private' {
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
-	export const PAGER: string;
 	export const PATH: string;
 	export const npm_package_json: string;
 	export const _: string;
@@ -59,7 +58,6 @@ declare module '$env/static/private' {
 	export const __CFBundleIdentifier: string;
 	export const npm_command: string;
 	export const PWD: string;
-	export const DISABLE_AUTO_UPDATE: string;
 	export const npm_lifecycle_event: string;
 	export const EDITOR: string;
 	export const npm_package_name: string;
@@ -67,6 +65,7 @@ declare module '$env/static/private' {
 	export const npm_config_npm_version: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 	export const XPC_FLAGS: string;
+	export const npm_package_engines_node: string;
 	export const npm_config_node_gyp: string;
 	export const RBENV_SHELL: string;
 	export const npm_package_version: string;
@@ -143,7 +142,6 @@ declare module '$env/dynamic/private' {
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
-		PAGER: string;
 		PATH: string;
 		npm_package_json: string;
 		_: string;
@@ -153,7 +151,6 @@ declare module '$env/dynamic/private' {
 		__CFBundleIdentifier: string;
 		npm_command: string;
 		PWD: string;
-		DISABLE_AUTO_UPDATE: string;
 		npm_lifecycle_event: string;
 		EDITOR: string;
 		npm_package_name: string;
@@ -161,6 +158,7 @@ declare module '$env/dynamic/private' {
 		npm_config_npm_version: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 		XPC_FLAGS: string;
+		npm_package_engines_node: string;
 		npm_config_node_gyp: string;
 		RBENV_SHELL: string;
 		npm_package_version: string;

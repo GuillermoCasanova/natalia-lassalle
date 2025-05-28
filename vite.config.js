@@ -1,6 +1,7 @@
 // vite.config.js
 import { sveltekit } from '@sveltejs/kit/vite';
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import { defineConfig } from 'vite';
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -22,6 +23,26 @@ const config = {
   },
   ssr: {
     noExternal: ['nodemailer', 'googleapis', 'dotenv']
+  },
+  build: {
+    target: 'esnext',
+    minify: 'terser',
+    sourcemap: false,
+    rollupOptions: {
+      external: ['@sanity/client'],
+      output: {
+        manualChunks: {
+          vendor: [
+            'svelte',
+            'svelte/internal',
+            'svelte/store',
+            'svelte/transition',
+            'svelte/animate'
+          ],
+          email: ['nodemailer', 'googleapis', 'dotenv']
+        }
+      }
+    }
   }
 };
 
