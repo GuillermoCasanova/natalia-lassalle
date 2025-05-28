@@ -1,1 +1,0 @@
-import{c as t}from"../../../chunks/sanity.js";async function n({params:n,fetch:e}){return{siteHead:await t.fetch("*[_type == 'site-settings'][0] {\n            seo,\n            analytics\n        }\n        ",n),content:await t.fetch("*[_type == 'page' && handle.current == 'current'][0] {\n        ...,\n        page_layout[]->\n    } \n    ",n)}}export{n as load};

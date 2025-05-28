@@ -1,6 +1,5 @@
 // vite.config.js
 import { sveltekit } from '@sveltejs/kit/vite';
-import basicSsl from '@vitejs/plugin-basic-ssl'
 import { defineConfig } from 'vite';
 
 /** @type {import('vite').UserConfig} */
@@ -9,20 +8,14 @@ const config = {
   server: {
     fs: {
       strict: false
-    },
-    proxy: {
-      '/.well-known/appspecific/com.chrome.devtools.json': {
-        target: 'http://localhost',
-        changeOrigin: true,
-        rewrite: (path) => ''
-      }
     }
   },
   optimizeDeps: {
+    include: ['@sanity/client', '@sanity/image-url'],
     exclude: ['@sveltejs/kit']
   },
   ssr: {
-    noExternal: ['nodemailer', 'googleapis', 'dotenv', '@sanity/client', '@sanity/image-url']
+    noExternal: ['nodemailer', 'googleapis', 'dotenv']
   },
   build: {
     target: 'esnext',
