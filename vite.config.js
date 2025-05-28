@@ -22,7 +22,7 @@ const config = {
     exclude: ['@sveltejs/kit']
   },
   ssr: {
-    noExternal: ['nodemailer', 'googleapis', 'dotenv', '@sanity/client']
+    noExternal: ['nodemailer', 'googleapis', 'dotenv', '@sanity/client', '@sanity/image-url']
   },
   build: {
     target: 'esnext',
@@ -39,8 +39,7 @@ const config = {
             'svelte/transition',
             'svelte/animate'
           ],
-          email: ['nodemailer', 'googleapis', 'dotenv'],
-          sanity: ['@sanity/client', '@sanity/image-url']
+          email: ['nodemailer', 'googleapis', 'dotenv']
         }
       }
     }
