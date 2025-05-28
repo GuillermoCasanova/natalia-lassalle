@@ -28,6 +28,7 @@ const config = {
     target: 'esnext',
     minify: 'terser',
     sourcemap: false,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       external: ['@sanity/client'],
       output: {
