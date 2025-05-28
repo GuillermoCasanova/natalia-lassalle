@@ -20,14 +20,17 @@ export async function sendMail(pReceiver, pFormData) {
     const accessToken = await oAuth2Client.getAccessToken();
 
     if (pFormData.message.length <= 10 || pFormData.email <= 0 || pFormData.full_name.length <= 0) {
-      let error = new Error('Missing required message data.');
-      error.status = 400;
-      error = Object.assign({ message: error.message }, error);
+      const error = {
+        message: 'Missing required message data.',
+        status: 400
+      };
       throw error;
     }
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         type: "OAuth2",
         user: AUTH_USER,

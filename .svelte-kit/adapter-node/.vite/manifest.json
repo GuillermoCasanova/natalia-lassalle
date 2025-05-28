@@ -198,6 +198,12 @@
       "_app/immutable/assets/_page.Cussjxze.css"
     ]
   },
+  "src/routes/api/send-mail/+server.js": {
+    "file": "entries/endpoints/api/send-mail/_server.js",
+    "name": "entries/endpoints/api/send-mail/_server",
+    "src": "src/routes/api/send-mail/+server.js",
+    "isEntry": true
+  },
   "src/routes/contact/+page.server.js": {
     "file": "entries/pages/contact/_page.server.js",
     "name": "entries/pages/contact/_page.server",

@@ -10,7 +10,7 @@ return {
 	assets: new Set([".DS_Store","favicon.png"]),
 	mimeTypes: {".png":"image/png"},
 	_: {
-		client: {start:"_app/immutable/entry/start.6Bx-yFmq.js",app:"_app/immutable/entry/app.DE112HXY.js",imports:["_app/immutable/entry/start.6Bx-yFmq.js","_app/immutable/chunks/C-3fZacK.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/entry/app.DE112HXY.js","_app/immutable/chunks/C1FmrZbK.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/chunks/ru3awRz-.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.BJcEnae5.js",app:"_app/immutable/entry/app.D7OVEPiO.js",imports:["_app/immutable/entry/start.BJcEnae5.js","_app/immutable/chunks/BksHmwdK.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/entry/app.D7OVEPiO.js","_app/immutable/chunks/C1FmrZbK.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/chunks/ru3awRz-.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
@@ -37,6 +37,13 @@ return {
 				params: [],
 				page: { layouts: [0,], errors: [1,], leaf: 3 },
 				endpoint: null
+			},
+			{
+				id: "/api/send-mail",
+				pattern: /^\/api\/send-mail\/?$/,
+				params: [],
+				page: null,
+				endpoint: __memo(() => import('./entries/endpoints/api/send-mail/_server.js'))
 			},
 			{
 				id: "/contact",
