@@ -30,13 +30,15 @@ function updateMetaInfo(pMetaInfo, pProjectHandle) {
   newSeo.canonical =
     "https://natalialassallemorillo.com/work/" + pProjectHandle;
   seo = newSeo;
-  let url = new URL(window.location.href);
 
-  if (pProjectHandle == url.pathname.split("/").filter(Boolean).pop()) {
-    return;
+  // Only update URL if it's different from current
+  const currentPath = window.location.pathname;
+  const newPath = `/work/${pProjectHandle}`;
+
+  if (currentPath !== newPath) {
+    // Use replaceState instead of pushState to avoid adding to history
+    history.replaceState({ projectHandle: pProjectHandle }, "", newPath);
   }
-  const newUrl = `/work/${pProjectHandle}`; // The new URL you want to navigate to
-  history.pushState({}, "", newUrl);
 }
 
 function showThumbnail(event, pName, pMedium) {
@@ -175,7 +177,6 @@ onMount(() => {
   };
 
   const scrollToProject = (pElement, pOffsetPixels) => {
-    // Find the target section element by its ID
     const targetSection = pElement;
     const scrollPosition = targetSection.offsetTop;
 
@@ -186,9 +187,7 @@ onMount(() => {
       });
       return;
     }
-    // Check if the target section exists
     if (targetSection) {
-      // Scroll to the target section with smooth behavior
       document.querySelector(".projects-archive-container").scrollTo({
         top: scrollPosition - pOffsetPixels,
         behavior: "smooth",
@@ -249,31 +248,26 @@ onMount(() => {
     mediaContainer.classList.add("is-visible");
   };
 
-  // Add an event listener for the popstate event
+  // Add popstate event listener to handle browser back/forward
   window.addEventListener("popstate", (event) => {
-    event.preventDefault();
-    let url = new URL(window.location.href);
-    let handle = url.pathname.split("/").filter(Boolean).pop();
-    let drawer = document.querySelector(`summary[data-handle="${handle}"]`);
+    const path = window.location.pathname;
+    const handle = path.split("/").pop();
 
-    let previousState = currentState;
-    currentState = history.state;
+    if (handle === "work") {
+      // If we're going back to the work index
+      goToWorkHome();
+      return;
+    }
 
-    if (currentState > previousState) {
-      // User clicked the forward button
-    } else if (currentState < previousState) {
-      // User clicked the back button
-    } else {
-      // // State change due to other reasons
+    // Find and open the corresponding project
+    const drawer = document.querySelector(`summary[data-handle="${handle}"]`);
+    if (drawer) {
       openDrawer(drawer);
     }
   });
 
+  // Initialize the drawers
   initDrawers(document.querySelector("[data-projects-list]"));
-
-  onMount(() => {
-    console.log(projects);
-  });
 });
 </script>
 
@@ -292,9 +286,13 @@ onMount(() => {
               on:mouseenter={(event) =>
                 showThumbnail(event, project.name, project.medium)}
               on:mouseleave={(event) => hideThumbnail()}
-              on:click={() => {
-                hideThumbnail();
-                updateMetaInfo(project.seo, project.handle.current);
+              on:click={(event) => {
+                event.preventDefault();
+                const details = event.currentTarget.closest("details");
+                if (!details.hasAttribute("open")) {
+                  hideThumbnail();
+                  updateMetaInfo(project.seo, project.handle.current);
+                }
               }}
             >
               <div class="project-summary-header">

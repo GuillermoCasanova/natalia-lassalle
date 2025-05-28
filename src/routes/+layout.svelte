@@ -1,6 +1,9 @@
 <script>
 // @ts-nocheck
 
+import "normalize.css";
+import "../styles/base.css";
+import "../styles/grid.css";
 import Nav from "../components/header.svelte";
 import SvgGraphics from "../components/svg-graphics.svelte";
 import { afterNavigate, beforeNavigate } from "$app/navigation";
@@ -79,9 +82,6 @@ onMount(() => {
 <SvgGraphics />
 
 <style>
-@import "../styles/base.css";
-@import "../styles/grid.css";
-
 .loading-screen {
   position: fixed;
   background-color: #000000;
