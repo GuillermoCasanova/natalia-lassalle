@@ -32,44 +32,44 @@ import expertiseExample from './expertise-example'
 import seoHead from './seo-head'
 import siteSettings from './site-settings.js'
 
-export const schema: {types: SchemaTypeDefinition[]} = {
-  types: [
-    // Documents
-    page,
-    project,
-    workType,
-    postAuthor,
-    post,
-    tag,
-    workCredit,
-    navigation,
+const schemaTypes = [
+  // Documents
+  page,
+  project,
+  workType,
+  postAuthor,
+  post,
+  tag,
+  workCredit,
+  navigation,
 
-    // Page sections
-    sctnHeroHeader,
-    sctnExperienceList,
-    sctnProjectsList,
-    sctnRichText,
-    sctnTextsList,
+  // Page sections
+  sctnHeroHeader,
+  sctnExperienceList,
+  sctnProjectsList,
+  sctnRichText,
+  sctnTextsList,
 
-    // Objects
-    navItem,
-    link,
-    richtext,
-    video,
-    iframe,
+  // Objects
+  navItem,
+  link,
+  richtext,
+  video,
+  iframe,
 
-    // Images
-    image,
-    imageWithFigure,
+  // Images
+  image,
+  imageWithFigure,
 
-    // Footer
-    footerLink,
-    footerEmail,
-    footerSettings,
+  // Footer
+  footerLink,
+  footerEmail,
+  footerSettings,
 
-    // Other components
-    expertiseExample,
-    seoHead,
-    siteSettings,
-  ],
-} 
+  // Other components
+  expertiseExample,
+  seoHead,
+  siteSettings,
+]
+
+export default schemaTypes 

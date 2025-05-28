@@ -4,25 +4,17 @@ export default {
     type: 'document',
     fields: [
         {
-            name: 'title',
-            title: 'Title',
+            name: 'page_title',
+            title: 'Page Title',
             type: 'string',
-            localize: true,
             validation: Rule => Rule.required()
         },
         {
-            name: 'description',
-            title: 'Description',
-            type: 'text',
-            localize: true,
-            validation: Rule => Rule.required()
-        },
-        {
-            name: 'slug',
-            title: 'Slug',
+            name: 'handle',
+            title: 'Page Handle',
             type: 'slug',
             options: {
-                source: 'title',
+                source: 'page_title',
                 maxLength: 96
             },
             validation: Rule => Rule.required()
@@ -33,15 +25,17 @@ export default {
             type: 'seo_head'
         },
         {
-            name: 'sections',
-            title: 'Page Sections',
+            name: 'page_layout',
+            title: 'Page Layout',
             type: 'array',
             of: [
-                {type: 'sctn_hero_header'},
-                {type: 'sctn_experience_list'},
-                {type: 'sctn_projects_list'},
-                {type: 'sctn_rich_text'},
-                {type: 'sctn_texts_list'}
+                {type: 'reference', to: [
+                    {type: 'sctn_hero_header'},
+                    {type: 'sctn_experience_list'},
+                    {type: 'sctn_projects_list'},
+                    {type: 'sctn_rich_text'},
+                    {type: 'sctn_texts_list'}
+                ]}
             ]
         }
     ]

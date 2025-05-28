@@ -1,8 +1,5 @@
-
-
 import sanityClient from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url'; 
-
 
 const config = {
     projectId: '43ajij5z',
@@ -12,12 +9,8 @@ const config = {
     useCdn: false, // `false` if you want to ensure fresh data
 };
 
-
 export const client = sanityClient(config);
 export const imageBuilder = imageUrlBuilder(config);
 
-
 // eslint-disable-next-line no-unused-vars
-export const urlFor  = function(source) {
-    return imageBuilder.image(source)
-}
+export const urlFor = (source) => imageBuilder.image(source);
