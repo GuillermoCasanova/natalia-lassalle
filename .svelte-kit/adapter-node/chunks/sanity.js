@@ -12,9 +12,7 @@ const config = {
 };
 const client = sanityClient(config);
 const imageBuilder = imageUrlBuilder(config);
-const urlFor = function(source) {
-  return imageBuilder.image(source);
-};
+const urlFor = (source) => imageBuilder.image(source);
 export {
   client as c,
   urlFor as u

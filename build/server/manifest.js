@@ -1,93 +1,95 @@
-const manifest = {
+const manifest = (() => {
+function __memo(fn) {
+	let value;
+	return () => value ??= (value = fn());
+}
+
+return {
 	appDir: "_app",
 	appPath: "_app",
 	assets: new Set([".DS_Store","favicon.png"]),
 	mimeTypes: {".png":"image/png"},
 	_: {
-		client: {"start":{"file":"_app/immutable/entry/start.b1587504.mjs","imports":["_app/immutable/entry/start.b1587504.mjs","_app/immutable/chunks/index.b299b763.mjs","_app/immutable/chunks/singletons.b71ff160.mjs"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.2e3a577b.mjs","imports":["_app/immutable/entry/app.2e3a577b.mjs","_app/immutable/chunks/index.b299b763.mjs"],"stylesheets":[],"fonts":[]}},
+		client: {start:"_app/immutable/entry/start.6Bx-yFmq.js",app:"_app/immutable/entry/app.DE112HXY.js",imports:["_app/immutable/entry/start.6Bx-yFmq.js","_app/immutable/chunks/C-3fZacK.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/entry/app.DE112HXY.js","_app/immutable/chunks/C1FmrZbK.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/chunks/ru3awRz-.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
-			() => import('./chunks/0-1e9e0a79.js'),
-			() => import('./chunks/1-f6542af1.js'),
-			() => import('./chunks/2-30dc2567.js'),
-			() => import('./chunks/3-614d0f4d.js'),
-			() => import('./chunks/4-89a79df4.js'),
-			() => import('./chunks/5-2dfc4852.js'),
-			() => import('./chunks/6-d64c2e07.js'),
-			() => import('./chunks/7-7a1592cd.js'),
-			() => import('./chunks/8-645c1c01.js'),
-			() => import('./chunks/9-1f5f3044.js')
+			__memo(() => import('./chunks/0-Dk18xLfx.js')),
+			__memo(() => import('./chunks/1-ByH4cE3l.js')),
+			__memo(() => import('./chunks/2-DasE9vY3.js')),
+			__memo(() => import('./chunks/3-BXiuqxHT.js')),
+			__memo(() => import('./chunks/4-CLjkZU-3.js')),
+			__memo(() => import('./chunks/5-CiQSlaeU.js')),
+			__memo(() => import('./chunks/6-BFl0yOgO.js')),
+			__memo(() => import('./chunks/7-sLI9m6eu.js')),
+			__memo(() => import('./chunks/8-NEHZIQAN.js')),
+			__memo(() => import('./chunks/9-v1LWnbHP.js'))
 		],
 		routes: [
 			{
 				id: "/",
 				pattern: /^\/$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 2 },
+				page: { layouts: [0,], errors: [1,], leaf: 2 },
 				endpoint: null
 			},
 			{
 				id: "/about",
 				pattern: /^\/about\/?$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 3 },
+				page: { layouts: [0,], errors: [1,], leaf: 3 },
 				endpoint: null
-			},
-			{
-				id: "/api/send-mail",
-				pattern: /^\/api\/send-mail\/?$/,
-				params: [],
-				page: null,
-				endpoint: () => import('./chunks/_server-9d072d59.js')
 			},
 			{
 				id: "/contact",
 				pattern: /^\/contact\/?$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 4 },
+				page: { layouts: [0,], errors: [1,], leaf: 4 },
 				endpoint: null
 			},
 			{
 				id: "/current",
 				pattern: /^\/current\/?$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 5 },
+				page: { layouts: [0,], errors: [1,], leaf: 5 },
 				endpoint: null
 			},
 			{
 				id: "/cv",
 				pattern: /^\/cv\/?$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 6 },
+				page: { layouts: [0,], errors: [1,], leaf: 6 },
 				endpoint: null
 			},
 			{
 				id: "/texts",
 				pattern: /^\/texts\/?$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 7 },
+				page: { layouts: [0,], errors: [1,], leaf: 7 },
 				endpoint: null
 			},
 			{
 				id: "/work",
 				pattern: /^\/work\/?$/,
 				params: [],
-				page: { layouts: [0], errors: [1], leaf: 8 },
+				page: { layouts: [0,], errors: [1,], leaf: 8 },
 				endpoint: null
 			},
 			{
 				id: "/work/[slug]",
 				pattern: /^\/work\/([^/]+?)\/?$/,
 				params: [{"name":"slug","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0], errors: [1], leaf: 9 },
+				page: { layouts: [0,], errors: [1,], leaf: 9 },
 				endpoint: null
 			}
 		],
+		prerendered_routes: new Set([]),
 		matchers: async () => {
 			
 			return {  };
-		}
+		},
+		server_assets: {}
 	}
-};
+}
+})();
 
 const prerendered = new Set([]);
 

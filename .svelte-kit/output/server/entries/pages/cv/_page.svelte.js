@@ -1,23 +1,20 @@
-import { c as create_ssr_component, s as subscribe, v as validate_component, a as each } from "../../../chunks/index.js";
+import { c as create_ssr_component, s as subscribe, a as each, v as validate_component } from "../../../chunks/ssr.js";
 import "../../../chunks/sanity.js";
 import { M as MetaTags } from "../../../chunks/rich-text.js";
 import { p as page } from "../../../chunks/stores.js";
 import { S as Sctn_rich_text, a as Sctn_experience_list } from "../../../chunks/sctn-experience-list.js";
 import { F as Featured_projects_slideshow } from "../../../chunks/featured-projects-slideshow.js";
-const _page_svelte_svelte_type_style_lang = "";
 const css = {
   code: "@media screen and (min-width: 900px){.main-container.svelte-xzzq7k{padding-top:var(--level6)}}",
-  map: null
+  map: '{"version":3,"file":"+page.svelte","sources":["+page.svelte"],"sourcesContent":["<script>\\nimport { urlFor } from \\"$lib/sanity\\";\\nimport { MetaTags } from \\"svelte-meta-tags\\";\\nimport { page } from \\"$app/stores\\";\\nimport SectionRichText from \\"../../components/sections/sctn-rich-text.svelte\\";\\nimport SectionExperienceList from \\"../../components/sections/sctn-experience-list.svelte\\";\\nimport FeaturedProjectsSlideshow from \\"../../components/featured-projects-slideshow.svelte\\";\\nexport let data;\\nexport let seo;\\n<\/script>\\n\\n<svelte:head>\\n  <MetaTags\\n    title={$page.data.content.seo.title}\\n    description={$page.data.content.seo.description}\\n    canonical=\\"https://natalialassallemorillo.com/cv\\"\\n    openGraph={{\\n      url: \\"https://natalialassallemorillo.com/cv\\",\\n      title: $page.data.content.seo.title,\\n      description: $page.data.content.seo.description,\\n      images: [\\n        {\\n          url:\\n            $page.data.content.seo.banner_image.url + \\"?auto=format&width=1200\\",\\n          width: 800,\\n          height: 600,\\n          alt: $page.data.content.seo.banner_image.alt_text\\n            ? $page.data.content.seo.banner_image.alt_text\\n            : \\"Missing Alt Text\\",\\n        },\\n      ],\\n      site_name: \\"SiteName\\",\\n    }}\\n    twitter={{\\n      handle: \\"natalialassallemorillo.com\\",\\n      site: \\"natalialassallemorillo.com\\",\\n      cardType: \\"summary_large_image\\",\\n      title: $page.data.content.seo.title,\\n      description: $page.data.content.seo.description,\\n      image:\\n        $page.data.content.seo.banner_image.url + \\"?auto=format&width=1200\\",\\n      imageAlt: $page.data.content.seo.banner_image.alt_text\\n        ? $page.data.content.seo.banner_image.alt_text\\n        : \\"Missing Alt Text\\",\\n    }}\\n  />\\n</svelte:head>\\n\\n<div class=\\"subpage\\">\\n  <div class=\\"subpage__inner\\">\\n    <div class=\\"subpage__left-content\\" data-left-content>\\n      <div class=\\"subpage__content-body main-container\\">\\n        <!-- <section class=\\"no-padding\\">\\n                            <div >\\n                                <h1>{$page.data.content.page_title}</h1>\\n                            </div>\\n                        </section> -->\\n        {#if data.content.page_layout}\\n          {#each data.content.page_layout as section}\\n            {#if section._type == \\"sctn_rich_text\\"}\\n              <SectionRichText {section} />\\n            {/if}\\n\\n            {#if section._type == \\"sctn_experience_list\\"}\\n              <SectionExperienceList {section} />\\n            {/if}\\n          {/each}\\n        {/if}\\n      </div>\\n    </div>\\n\\n    <div class=\\"subpage__right-content\\">\\n      <FeaturedProjectsSlideshow />\\n    </div>\\n  </div>\\n</div>\\n\\n<style>\\n@media screen and (min-width: 900px) {\\n  .main-container {\\n    padding-top: var(--level6);\\n  }\\n}\\n</style>\\n"],"names":[],"mappings":"AA8EA,OAAO,MAAM,CAAC,GAAG,CAAC,YAAY,KAAK,CAAE,CACnC,6BAAgB,CACd,WAAW,CAAE,IAAI,QAAQ,CAC3B,CACF"}'
 };
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $page, $$unsubscribe_page;
   $$unsubscribe_page = subscribe(page, (value) => $page = value);
   let { data } = $$props;
   let { seo } = $$props;
-  if ($$props.data === void 0 && $$bindings.data && data !== void 0)
-    $$bindings.data(data);
-  if ($$props.seo === void 0 && $$bindings.seo && seo !== void 0)
-    $$bindings.seo(seo);
+  if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+  if ($$props.seo === void 0 && $$bindings.seo && seo !== void 0) $$bindings.seo(seo);
   $$result.css.add(css);
   $$unsubscribe_page();
   return `${$$result.head += `<!-- HEAD_svelte-1sa9qku_START -->${validate_component(MetaTags, "MetaTags").$$render(
@@ -52,17 +49,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     },
     {},
     {}
-  )}<!-- HEAD_svelte-1sa9qku_END -->`, ""}
-
-<div class="subpage"><div class="subpage__inner"><div class="subpage__left-content" data-left-content><div class="subpage__content-body main-container svelte-xzzq7k">
-        ${data.content.page_layout ? `${each(data.content.page_layout, (section) => {
-    return `${section._type == "sctn_rich_text" ? `${validate_component(Sctn_rich_text, "SectionRichText").$$render($$result, { section }, {}, {})}` : ``}
-
-            ${section._type == "sctn_experience_list" ? `${validate_component(Sctn_experience_list, "SectionExperienceList").$$render($$result, { section }, {}, {})}` : ``}`;
-  })}` : ``}</div></div>
-
-    <div class="subpage__right-content">${validate_component(Featured_projects_slideshow, "FeaturedProjectsSlideshow").$$render($$result, {}, {}, {})}</div></div>
-</div>`;
+  )}<!-- HEAD_svelte-1sa9qku_END -->`, ""} <div class="subpage"><div class="subpage__inner"><div class="subpage__left-content" data-left-content><div class="subpage__content-body main-container svelte-xzzq7k"> ${data.content.page_layout ? `${each(data.content.page_layout, (section) => {
+    return `${section._type == "sctn_rich_text" ? `${validate_component(Sctn_rich_text, "SectionRichText").$$render($$result, { section }, {}, {})}` : ``} ${section._type == "sctn_experience_list" ? `${validate_component(Sctn_experience_list, "SectionExperienceList").$$render($$result, { section }, {}, {})}` : ``}`;
+  })}` : ``}</div></div> <div class="subpage__right-content">${validate_component(Featured_projects_slideshow, "FeaturedProjectsSlideshow").$$render($$result, {}, {}, {})}</div></div> </div>`;
 });
 export {
   Page as default

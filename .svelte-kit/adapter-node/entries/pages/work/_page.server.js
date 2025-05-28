@@ -1,6 +1,6 @@
 import { c as client } from "../../../chunks/sanity.js";
-async function load(loadEvent) {
-  const { params, fetch, parent } = loadEvent;
+async function load({ params, url }) {
+  const language = url.searchParams.get("lang") || "en";
   const page_request = `*[_type == 'page' && handle.current == 'work'][0] {
         ...,
         page_layout[]-> {
@@ -31,7 +31,8 @@ async function load(loadEvent) {
     }`;
   const projects_request = `*[_type == 'project' && !(_id in path('drafts.**'))] {
         ...,
-        "about": about[] {
+        "name": coalesce(name.${language}, name.en),
+        "about": coalesce(about.${language}, about.en)[] {
             ...,
             markDefs[] {
                 ...,
@@ -58,7 +59,7 @@ async function load(loadEvent) {
             "video_file": video_file.asset->
         },
         "creditsList": creditsList[]-> {
-            _type,
+          _type,
             _ref,
             _key,
             "workDone": workDone->name,

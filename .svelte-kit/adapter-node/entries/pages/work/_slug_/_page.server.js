@@ -1,8 +1,9 @@
 import { c as client } from "../../../../chunks/sanity.js";
 async function load(loadEvent) {
   console.log("Work slug page server running");
-  const { params, fetch, parent } = loadEvent;
+  const { params, fetch, parent, url } = loadEvent;
   const parentData = await parent();
+  const language = url.searchParams.get("lang") || "en";
   console.log("Parent data in slug:", parentData);
   const projHandle = params.slug.toString();
   const request = `*[_type == 'site-settings'][0] {
@@ -19,7 +20,8 @@ async function load(loadEvent) {
   const content = await client.fetch(page_request, params);
   const projects_request = `*[_type == 'project' && !(_id in path('drafts.**'))] {
         ...,
-        about[] {
+        "name": coalesce(name.${language}, name.en),
+        "about": coalesce(about.${language}, about.en)[] {
             ...,
             markDefs[] {
                 ...,
@@ -46,8 +48,11 @@ async function load(loadEvent) {
             "video_file": video_file.asset->
         },
         "creditsList": creditsList[]-> {
-            ...,
-            "workDone": workDone->name 
+            _type,
+            _ref,
+            _key,
+            "workDone": workDone->name,
+            "name": name
         }
     }`;
   return {

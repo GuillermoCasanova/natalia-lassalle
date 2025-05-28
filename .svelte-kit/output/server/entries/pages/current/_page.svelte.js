@@ -1,4 +1,4 @@
-import { c as create_ssr_component, a as each, v as validate_component, s as subscribe } from "../../../chunks/index.js";
+import { c as create_ssr_component, a as each, v as validate_component, s as subscribe } from "../../../chunks/ssr.js";
 import "../../../chunks/sanity.js";
 import { M as MetaTags } from "../../../chunks/rich-text.js";
 import { p as page } from "../../../chunks/stores.js";
@@ -7,21 +7,16 @@ import { S as Sctn_projects_list } from "../../../chunks/sctn-projects-list.js";
 const Layout_subpage = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { data } = $$props;
   let { seo } = $$props;
-  if ($$props.data === void 0 && $$bindings.data && data !== void 0)
-    $$bindings.data(data);
-  if ($$props.seo === void 0 && $$bindings.seo && seo !== void 0)
-    $$bindings.seo(seo);
+  if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+  if ($$props.seo === void 0 && $$bindings.seo && seo !== void 0) $$bindings.seo(seo);
   let $$settled;
   let $$rendered;
+  let previous_head = $$result.head;
   do {
     $$settled = true;
-    $$rendered = `<div class="subpage"><div class="subpage__inner"><div class="subpage__left-content" data-left-content><div class="subpage__content-body">
-        ${data.content.page_layout ? `${each(data.content.page_layout, (section) => {
-      return `${section._type == "sctn_rich_text" ? `${validate_component(Sctn_rich_text, "SectionRichText").$$render($$result, { section }, {}, {})}` : ``}
-
-            ${section._type == "sctn_experience_list" ? `${validate_component(Sctn_experience_list, "SectionExperienceList").$$render($$result, { section }, {}, {})}` : ``}
-
-            ${section._type == "sctn_projects_list" && data.projects ? `${validate_component(Sctn_projects_list, "SectionProjectsList").$$render(
+    $$result.head = previous_head;
+    $$rendered = `<div class="subpage"><div class="subpage__inner"><div class="subpage__left-content" data-left-content><div class="subpage__content-body"> ${data.content.page_layout ? `${each(data.content.page_layout, (section) => {
+      return `${section._type == "sctn_rich_text" ? `${validate_component(Sctn_rich_text, "SectionRichText").$$render($$result, { section }, {}, {})}` : ``} ${section._type == "sctn_experience_list" ? `${validate_component(Sctn_experience_list, "SectionExperienceList").$$render($$result, { section }, {}, {})}` : ``} ${section._type == "sctn_projects_list" && data.projects ? `${validate_component(Sctn_projects_list, "SectionProjectsList").$$render(
         $$result,
         { projects: data.projects, seo },
         {
@@ -32,9 +27,7 @@ const Layout_subpage = create_ssr_component(($$result, $$props, $$bindings, slot
         },
         {}
       )}` : ``}`;
-    })}` : ``}</div></div>
-
-    <div class="subpage__right-content"></div></div></div>`;
+    })}` : ``}</div></div> <div class="subpage__right-content"></div></div></div>`;
   } while (!$$settled);
   return $$rendered;
 });
@@ -42,8 +35,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $page, $$unsubscribe_page;
   $$unsubscribe_page = subscribe(page, (value) => $page = value);
   let { data } = $$props;
-  if ($$props.data === void 0 && $$bindings.data && data !== void 0)
-    $$bindings.data(data);
+  if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
   $$unsubscribe_page();
   return `${$$result.head += `<!-- HEAD_svelte-px1s48_START -->${validate_component(MetaTags, "MetaTags").$$render(
     $$result,
@@ -77,9 +69,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     },
     {},
     {}
-  )}<!-- HEAD_svelte-px1s48_END -->`, ""}
-
-${validate_component(Layout_subpage, "LayoutSubpage").$$render($$result, { data }, {}, {})}`;
+  )}<!-- HEAD_svelte-px1s48_END -->`, ""} ${validate_component(Layout_subpage, "LayoutSubpage").$$render($$result, { data }, {}, {})}`;
 });
 export {
   Page as default

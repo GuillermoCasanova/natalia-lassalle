@@ -1,10 +1,10 @@
 import * as server from '../entries/pages/texts/_page.server.js';
 
 export const index = 7;
-export const component = async () => (await import('../entries/pages/texts/_page.svelte.js')).default;
-export const file = '_app/immutable/entry/texts-page.svelte.10a595ec.mjs';
+let component_cache;
+export const component = async () => component_cache ??= (await import('../entries/pages/texts/_page.svelte.js')).default;
 export { server };
 export const server_id = "src/routes/texts/+page.server.js";
-export const imports = ["_app/immutable/entry/texts-page.svelte.10a595ec.mjs","_app/immutable/chunks/index.b299b763.mjs","_app/immutable/chunks/rich-text.45596a5b.mjs","_app/immutable/chunks/sanity.d951c4df.mjs"];
-export const stylesheets = ["_app/immutable/assets/_page.b13ae3e8.css","_app/immutable/assets/rich-text.3d254789.css"];
+export const imports = ["_app/immutable/nodes/7.EnuCiGw3.js","_app/immutable/chunks/TOP8TKJg.js","_app/immutable/chunks/ru3awRz-.js","_app/immutable/chunks/xbnKh8CZ.js","_app/immutable/chunks/C1FmrZbK.js","_app/immutable/chunks/DyEKE_NK.js","_app/immutable/chunks/DJ2DcCb_.js","_app/immutable/chunks/C-3fZacK.js"];
+export const stylesheets = ["_app/immutable/assets/rich-text.DiPaT0Bv.css","_app/immutable/assets/7.ByD8kY5j.css"];
 export const fonts = [];

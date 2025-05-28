@@ -19,6 +19,9 @@ const config = {
   },
   optimizeDeps: {
     exclude: ['@sveltejs/kit']
+  },
+  ssr: {
+    noExternal: ['nodemailer', 'googleapis', 'dotenv']
   }
 };
 
