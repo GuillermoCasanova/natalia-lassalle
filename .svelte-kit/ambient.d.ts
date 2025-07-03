@@ -36,7 +36,6 @@ declare module '$env/static/private' {
 	export const npm_config_global_prefix: string;
 	export const TERM_PROGRAM_VERSION: string;
 	export const NODE_OPTIONS: string;
-	export const ZDOTDIR: string;
 	export const CURSOR_TRACE_ID: string;
 	export const ORIGINAL_XDG_CURRENT_DESKTOP: string;
 	export const MallocNanoZone: string;
@@ -55,7 +54,6 @@ declare module '$env/static/private' {
 	export const _: string;
 	export const npm_config_userconfig: string;
 	export const npm_config_init_module: string;
-	export const USER_ZDOTDIR: string;
 	export const __CFBundleIdentifier: string;
 	export const npm_command: string;
 	export const PWD: string;
@@ -71,7 +69,6 @@ declare module '$env/static/private' {
 	export const RBENV_SHELL: string;
 	export const npm_package_version: string;
 	export const XPC_SERVICE_NAME: string;
-	export const VSCODE_INJECTION: string;
 	export const SHLVL: string;
 	export const HOME: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
@@ -131,7 +128,6 @@ declare module '$env/dynamic/private' {
 		npm_config_global_prefix: string;
 		TERM_PROGRAM_VERSION: string;
 		NODE_OPTIONS: string;
-		ZDOTDIR: string;
 		CURSOR_TRACE_ID: string;
 		ORIGINAL_XDG_CURRENT_DESKTOP: string;
 		MallocNanoZone: string;
@@ -150,7 +146,6 @@ declare module '$env/dynamic/private' {
 		_: string;
 		npm_config_userconfig: string;
 		npm_config_init_module: string;
-		USER_ZDOTDIR: string;
 		__CFBundleIdentifier: string;
 		npm_command: string;
 		PWD: string;
@@ -166,7 +161,6 @@ declare module '$env/dynamic/private' {
 		RBENV_SHELL: string;
 		npm_package_version: string;
 		XPC_SERVICE_NAME: string;
-		VSCODE_INJECTION: string;
 		SHLVL: string;
 		HOME: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;

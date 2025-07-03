@@ -11,7 +11,7 @@ let language = $page.data.language || "en";
 const components = {
   marks: {
     internalLink: InternalLinkRenderer,
-    link: ExternalLinkRenderer,
+    externalLink: ExternalLinkRenderer,
     mailtoLink: MailtoLinkRenderer,
   },
 };
