@@ -16,6 +16,11 @@ export let section;
               {#if experience.link && experience.link.href !== undefined}
                 <a href={experience.link.href} target="_blank">
                   {experience.name}
+                  <span class="external-link-icon">
+                    <svg>
+                      <use xlink:href="#icon-external-link" />
+                    </svg>
+                  </span>
                 </a>
               {:else}
                 <span class="experience-list__item__name">
@@ -52,8 +57,24 @@ export let section;
   display: block;
 }
 
+a {
+  text-decoration: none;
+}
+
 a:hover,
 a:focus {
   text-decoration: underline;
+}
+
+.external-link-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  display: inline-block;
+  margin-right: var(--level1);
+}
+
+.external-link-icon svg {
+  width: 100%;
+  height: 100%;
 }
 </style>
