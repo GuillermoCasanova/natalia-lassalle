@@ -5,9 +5,16 @@ export async function load(loadEvent) {
     console.log("Work slug page server running");
     const {params, fetch, parent, url} = loadEvent; 
     const parentData = await parent();
-        // Get language from query param, route param, or default to 'en'
-        const language = url.searchParams.get('lang') || 'en';
+    
+    // Get language from query param or default to 'en'
+    const language = url.searchParams.get('lang') || 'en';
+    
+    console.log('=== WORK SLUG PAGE SERVER DEBUG ===');
+    console.log('URL:', url.toString());
+    console.log('Search params:', Object.fromEntries(url.searchParams));
+    console.log('Language detected:', language);
     console.log("Parent data in slug:", parentData);
+    console.log('===================================');
 
     const projHandle = params.slug.toString(); 
 
@@ -30,8 +37,9 @@ export async function load(loadEvent) {
 
     const projects_request = `*[_type == 'project' && !(_id in path('drafts.**'))] {
         ...,
-        "name": coalesce(name.${language}, name.en),
-        "about": coalesce(about.${language}, about.en)[] {
+        "name_en": name.en,
+        "name_es": name.es,
+        "about_en": about.en[] {
             ...,
             markDefs[] {
                 ...,
@@ -43,15 +51,34 @@ export async function load(loadEvent) {
                     }
                 },
                 _type == "link" => {
-                    ...
+                    ...,
                 },
                 _type == "mailtoLink" => {
-                    ...
+                    ...,
+                }
+            }
+        },
+        "about_es": about.es[] {
+            ...,
+            markDefs[] {
+                ...,
+                _type == "internalLink" => {
+                    "page": page-> { 
+                        "slug": handle.current,
+                        "title": page_title,
+                        "_type": _type
+                    }
+                },
+                _type == "link" => {
+                    ...,
+                },
+                _type == "mailtoLink" => {
+                    ...,
                 }
             }
         },
         "medium": medium->{
-            ...
+            ...,
         },
         "preview_videos": preview_videos[] {
             ...,
@@ -71,6 +98,7 @@ export async function load(loadEvent) {
         siteHead,
         content,
         projects: await client.fetch(projects_request),
-        projHandle
+        projHandle,
+        currentLanguage: language
     };
 }

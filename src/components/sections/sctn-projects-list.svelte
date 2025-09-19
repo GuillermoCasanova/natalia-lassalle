@@ -7,11 +7,31 @@ import RichText from "../rich-text.svelte";
 import { urlFor } from "$lib/sanity";
 import { page } from "$app/stores";
 import { goto } from "$app/navigation";
+import {
+  currentLanguage,
+  initializeLanguageFromUrl,
+} from "$lib/stores/language";
+import { filterProjectsByLanguage } from "$lib/utils/language-filter";
 
 import { onMount } from "svelte";
 
 export let seo;
 export let projects;
+
+// Filter projects based on current language
+$: filteredProjects = projects
+  ? filterProjectsByLanguage(projects, $currentLanguage)
+  : [];
+
+// Debug logging
+$: console.log("=== PROJECTS LIST DEBUG ===");
+$: console.log("Current language:", $currentLanguage);
+$: console.log("Original projects:", projects);
+$: console.log("Filtered projects:", filteredProjects);
+$: console.log("Number of projects:", filteredProjects?.length);
+$: console.log("First project name:", filteredProjects?.[0]?.name);
+$: console.log("First project about:", filteredProjects?.[0]?.about);
+$: console.log("================================");
 
 let slug = $page.params.slug;
 let thumbnailsContainer;
@@ -20,9 +40,9 @@ let activeThumbInfo;
 let projectIsOpen;
 let workIndexSeo = { ...seo };
 
-if (projects.length > 0) {
-  formatDates(projects);
-  placeFeaturedFirst(projects);
+if (filteredProjects && filteredProjects.length > 0) {
+  formatDates(filteredProjects);
+  placeFeaturedFirst(filteredProjects);
 }
 
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
@@ -98,7 +118,11 @@ function goToWorkHome() {
 }
 
 onMount(() => {
-  console.log(projects);
+  // Initialize language from URL on client side
+  initializeLanguageFromUrl();
+
+  console.log("Original projects:", projects);
+  console.log("Filtered projects:", filteredProjects);
   let currentState = history ? history.state : false;
   let activeDrawer = null;
 
@@ -273,8 +297,8 @@ onMount(() => {
 
 <section class="projects-archive-container" data-projects-list>
   <div class="projects-list-container">
-    {#if projects}
-      {#each projects as project, index}
+    {#if filteredProjects && filteredProjects.length > 0}
+      {#each filteredProjects as project, index}
         <article class="project-line-item">
           <details>
             <summary

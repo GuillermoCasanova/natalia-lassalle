@@ -5,6 +5,7 @@ import { MetaTags } from "svelte-meta-tags";
 import SectionRichText from "../../components/sections/sctn-rich-text.svelte";
 import SectionProjectsList from "../../components/sections/sctn-projects-list.svelte";
 import SectionExperienceList from "../../components/sections/sctn-experience-list.svelte";
+import DebugLanguage from "../../components/debug-language.svelte";
 export let data;
 export let projects;
 let seo = data.content.seo;
@@ -43,6 +44,9 @@ let seo = data.content.seo;
   }}
 />
 
+<!-- Debug component -->
+<DebugLanguage />
+
 <div class="subpage is-projects-page">
   <div class="subpage__inner">
     <div class="subpage__left-content is-projects-page" data-left-content>
@@ -63,7 +67,7 @@ let seo = data.content.seo;
             {/if}
 
             {#if section._type == "sctn_projects_list"}
-              <SectionProjectsList projects={data.projects} bind:seo />
+              <SectionProjectsList projects={data.projects || []} bind:seo />
             {/if}
           {/each}
         {/if}

@@ -2,6 +2,7 @@
 import { trapFocus, removeTrapFocus } from "$lib/trapFocus";
 import { page } from "$app/stores";
 import ModalTrigger from "./modal-trigger.svelte";
+import LanguageSwitcher from "./language-switcher.svelte";
 import { onMount } from "svelte";
 
 export let main_nav;
@@ -182,6 +183,9 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                 class="menu-drawer__items"
                 class:show-nav-items={showNavItems}
               >
+                <li class="menu-drawer__item" style="transition-delay: 0s">
+                  <LanguageSwitcher />
+                </li>
                 {#each navLinks as navItem, index}
                   <li
                     class="menu-drawer__item"
@@ -252,6 +256,9 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
       <nav class="menu-list">
         <div class="menu-list__inner">
           <ul class="menu-list__items" class:show-nav-items={showNavItems}>
+            <li class="menu-list__item">
+              <LanguageSwitcher />
+            </li>
             {#each navLinks as navItem, index}
               <li
                 class="menu-list__item"
@@ -718,19 +725,19 @@ header.menu-opening {
 :global(header.is-transparent .header__menu-icon .header__menu-icon-top-bar),
 :global(header.is-transparent .header__menu-icon .header__menu-icon-middle-bar),
 :global(
-    header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar
-  ) {
+  header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar
+) {
   background-color: white;
 }
 
 @media screen and (min-width: 940px) {
   :global(header.is-transparent .header__menu-icon .header__menu-icon-top-bar),
   :global(
-      header.is-transparent .header__menu-icon .header__menu-icon-middle-bar
-    ),
+    header.is-transparent .header__menu-icon .header__menu-icon-middle-bar
+  ),
   :global(
-      header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar
-    ),
+    header.is-transparent .header__menu-icon .header__menu-icon-bottom-bar
+  ),
   .header__menu-icon .header__menu-icon-top-bar,
   .header__menu-icon .header__menu-icon-middle-bar,
   .header__menu-icon .header__menu-icon-bottom-bar {

@@ -13,6 +13,11 @@ import { cubicOut } from "svelte/easing";
 import { onMount } from "svelte";
 import { page } from "$app/stores";
 import Loader from "$lib/components/loader.svelte";
+import { initializeLanguageFromUrl } from "$lib/stores/language";
+import {
+  setupLinkInterceptor,
+  removeLinkInterceptor,
+} from "$lib/utils/linkInterceptor";
 
 export let data;
 
@@ -52,6 +57,9 @@ beforeNavigate(({ to }) => {
 });
 
 onMount(() => {
+  // Initialize language system from URL
+  initializeLanguageFromUrl();
+
   document.querySelectorAll('a[href^="/#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       if (pathName === "/") {
@@ -60,6 +68,11 @@ onMount(() => {
       }
     });
   });
+
+  // Cleanup function
+  return () => {
+    removeLinkInterceptor();
+  };
 });
 </script>
 
