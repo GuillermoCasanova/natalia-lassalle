@@ -28,8 +28,7 @@ function toggleDropdown() {
     on:click={toggleDropdown}
     aria-expanded={isOpen}
   >
-    {languages.find((lang) => lang.code === $currentLanguage)?.flag}
-    {languages.find((lang) => lang.code === $currentLanguage)?.name}
+    {languages.find((lang) => lang.code === $currentLanguage)?.name.slice(0, 2)}
     <svg
       class="chevron"
       class:rotate={isOpen}
@@ -50,7 +49,6 @@ function toggleDropdown() {
             class:active={lang.code === $currentLanguage}
             on:click={() => handleLanguageChange(lang.code)}
           >
-            <span class="flag">{lang.flag}</span>
             {lang.name}
           </button>
         </li>

@@ -258,9 +258,6 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
       <nav class="menu-list">
         <div class="menu-list__inner">
           <ul class="menu-list__items" class:show-nav-items={showNavItems}>
-            <li class="menu-list__item">
-              <LanguageSwitcher />
-            </li>
             {#each navLinks as navItem, index}
               <li
                 class="menu-list__item"
@@ -324,6 +321,9 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                 {/if}
               </li>
             {/each}
+            <li class="menu-list__item">
+              <LanguageSwitcher />
+            </li>
           </ul>
         </div>
       </nav>
@@ -616,7 +616,7 @@ header.menu-opening {
 }
 
 .menu-list {
-  width: 86%;
+  width: 100%;
   margin-right: 0;
   margin-left: auto;
 }
