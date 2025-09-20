@@ -62,6 +62,9 @@ onMount(() => {
   // Initialize language system from URL
   initializeLanguageFromUrl();
 
+  // Setup link interceptor to add language params to internal links
+  setupLinkInterceptor();
+
   document.querySelectorAll('a[href^="/#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       if (pathName === "/") {

@@ -10,6 +10,7 @@ import { goto } from "$app/navigation";
 import {
   currentLanguage,
   initializeLanguageFromUrl,
+  addLanguageToUrl,
 } from "$lib/stores/language";
 
 import { onMount } from "svelte";
@@ -44,7 +45,7 @@ function updateMetaInfo(pMetaInfo, pProjectHandle) {
 
   // Only update URL if it's different from current
   const currentPath = window.location.pathname;
-  const newPath = `/work/${pProjectHandle}`;
+  const newPath = addLanguageToUrl(`/work/${pProjectHandle}`, $currentLanguage);
 
   if (currentPath !== newPath) {
     // Use replaceState instead of pushState to avoid adding to history
@@ -114,7 +115,7 @@ function formatDates(pProjects) {
 
 function goToWorkHome() {
   seo = workIndexSeo;
-  goto("/work");
+  goto(addLanguageToUrl("/work", $currentLanguage));
 }
 
 onMount(() => {

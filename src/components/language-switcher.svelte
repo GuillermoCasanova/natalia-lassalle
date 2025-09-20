@@ -1,6 +1,12 @@
 <script lang="ts">
-import { currentLanguage, languages } from "$lib/stores/language";
+import {
+  currentLanguage,
+  languages,
+  addLanguageToUrl,
+} from "$lib/stores/language";
 import { onMount } from "svelte";
+import { page } from "$app/stores";
+import { goto } from "$app/navigation";
 
 let isOpen = false;
 
@@ -12,6 +18,17 @@ function handleLanguageChange(langCode: string) {
   // Update the store
   $currentLanguage = langCode;
   isOpen = false;
+
+  // Navigate to current URL with new language parameter
+  const currentUrl = $page.url.pathname + $page.url.search;
+  const newUrl = addLanguageToUrl(currentUrl, langCode);
+
+  console.log("Current URL:", currentUrl);
+  console.log("New URL with language:", newUrl);
+  console.log("Navigating to:", newUrl);
+
+  // Navigate to the new URL using SvelteKit's goto
+  goto(newUrl);
 
   console.log("Store value after change:", $currentLanguage);
   console.log("================================");

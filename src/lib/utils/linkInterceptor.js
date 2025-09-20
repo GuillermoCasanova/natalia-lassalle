@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import { addLanguageToUrl, currentLanguage } from '$lib/stores/language';
 import { get } from 'svelte/store';
+import { goto } from '$app/navigation';
 
 /**
  * Intercepts clicks on internal links and adds language parameter
@@ -10,6 +11,7 @@ export function handleInternalLinkClick(event) {
   if (!browser) return;
   
   const target = event.target;
+  if (!target || !(target instanceof Element)) return;
   
   // Find the closest anchor tag
   const link = target.closest('a');
@@ -25,7 +27,6 @@ export function handleInternalLinkClick(event) {
   if (!isInternal || 
       link.hasAttribute('target') || 
       link.hasAttribute('download') ||
-      link.hasAttribute('data-sveltekit-noscroll') ||
       href.includes('mailto:') || 
       href.includes('tel:') ||
       href.includes('#')) {
@@ -48,8 +49,8 @@ export function handleInternalLinkClick(event) {
   console.log('URL with language:', urlWithLang);
   console.log('========================');
   
-  // Navigate to the new URL
-  window.location.href = urlWithLang;
+  // Navigate to the new URL using SvelteKit's goto
+  goto(urlWithLang);
 }
 
 /**
