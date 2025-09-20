@@ -77,6 +77,7 @@ function toggleDropdown() {
 <style>
 .language-switcher {
   position: relative;
+  display: inline-block;
 }
 
 /* Desktop menu styles */
@@ -110,7 +111,7 @@ function toggleDropdown() {
 }
 
 .menu-list .language-switcher .language-dropdown {
-  position: absolute;
+  position: relative;
   top: calc(100% + 8px);
   right: 0;
   background: white;
@@ -121,6 +122,12 @@ function toggleDropdown() {
   padding: 8px 0;
   z-index: 1000;
   min-width: 140px;
+}
+
+@media screen and (min-width: 900px) {
+  .menu-list .language-switcher .language-dropdown {
+    position: absolute;
+  }
 }
 
 .menu-list .language-switcher .language-option {
@@ -204,7 +211,7 @@ function toggleDropdown() {
 }
 
 .menu-drawer .language-switcher .language-dropdown {
-  position: absolute;
+  position: relative;
   top: calc(100% + 8px);
   right: 0;
   background: black;
@@ -233,6 +240,9 @@ function toggleDropdown() {
   text-transform: uppercase;
   color: white;
   font-weight: bold;
+}
+.menu-drawer .language-switcher .language-button {
+  display: inline-block;
 }
 
 .menu-drawer .language-switcher .language-option:hover {

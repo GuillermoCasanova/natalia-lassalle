@@ -183,9 +183,6 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                 class="menu-drawer__items"
                 class:show-nav-items={showNavItems}
               >
-                <li class="menu-drawer__item" style="transition-delay: 0s">
-                  <LanguageSwitcher />
-                </li>
                 {#each navLinks as navItem, index}
                   <li
                     class="menu-drawer__item"
@@ -247,6 +244,9 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                     {/if}
                   </li>
                 {/each}
+                <li class="menu-drawer__item" style="transition-delay: 0s">
+                  <LanguageSwitcher />
+                </li>
               </ul>
             </div>
           </nav>
