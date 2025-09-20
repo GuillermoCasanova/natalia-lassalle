@@ -3,16 +3,7 @@ import { deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
 import schemaTypes from './schemas'
 import {languageFilter} from '@sanity/language-filter'
-
-
-const hiddenDocTypes = [
-  'sctn_hero_header',
-  'sctn_experience_list',
-  'sctn_projects_list',
-  'sctn_rich_text',
-  'sctn_texts_list',
-  'iframe'
-]
+import deskStructure from './desk-structure.js'
 
 export default defineConfig({
   name: 'default',
@@ -29,14 +20,7 @@ export default defineConfig({
       documentTypes: ['project', 'page'],
     }),
     deskTool({
-      structure: (S) =>
-        S.list()
-          .title('Content')
-          .items([
-            ...S.documentTypeListItems().filter(
-              (listItem) => !hiddenDocTypes.includes(listItem.getId())
-            ),
-          ]),
+      structure: deskStructure
     }),
     visionTool()
   ],

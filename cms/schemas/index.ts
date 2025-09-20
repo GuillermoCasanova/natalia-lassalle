@@ -1,6 +1,7 @@
 import {type SchemaTypeDefinition} from 'sanity'
 
 import page from './documents/page'
+import pageHome from './page-home'
 import project from './documents/project'
 import workType from './documents/work-type'
 import postAuthor from './documents/post-author'
@@ -37,6 +38,7 @@ import localeRichText from './objects/localeRichText'
 const schemaTypes = [
   // Documents
   page,
+  pageHome,
   project,
   workType,
   postAuthor,
