@@ -8,7 +8,7 @@ export default {
       {
         name: 'title',
         title: 'Title',
-        type: 'string',
+        type: 'localeString',
         validation: Rule => Rule.required(),
       },
       {
@@ -47,6 +47,11 @@ export default {
         ],
       },
     ],
+    preview: {
+        select: {
+            title: "title.en"
+        }
+    }
   };
   
 

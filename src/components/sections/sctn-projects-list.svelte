@@ -11,7 +11,10 @@ import {
   currentLanguage,
   initializeLanguageFromUrl,
 } from "$lib/stores/language";
-import { filterProjectsByLanguage } from "$lib/utils/language-filter";
+import {
+  filterProjectsByLanguage,
+  getLocalizedString,
+} from "$lib/utils/language-filter";
 
 import { onMount } from "svelte";
 
@@ -22,16 +25,6 @@ export let projects;
 $: filteredProjects = projects
   ? filterProjectsByLanguage(projects, $currentLanguage)
   : [];
-
-// Debug logging
-$: console.log("=== PROJECTS LIST DEBUG ===");
-$: console.log("Current language:", $currentLanguage);
-$: console.log("Original projects:", projects);
-$: console.log("Filtered projects:", filteredProjects);
-$: console.log("Number of projects:", filteredProjects?.length);
-$: console.log("First project name:", filteredProjects?.[0]?.name);
-$: console.log("First project about:", filteredProjects?.[0]?.about);
-$: console.log("================================");
 
 let slug = $page.params.slug;
 let thumbnailsContainer;
@@ -333,7 +326,10 @@ onMount(() => {
                 <div class="project-column project-medium">
                   <p aria-label="Project Medium">
                     {#if project.medium}
-                      {project.medium.title}
+                      {getLocalizedString(
+                        project.medium.title,
+                        $currentLanguage
+                      )}
                     {/if}
                   </p>
                 </div>

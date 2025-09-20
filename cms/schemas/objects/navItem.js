@@ -8,8 +8,9 @@ export default {
     fields: [
         {
             name: "text", 
-            type: "string", 
-            title: "Link Text"
+            type: "localeString", 
+            title: "Link Text",
+            validation: Rule => Rule.required()
         }, 
         {
             name: "navigationItemUrl", 

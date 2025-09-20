@@ -5,13 +5,13 @@ export default {
     description: "Section composed of a richtext.",
     fields: [
         {
-            type: "string", 
+            type: "localeString", 
             title: "Title", 
             name: "title", 
             validation: Rule => Rule.required()
         },
         {
-            type: "richtext", 
+            type: "localeRichText", 
             title: "Rich Text", 
             name: "text", 
             validation: Rule => Rule.required()
@@ -19,7 +19,7 @@ export default {
     ],
     preview: {
         select: {
-            title: "title"
+            title: "title.en"
         }
     }
 }

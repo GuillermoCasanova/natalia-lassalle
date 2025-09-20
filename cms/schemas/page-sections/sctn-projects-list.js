@@ -6,8 +6,14 @@ export default {
         {
             name: "title", 
             title: "Title", 
-            type: "string",
-            description: "This is the section that features all projects on the site by date."
+            type: "localeString",
+            description: "This is the section that features all projects on the site by date.",
+            validation: Rule => Rule.required()
         }
-    ]
+    ],
+    preview: {
+        select: {
+            title: "title.en"
+        }
+    }
 }

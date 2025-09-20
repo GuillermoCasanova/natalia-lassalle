@@ -31,6 +31,8 @@ import footerSettings from './footer-settings.js'
 import expertiseExample from './expertise-example'
 import seoHead from './seo-head'
 import siteSettings from './site-settings.js'
+import localeString from './objects/localeString'
+import localeRichText from './objects/localeRichText'
 
 const schemaTypes = [
   // Documents
@@ -56,7 +58,8 @@ const schemaTypes = [
   richtext,
   video,
   iframe,
-
+  localeString,
+  localeRichText,
   // Images
   image,
   imageWithFigure,

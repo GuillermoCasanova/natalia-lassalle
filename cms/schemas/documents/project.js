@@ -8,22 +8,7 @@ export default {
     fields: [
         {
             name: "name", 
-            type: "object", 
-            title: 'Name',
-            fields: [
-                {
-                    name: "en",
-                    type: "string",
-                    title: "English",
-                    validation: Rule => Rule.required()
-                },
-                {
-                    name: "es",
-                    type: "string",
-                    title: "Spanish",
-                    validation: Rule => Rule.required()
-                }
-            ],
+            type: "localeString", 
             validation: Rule => Rule.required()
         },
         {
@@ -54,23 +39,9 @@ export default {
             description: 'Mark as featured project, this will place it at the top of the list it is in. Only one can be featured at a time.'
         },
         {
-            type: "object", 
+            type: "localeRichText", 
             title: "About The Work", 
             name: "about",
-            fields: [
-                {
-                    name: "en",
-                    type: "richtext",
-                    title: "English",
-                    validation: Rule => Rule.required()
-                },
-                {
-                    name: "es",
-                    type: "richtext",
-                    title: "Spanish",
-                    validation: Rule => Rule.required()
-                }
-            ],
             validation: Rule => Rule.required()
         },
         {

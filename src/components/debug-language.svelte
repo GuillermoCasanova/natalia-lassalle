@@ -42,6 +42,8 @@ $: console.log("=== CLIENT DEBUG ===", debugInfo);
   background: #0066ff;
   color: #fff;
   left: 0;
+  bottom: 0;
+  top: auto;
   right: auto;
   padding: 15px;
   border-radius: 8px;
