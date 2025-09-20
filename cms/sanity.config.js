@@ -17,7 +17,7 @@ export default defineConfig({
         {id: 'es', title: 'Spanish'}
       ],
       defaultLanguages: ['en'],
-      documentTypes: ['project', 'page'],
+      documentTypes: ['project', 'page', 'post'],
     }),
     deskTool({
       structure: deskStructure

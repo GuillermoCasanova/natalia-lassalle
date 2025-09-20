@@ -19,12 +19,16 @@ export default {
     name: "post",
     type: "document",
     title: "Text Post",
-    icon: FiEdit3, 
+    icon: FiEdit3,
+    options: {
+        // show language filter for this document type, regardless of how documentTypes for the plugin is configured
+        languageFilter: true,
+    },
     fields: [
         {
-            type: 'string', 
+            name: "title", 
+            type: "localeString",
             title: "Post Title",
-            name: "title",
             validation: Rule => Rule.required()
         },
         {
@@ -32,7 +36,7 @@ export default {
             title: "Post Handle",
             type: "slug",
             options: {
-                source: "title",
+                source: "title.en",
                 maxLength: 100
             },
             validation: Rule => Rule.required()
@@ -55,10 +59,9 @@ export default {
             validation: Rule => Rule.required()
         },
         {
-            type: "array", 
+            type: "localeRichText", 
             title: "Post Content", 
-            name: "content", 
-            of: [{ type: "block"}],
+            name: "content",
             validation: Rule => Rule.required()
         },
         {
@@ -82,5 +85,18 @@ export default {
               return true
             })
           },
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'title.en',
+            media: 'featured_image'
+        },
+        prepare(selection) {
+            const { title, media } = selection
+            return {
+                title: title || 'Untitled Post',
+                media: media
+            }
+        }
+    }
 }
