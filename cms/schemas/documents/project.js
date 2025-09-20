@@ -5,11 +5,16 @@ export default {
     title: 'Project',
     type: 'document',
     icon: FiBriefcase,
+    options: {
+        // show language filter for this document type, regardless of how documentTypes for the plugin is configured
+        languageFilter: true,
+      },
     fields: [
         {
             name: "name", 
             type: "localeString", 
-            validation: Rule => Rule.required()
+            validation: Rule => Rule.required(),
+            
         },
         {
             name: "handle", 
@@ -108,6 +113,13 @@ export default {
         select: {
             title: 'name.en',
             media: 'thumbnail'
+        },
+        prepare(selection) {
+            const { title, media } = selection
+            return {
+                title: title || 'Untitled Project',
+                media: media
+            }
         }
     }
 } 

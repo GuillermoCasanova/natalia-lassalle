@@ -1,6 +1,5 @@
 <script>
 import { currentLanguage } from "$lib/stores/language";
-import { getLocalizedString } from "$lib/utils/language-filter";
 
 export let activeThumb;
 export let activeThumbInfo;
@@ -27,10 +26,7 @@ export let activeThumbInfo;
             {activeThumbInfo.name}
           </p>
           <p class="thumbnail__details__medium">
-            - {getLocalizedString(
-              activeThumbInfo.medium.title,
-              $currentLanguage
-            )}
+            - {activeThumbInfo.medium?.title || ""}
           </p>
         </div>
       </div>

@@ -11,19 +11,22 @@ import {
   currentLanguage,
   initializeLanguageFromUrl,
 } from "$lib/stores/language";
-import {
-  filterProjectsByLanguage,
-  getLocalizedString,
-} from "$lib/utils/language-filter";
 
 import { onMount } from "svelte";
 
 export let seo;
 export let projects;
 
-// Filter projects based on current language
+// Process projects (server already filtered by language)
 $: filteredProjects = projects
-  ? filterProjectsByLanguage(projects, $currentLanguage)
+  ? (() => {
+      const processed = [...projects]; // Copy the array
+      if (processed && processed.length > 0) {
+        formatDates(processed);
+        placeFeaturedFirst(processed);
+      }
+      return processed;
+    })()
   : [];
 
 let slug = $page.params.slug;
@@ -32,11 +35,6 @@ let activeThumb;
 let activeThumbInfo;
 let projectIsOpen;
 let workIndexSeo = { ...seo };
-
-if (filteredProjects && filteredProjects.length > 0) {
-  formatDates(filteredProjects);
-  placeFeaturedFirst(filteredProjects);
-}
 
 function updateMetaInfo(pMetaInfo, pProjectHandle) {
   let newSeo = pMetaInfo;
@@ -92,13 +90,22 @@ function placeFeaturedFirst(pProjects) {
 
 function formatDates(pProjects) {
   pProjects.forEach((project) => {
-    project.date_released = project.date_released.substring(0, 4);
+    if (project.date_released) {
+      // Handle different date formats
+      if (typeof project.date_released === "string") {
+        // If it's a full date like "2019-01-01", extract just the year
+        project.date_released = project.date_released.substring(0, 4);
+      } else if (project.date_released instanceof Date) {
+        // If it's a Date object, get the year
+        project.date_released = project.date_released.getFullYear().toString();
+      }
+    }
   });
 
   pProjects.sort((a, b) => {
     // Convert "date_released" to numbers for correct numeric sorting
-    const yearA = parseInt(a.date_released);
-    const yearB = parseInt(b.date_released);
+    const yearA = parseInt(a.date_released) || 0;
+    const yearB = parseInt(b.date_released) || 0;
 
     // Sort in descending order
     return yearB - yearA;
@@ -326,10 +333,7 @@ onMount(() => {
                 <div class="project-column project-medium">
                   <p aria-label="Project Medium">
                     {#if project.medium}
-                      {getLocalizedString(
-                        project.medium.title,
-                        $currentLanguage
-                      )}
+                      {project.medium.title}
                     {/if}
                   </p>
                 </div>

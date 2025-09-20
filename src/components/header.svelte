@@ -203,7 +203,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                         title="Go to external link at {navItem.navigationItemUrl
                           .href}"
                       >
-                        {navItem.text}
+                        {navItem.text || "Untitled"}
                       </a>
                     {/if}
 
@@ -215,18 +215,19 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                         href={navItem.navigationItemUrl.internalLink.handle
                           .current}
                         rel="internal"
-                        title="Go to {navItem.text.toLowerCase()} page"
+                        title="Go to {navItem.text?.toLowerCase() ||
+                          'page'} page"
                         class:is-active={pathName ==
                           navItem.navigationItemUrl.href}
                       >
-                        {navItem.text}
+                        {navItem.text || "Untitled"}
                       </a>
                     {/if}
 
                     {#if navItem.navigationItemUrl.linkType == "anchor"}
-                      {#if "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
+                      {#if navItem.text && "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
                         <ModalTrigger
-                          bind:buttonText={navItem.text}
+                          buttonText={navItem.text || "Contact"}
                           modalId="contact-modal"
                           label="contact modal"
                           classes="menu-drawer__link"
@@ -237,9 +238,10 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                           class="menu-drawer__link"
                           href={navItem.navigationItemUrl.anchorLink}
                           rel="internal"
-                          title="Go to {navItem.text.toLowerCase()} section"
+                          title="Go to {navItem.text?.toLowerCase() ||
+                            'section'} section"
                         >
-                          {navItem.text}
+                          {navItem.text || "Untitled"}
                         </a>
                       {/if}
                     {/if}
@@ -274,7 +276,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                     title="Go to external link at {navItem.navigationItemUrl
                       .href}"
                   >
-                    {navItem.text}
+                    {navItem.text || "Untitled"}
                   </a>
                 {/if}
 
@@ -286,7 +288,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                     href="/{navItem.navigationItemUrl.internalLink.handle
                       .current}"
                     rel="internal"
-                    title="Go to {navItem.text.toLowerCase()} page"
+                    title="Go to {navItem.text?.toLowerCase() || 'page'} page"
                     aria-current={pathName ==
                     "/" + navItem.navigationItemUrl.internalLink.handle.current
                       ? "page"
@@ -295,12 +297,12 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                       "/" +
                         navItem.navigationItemUrl.internalLink.handle.current}
                   >
-                    {navItem.text}
+                    {navItem.text || "Untitled"}
                   </a>
                 {/if}
 
                 {#if navItem.navigationItemUrl.linkType == "anchor"}
-                  {#if "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
+                  {#if navItem.text && "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
                     <ModalTrigger
                       bind:buttonText={navItem.text}
                       modalId="contact-modal"
@@ -313,9 +315,10 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                       class="menu-list__link"
                       href={navItem.navigationItemUrl.anchorLink}
                       rel="internal"
-                      title="Go to {navItem.text.toLowerCase()} section"
+                      title="Go to {navItem.text?.toLowerCase() ||
+                        'section'} section"
                     >
-                      {navItem.text}
+                      {navItem.text || "Untitled"}
                     </a>
                   {/if}
                 {/if}

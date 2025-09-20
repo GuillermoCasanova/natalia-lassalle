@@ -1,11 +1,12 @@
 /** @type {import('./$types').LayoutLoad} */
 
 import { client } from '$lib/sanity';
+import { getLanguageFromUrl, fetchWithLocale } from '$lib/sanity/locale-client';
 
 export const ssr = true;
 
-export async function load( {url: {pathname}}) {
-
+export async function load( {url}) {
+    const language = getLanguageFromUrl(url);
 
     const footerRequest = `*[_type == 'footer-settings'][0] {
         ...,
@@ -29,6 +30,11 @@ export async function load( {url: {pathname}}) {
             ..., 
             items[] {
                 ...,
+                "text": select(
+                    defined(text.${language}) => text.${language},
+                    defined(text.en) => text.en,
+                    text
+                ),
                 select(navigationItemUrl.linkType == "internal") => {
                     'navigationItemUrl': navigationItemUrl {
                         ...,
@@ -41,13 +47,13 @@ export async function load( {url: {pathname}}) {
 
 
 
-    const navigation = await client.fetch(mainNavRequest); 
+    const navigation = await fetchWithLocale(mainNavRequest, language); 
     const footer = await client.fetch(footerRequest); 
     
     return {
         navigation,
         footer,
-        pathname
+        pathname: url.pathname
     };
 }
 

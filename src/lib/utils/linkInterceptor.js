@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
-import { addLanguageToUrl } from '$lib/stores/language';
+import { addLanguageToUrl, currentLanguage } from '$lib/stores/language';
+import { get } from 'svelte/store';
 
 /**
  * Intercepts clicks on internal links and adds language parameter
@@ -40,7 +41,7 @@ export function handleInternalLinkClick(event) {
   event.preventDefault();
   
   // Add language parameter and navigate
-  const urlWithLang = addLanguageToUrl(href);
+  const urlWithLang = addLanguageToUrl(href, get(currentLanguage));
   
   console.log('=== LINK INTERCEPTOR ===');
   console.log('Original URL:', href);

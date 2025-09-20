@@ -1,7 +1,10 @@
 /** @type {import('./$types').PageLoad} */
 import { client } from '$lib/sanity';
+import { getLanguageFromUrl, fetchWithLocale } from '$lib/sanity/locale-client';
 
-export async function load({ params, fetch }) {
+export async function load({ params, url }) {
+    const language = getLanguageFromUrl(url);
+
     const request = `*[_type == 'site-settings'][0] {
             seo,
             analytics
@@ -25,18 +28,87 @@ export async function load({ params, fetch }) {
                 featured_project-> {
                     handle
                 }
+            },
+            select(_type == "sctn_rich_text") => {
+                ...,
+                "text": select(
+                    defined(text[language == "${language}"]) => text[language == "${language}"][0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> {
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    },
+                    defined(text[language == "en"]) => text[language == "en"][0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> {
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    },
+                    defined(text[0]) => text[0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> {
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    }
+                )
+            },
+            _type == "sctn_experience_list" => {
+                ...,
+                "title": select(
+                    defined(title.${language}) => title.${language},
+                    defined(title.en) => title.en,
+                    title
+                )
             }
         }
     } 
     `;
 
-
-    const content = await client.fetch(page_request, params);
-
+    const content = await fetchWithLocale(page_request, language, params);
 
     //This is available to child components via STUFF since it is in layout
     return {
         siteHead,
-        content
+        content,
+        currentLanguage: language
     };
 }

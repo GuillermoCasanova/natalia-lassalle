@@ -20,6 +20,12 @@ export default {
     preview: {
         select: {
             title: "title.en"
+        },
+        prepare(selection) {
+            const { title } = selection
+            return {
+                title: title || 'Rich Text Section'
+            }
         }
     }
 }

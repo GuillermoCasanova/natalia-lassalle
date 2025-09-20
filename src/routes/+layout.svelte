@@ -26,6 +26,8 @@ let ready = true;
 $: loading = false;
 $: pathName = $page.url.pathname;
 
+console.log("data", data.navigation.main_nav.items);
+
 function scrollToSection(pHash, pBehavior) {
   let element = document.querySelector(pHash);
   let headerOffset = document.querySelector("header").offsetHeight - 5;

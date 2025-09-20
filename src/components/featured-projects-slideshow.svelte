@@ -8,7 +8,6 @@ import { onMount } from "svelte";
 import { onDestroy } from "svelte";
 import { client } from "$lib/sanity";
 import { currentLanguage } from "$lib/stores/language";
-import { getLocalizedString } from "$lib/utils/language-filter";
 
 let myData = [];
 let featuredProjects = [];
@@ -108,10 +107,7 @@ onDestroy(() => {
                     {project.name}
                   </p>
                   <p class="thumbnail__details__medium">
-                    - {getLocalizedString(
-                      project.medium.title,
-                      $currentLanguage
-                    )}
+                    - {project.medium?.title || ""}
                   </p>
                 </div>
               </a>

@@ -61,25 +61,65 @@ export function buildLocalizedQuery(baseQuery, language = 'en', availableLanguag
         ...,
         // Automatically select the correct language with fallback
         "name": ${buildSelectStatement('name')},
-        "about": ${buildSelectStatement('about', true)} {
-            ...,
-            markDefs[] {
+        "about": select(
+            defined(about[language == "${language}"]) => about[language == "${language}"][0].content[] {
                 ...,
-                _type == "internalLink" => {
-                    "page": page-> { 
-                        "slug": handle.current,
-                        "title": page_title,
-                        "_type": _type
+                markDefs[] {
+                    ...,
+                    _type == "internalLink" => {
+                        "page": page-> { 
+                            "slug": handle.current,
+                            "title": page_title,
+                            "_type": _type
+                        }
+                    },
+                    _type == "link" => {
+                        ...,
+                    },
+                    _type == "mailtoLink" => {
+                        ...,
                     }
-                },
-                _type == "link" => {
+                }
+            },
+            defined(about[language == "en"]) => about[language == "en"][0].content[] {
+                ...,
+                markDefs[] {
                     ...,
-                },
-                _type == "mailtoLink" => {
+                    _type == "internalLink" => {
+                        "page": page-> { 
+                            "slug": handle.current,
+                            "title": page_title,
+                            "_type": _type
+                        }
+                    },
+                    _type == "link" => {
+                        ...,
+                    },
+                    _type == "mailtoLink" => {
+                        ...,
+                    }
+                }
+            },
+            defined(about[0]) => about[0].content[] {
+                ...,
+                markDefs[] {
                     ...,
+                    _type == "internalLink" => {
+                        "page": page-> { 
+                            "slug": handle.current,
+                            "title": page_title,
+                            "_type": _type
+                        }
+                    },
+                    _type == "link" => {
+                        ...,
+                    },
+                    _type == "mailtoLink" => {
+                        ...,
+                    }
                 }
             }
-        },
+        ),
         "medium": medium->{
             ...,
             "title": ${buildSelectStatement('title')}
@@ -111,7 +151,7 @@ export function buildPageQuery(language = 'en') {
             _type == "sctn_rich_text" => {
                 ...,
                 "text": select(
-                    "${language}" == "es" => text.es[] {
+                    defined(text[language == "${language}"]) => text[language == "${language}"][0].content[] {
                         ...,
                         markDefs[] {
                             ...,
@@ -130,7 +170,26 @@ export function buildPageQuery(language = 'en') {
                             }
                         }
                     },
-                    text.en[] {
+                    defined(text[language == "en"]) => text[language == "en"][0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> { 
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    },
+                    defined(text[0]) => text[0].content[] {
                         ...,
                         markDefs[] {
                             ...,
