@@ -49,7 +49,7 @@ export function buildLocalizedQuery(baseQuery, language = 'en', availableLanguag
         }
         
         const conditions = fallbackChain.map((lang, index) => {
-            const condition = index === 0 ? `"${language}" == "${lang}"` : `defined(${field}.${lang})`;
+            const condition = `defined(${field}.${lang}) && ${field}.${lang} != ""`;
             const value = `${field}.${lang}${isArray ? '[]' : ''}`;
             return `${condition} => ${value}`;
         }).join(',\n            ');
@@ -62,7 +62,7 @@ export function buildLocalizedQuery(baseQuery, language = 'en', availableLanguag
         // Automatically select the correct language with fallback
         "name": ${buildSelectStatement('name')},
         "about": select(
-            defined(about[language == "${language}"]) => about[language == "${language}"][0].content[] {
+            defined(about[language == "${language}"]) && count(about[language == "${language}"][0].content) > 0 => about[language == "${language}"][0].content[] {
                 ...,
                 markDefs[] {
                     ...,
@@ -81,7 +81,7 @@ export function buildLocalizedQuery(baseQuery, language = 'en', availableLanguag
                     }
                 }
             },
-            defined(about[language == "en"]) => about[language == "en"][0].content[] {
+            defined(about[language == "en"]) && count(about[language == "en"][0].content) > 0 => about[language == "en"][0].content[] {
                 ...,
                 markDefs[] {
                     ...,
@@ -265,5 +265,96 @@ export const queries = {
     projectBySlug: (slug, language = 'en') => buildLocalizedQuery(
         `*[_type == 'project' && handle.current == '${slug}'][0]`,
         language
-    )
+    ),
+
+    /**
+     * Get texts page with automatic language selection
+     * @param {string} language - The target language
+     * @returns {string} GROQ query
+     */
+    texts: (language = 'en') => buildTextsQuery(language)
 };
+
+/**
+ * Build a texts page query with automatic language selection
+ * @param {string} language - The target language
+ * @returns {string} Texts page query with language selection
+ */
+export function buildTextsQuery(language = 'en') {
+    return `*[_type == 'page' && handle.current == 'texts'][0] {
+        ...,
+        page_layout[]-> {
+            ...,
+            _type == "sctn_rich_text" => {
+                ...,
+                "text": select(
+                    defined(text[language == "${language}"]) => text[language == "${language}"][0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> { 
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    },
+                    defined(text[language == "en"]) => text[language == "en"][0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> { 
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    },
+                    defined(text[0]) => text[0].content[] {
+                        ...,
+                        markDefs[] {
+                            ...,
+                            _type == "internalLink" => {
+                                "page": page-> { 
+                                    "slug": handle.current,
+                                    "title": page_title,
+                                    "_type": _type
+                                }
+                            },
+                            _type == "link" => {
+                                ...,
+                            },
+                            _type == "mailtoLink" => {
+                                ...,
+                            }
+                        }
+                    }
+                )
+            },
+            _type == "sctn_experience_list" => {
+                ...,
+                "title": select(
+                    defined(title.${language}) => title.${language},
+                    defined(title.en) => title.en,
+                    title
+                )
+            }
+        }
+    }`;
+}

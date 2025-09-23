@@ -7,6 +7,7 @@ import {
 import { onMount } from "svelte";
 import { page } from "$app/stores";
 import { goto } from "$app/navigation";
+import { invalidate } from "$app/navigation";
 
 let isOpen = false;
 
@@ -27,8 +28,10 @@ function handleLanguageChange(langCode: string) {
   console.log("New URL with language:", newUrl);
   console.log("Navigating to:", newUrl);
 
-  // Navigate to the new URL using SvelteKit's goto
-  goto(newUrl);
+  // Invalidate layout data and navigate
+  invalidate("layout:language").then(() => {
+    window.location.href = newUrl;
+  });
 
   console.log("Store value after change:", $currentLanguage);
   console.log("================================");

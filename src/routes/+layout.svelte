@@ -18,8 +18,12 @@ import {
   setupLinkInterceptor,
   removeLinkInterceptor,
 } from "$lib/utils/linkInterceptor";
+import { currentLanguage } from "$lib/stores/language";
 
 export let data;
+
+// Make navigation reactive to language changes
+$: navigationData = data.navigation;
 
 let ready = true;
 
@@ -91,7 +95,7 @@ onMount(() => {
   </div>
 {/if}
 
-<Nav {...data.navigation} />
+<Nav {...navigationData} />
 
 <main data-sveltekit-prefetch>
   <slot />

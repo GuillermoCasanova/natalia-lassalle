@@ -9,94 +9,80 @@ export async function load(loadEvent) {
     // Get language from URL parameter (e.g., ?lang=es)
     const language = getLanguageFromUrl(url);
 
-    // Use localized query for texts page
-    const pageQuery = `*[_type == 'page' && handle.current == 'texts'][0] {
-        ...,
-        page_layout[]-> {
-            ...,
-            _type == "sctn_rich_text" => {
-                ...,
-                "text": select(
-                    defined(text[language == "${language}"]) => text[language == "${language}"][0].content[] {
-                        ...,
-                        markDefs[] {
-                            ...,
-                            _type == "internalLink" => {
-                                "page": page-> { 
-                                    "slug": handle.current,
-                                    "title": page_title,
-                                    "_type": _type
-                                }
-                            },
-                            _type == "link" => {
-                                ...,
-                            },
-                            _type == "mailtoLink" => {
-                                ...,
-                            }
-                        }
-                    },
-                    defined(text[language == "en"]) => text[language == "en"][0].content[] {
-                        ...,
-                        markDefs[] {
-                            ...,
-                            _type == "internalLink" => {
-                                "page": page-> { 
-                                    "slug": handle.current,
-                                    "title": page_title,
-                                    "_type": _type
-                                }
-                            },
-                            _type == "link" => {
-                                ...,
-                            },
-                            _type == "mailtoLink" => {
-                                ...,
-                            }
-                        }
-                    },
-                    defined(text[0]) => text[0].content[] {
-                        ...,
-                        markDefs[] {
-                            ...,
-                            _type == "internalLink" => {
-                                "page": page-> { 
-                                    "slug": handle.current,
-                                    "title": page_title,
-                                    "_type": _type
-                                }
-                            },
-                            _type == "link" => {
-                                ...,
-                            },
-                            _type == "mailtoLink" => {
-                                ...,
-                            }
-                        }
-                    }
-                )
-            },
-            _type == "sctn_experience_list" => {
-                ...,
-                "title": select(
-                    defined(title.${language}) => title.${language},
-                    defined(title.en) => title.en,
-                    title
-                )
-            }
-        }
-    }`;
-
-    // Posts query (not localized for now, but could be added later)
+    // Posts query with localization
     const postsQuery = `*[_type == 'post' && !(_id in path('drafts.**'))][] {
         ...,
+        "title": select(
+            defined(title.${language}) && title.${language} != "" => title.${language},
+            defined(title.en) && title.en != "" => title.en,
+            title
+        ),
+        "content": select(
+            defined(content[language == "${language}"]) && count(content[language == "${language}"][0].content) > 0 => content[language == "${language}"][0].content[] {
+                ...,
+                markDefs[] {
+                    ...,
+                    _type == "internalLink" => {
+                        "page": page-> { 
+                            "slug": handle.current,
+                            "title": page_title,
+                            "_type": _type
+                        }
+                    },
+                    _type == "link" => {
+                        ...,
+                    },
+                    _type == "mailtoLink" => {
+                        ...,
+                    }
+                }
+            },
+            defined(content[language == "en"]) && count(content[language == "en"][0].content) > 0 => content[language == "en"][0].content[] {
+                ...,
+                markDefs[] {
+                    ...,
+                    _type == "internalLink" => {
+                        "page": page-> { 
+                            "slug": handle.current,
+                            "title": page_title,
+                            "_type": _type
+                        }
+                    },
+                    _type == "link" => {
+                        ...,
+                    },
+                    _type == "mailtoLink" => {
+                        ...,
+                    }
+                }
+            },
+            defined(content[0]) => content[0].content[] {
+                ...,
+                markDefs[] {
+                    ...,
+                    _type == "internalLink" => {
+                        "page": page-> { 
+                            "slug": handle.current,
+                            "title": page_title,
+                            "_type": _type
+                        }
+                    },
+                    _type == "link" => {
+                        ...,
+                    },
+                    _type == "mailtoLink" => {
+                        ...,
+                    }
+                }
+            }
+        ),
         authors[]->
     }`;
 
-    // Fetch data with automatic language selection
+    // Fetch data with automatic language selection using centralized query
     const [content, posts] = await Promise.all([
-        fetchWithLocale(pageQuery, language, params),
-        client.fetch(postsQuery)
+        fetchWithLocale(queries.texts(language), language, params),
+        fetchWithLocale(postsQuery, language, params)
     ]);
 
     return {
