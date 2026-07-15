@@ -9,8 +9,8 @@ import { page } from "$app/stores";
 import { goto } from "$app/navigation";
 import {
   currentLanguage,
-  initializeLanguageFromUrl,
-  addLanguageToUrl,
+  localizedPath,
+  initializeLanguageFromParams,
 } from "$lib/stores/language";
 
 import { onMount } from "svelte";
@@ -45,7 +45,7 @@ function updateMetaInfo(pMetaInfo, pProjectHandle) {
 
   // Only update URL if it's different from current
   const currentPath = window.location.pathname;
-  const newPath = addLanguageToUrl(`/work/${pProjectHandle}`, $currentLanguage);
+  const newPath = localizedPath(`/work/${pProjectHandle}`, $currentLanguage);
 
   if (currentPath !== newPath) {
     // Use replaceState instead of pushState to avoid adding to history
@@ -115,12 +115,11 @@ function formatDates(pProjects) {
 
 function goToWorkHome() {
   seo = workIndexSeo;
-  goto(addLanguageToUrl("/work", $currentLanguage));
+  goto(localizedPath("/work", $currentLanguage));
 }
 
 onMount(() => {
-  // Initialize language from URL on client side
-  initializeLanguageFromUrl();
+  initializeLanguageFromParams($page.params.lang || "en");
 
   console.log("Original projects:", projects);
   console.log("Filtered projects:", filteredProjects);

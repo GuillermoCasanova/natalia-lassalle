@@ -3,9 +3,17 @@ import { trapFocus, removeTrapFocus } from "$lib/trapFocus";
 import { page } from "$app/stores";
 import ModalTrigger from "./modal-trigger.svelte";
 import LanguageSwitcher from "./language-switcher.svelte";
+import { localizedPath } from "$lib/stores/language";
 import { onMount } from "svelte";
 
 export let main_nav;
+export let lang = "en";
+
+function getPageSlug(internalLink) {
+  const handle = internalLink?.handle;
+  if (!handle) return null;
+  return typeof handle === "string" ? handle : handle.current;
+}
 
 let navLinks = main_nav.items;
 let container;
@@ -14,7 +22,7 @@ let isHomePage = true;
 
 $: {
   currentPage = $page.url.pathname;
-  isHomePage = currentPage.length == 1 ? true : false;
+  isHomePage = currentPage === `/${lang}` || currentPage === `/${lang}/`;
 }
 
 //
@@ -111,9 +119,9 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
 >
   <div class="header__inner">
     <div class="header__logo">
-      {#if pathName == "/"}
+      {#if isHomePage}
         <a
-          href="/"
+          href={localizedPath("/", lang)}
           title="Natalia Lassalle Morillo home"
           rel="internal"
           on:click={closeMenuDrawer}
@@ -129,7 +137,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
       {:else}
         <a
           class="header__logo__inner"
-          href="/"
+          href={localizedPath("/", lang)}
           title="Natalia Lassalle Morillo home"
           rel="internal"
           on:click={closeMenuDrawer}
@@ -204,18 +212,23 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                       </a>
                     {/if}
 
-                    {#if navItem.navigationItemUrl.linkType == "internal"}
+                    {#if navItem.navigationItemUrl.linkType == "internal" && getPageSlug(navItem.navigationItemUrl.internalLink)}
                       <a
                         data-sveltekit-noscroll
                         on:click={closeMenuDrawer}
                         class="menu-drawer__link"
-                        href={navItem.navigationItemUrl.internalLink.handle
-                          .current}
+                        href={localizedPath(
+                          `/${getPageSlug(navItem.navigationItemUrl.internalLink)}`,
+                          lang
+                        )}
                         rel="internal"
                         title="Go to {navItem.text?.toLowerCase() ||
                           'page'} page"
                         class:is-active={pathName ==
-                          navItem.navigationItemUrl.href}
+                          localizedPath(
+                            `/${getPageSlug(navItem.navigationItemUrl.internalLink)}`,
+                            lang
+                          )}
                       >
                         {navItem.text || "Untitled"}
                       </a>
@@ -277,22 +290,29 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                   </a>
                 {/if}
 
-                {#if navItem.navigationItemUrl.linkType == "internal"}
+                {#if navItem.navigationItemUrl.linkType == "internal" && getPageSlug(navItem.navigationItemUrl.internalLink)}
                   <a
                     data-sveltekit-noscroll
                     on:click={closeMenuDrawer}
                     class="menu-list__link"
-                    href="/{navItem.navigationItemUrl.internalLink.handle
-                      .current}"
+                    href={localizedPath(
+                      `/${getPageSlug(navItem.navigationItemUrl.internalLink)}`,
+                      lang
+                    )}
                     rel="internal"
                     title="Go to {navItem.text?.toLowerCase() || 'page'} page"
                     aria-current={pathName ==
-                    "/" + navItem.navigationItemUrl.internalLink.handle.current
+                    localizedPath(
+                      `/${getPageSlug(navItem.navigationItemUrl.internalLink)}`,
+                      lang
+                    )
                       ? "page"
                       : false || null}
                     class:is-active={pathName ==
-                      "/" +
-                        navItem.navigationItemUrl.internalLink.handle.current}
+                      localizedPath(
+                        `/${getPageSlug(navItem.navigationItemUrl.internalLink)}`,
+                        lang
+                      )}
                   >
                     {navItem.text || "Untitled"}
                   </a>

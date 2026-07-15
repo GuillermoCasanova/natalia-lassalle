@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import { sendMail } from '$lib/server/email';
 
 export async function POST({ request }) {

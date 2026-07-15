@@ -1,45 +1,31 @@
-<script lang="ts">
+<script>
 import {
   currentLanguage,
   languages,
-  addLanguageToUrl,
+  switchLanguagePath,
+  initializeLanguageFromParams
 } from "$lib/stores/language";
 import { onMount } from "svelte";
 import { page } from "$app/stores";
 import { goto } from "$app/navigation";
-import { invalidate } from "$app/navigation";
 
 let isOpen = false;
 
-function handleLanguageChange(langCode: string) {
-  console.log("=== LANGUAGE SWITCHER DEBUG ===");
-  console.log("Switching to language:", langCode);
-  console.log("Current store value before change:", $currentLanguage);
-
-  // Update the store
+function handleLanguageChange(langCode) {
   $currentLanguage = langCode;
   isOpen = false;
 
-  // Navigate to current URL with new language parameter
-  const currentUrl = $page.url.pathname + $page.url.search;
-  const newUrl = addLanguageToUrl(currentUrl, langCode);
-
-  console.log("Current URL:", currentUrl);
-  console.log("New URL with language:", newUrl);
-  console.log("Navigating to:", newUrl);
-
-  // Invalidate layout data and navigate
-  invalidate("layout:language").then(() => {
-    window.location.href = newUrl;
-  });
-
-  console.log("Store value after change:", $currentLanguage);
-  console.log("================================");
+  const newUrl = switchLanguagePath($page.url.pathname, langCode);
+  goto(newUrl);
 }
 
 function toggleDropdown() {
   isOpen = !isOpen;
 }
+
+onMount(() => {
+  initializeLanguageFromParams($page.params.lang || "en");
+});
 </script>
 
 <div class="language-switcher">

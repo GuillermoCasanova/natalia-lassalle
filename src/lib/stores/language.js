@@ -1,63 +1,75 @@
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
 
-// Available languages
 export const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' }
+	{ code: 'en', name: 'English', flag: '🇺🇸' },
+	{ code: 'es', name: 'Español', flag: '🇪🇸' }
 ];
 
-// Language store
 export const currentLanguage = writable('en');
 
-// Initialize language from URL if in browser
 /**
- * @param {URL} url
- * @returns {string}
+ * @param {string} lang
  */
-export function getLanguageFromUrl(url) {
-    return url.searchParams.get('lang') || 'en';
+export function initializeLanguageFromParams(lang) {
+	if (browser) {
+		currentLanguage.set(lang);
+	}
 }
 
-// Initialize language from URL on page load
+/** @deprecated Use initializeLanguageFromParams */
 export function initializeLanguageFromUrl() {
-    if (browser) {
-        const url = new URL(window.location.href);
-        const language = getLanguageFromUrl(url);
-        currentLanguage.set(language);
-        console.log('Language store initialized with:', language);
-    }
+	if (browser) {
+		const url = new URL(window.location.href);
+		const segments = url.pathname.split('/').filter(Boolean);
+		const language = segments[0] === 'es' ? 'es' : 'en';
+		currentLanguage.set(language);
+	}
 }
 
-// Add language parameter to URL
 /**
- * @param {string} url
+ * Build a localized path from a route segment path.
+ * @param {string} path - e.g. '/work', '/work/foo', 'about'
  * @param {string} language
  * @returns {string}
  */
-export function addLanguageToUrl(url, language) {
-    if (typeof url !== 'string') {
-        return String(url);
-    }
-    
-    // Handle relative URLs by creating a URL object with current origin
-    const baseUrl = browser ? window.location.origin : 'http://localhost:5173';
-    const urlObj = new URL(url, baseUrl);
-    
-    if (language === 'en') {
-        urlObj.searchParams.delete('lang');
-    } else {
-        urlObj.searchParams.set('lang', language);
-    }
-    
-    // Return just the pathname and search params for internal navigation
-    return urlObj.pathname + urlObj.search;
+export function localizedPath(path, language) {
+	const normalized = path.startsWith('/') ? path : `/${path}`;
+	const stripped = normalized.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
+
+	if (stripped === '/') {
+		return `/${language}`;
+	}
+
+	return `/${language}${stripped.startsWith('/') ? stripped : `/${stripped}`}`;
 }
 
-// Derived store for language-aware operations
+/**
+ * Swap the language segment in the current pathname.
+ * @param {string} pathname
+ * @param {string} language
+ * @returns {string}
+ */
+export function switchLanguagePath(pathname, language) {
+	const segments = pathname.split('/').filter(Boolean);
+
+	if (segments.length > 0 && languages.some((lang) => lang.code === segments[0])) {
+		segments[0] = language;
+	} else {
+		segments.unshift(language);
+	}
+
+	return `/${segments.join('/')}`;
+}
+
+/** @deprecated Use localizedPath instead */
+export function addLanguageToUrl(url, language) {
+	return localizedPath(url, language);
+}
+
 export const languageInfo = derived(currentLanguage, ($currentLanguage) => ({
-    current: $currentLanguage,
-    isEnglish: $currentLanguage === 'en',
-    isSpanish: $currentLanguage === 'es',
-    displayName: $currentLanguage === 'es' ? 'Español' : 'English'
+	current: $currentLanguage,
+	isEnglish: $currentLanguage === 'en',
+	isSpanish: $currentLanguage === 'es',
+	displayName: $currentLanguage === 'es' ? 'Español' : 'English'
 }));

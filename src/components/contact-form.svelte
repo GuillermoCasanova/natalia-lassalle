@@ -8,23 +8,13 @@ let modalContainer;
 let succesfullySubmitted = false;
 let modalIsOpen = false;
 let modalId = "contact-modal";
-let modal_copy = {
+
+export let modalCopy = {
   default_state: {},
   success_state: {},
 };
-import { client } from "$lib/sanity";
 
-async function loadData() {
-  const formRequest = `*[_type == 'modal' && handle.current == "${modalId}" ][0] {
-			...
-    	}`;
-
-  const content = await client.fetch(formRequest);
-
-  return {
-    content,
-  };
-}
+$: modal_copy = modalCopy || { default_state: {}, success_state: {} };
 
 async function sendMail(event) {
   const formData = new FormData(event.target);
@@ -79,15 +69,6 @@ function closeModal(event) {
     elem.value = "";
   });
 }
-
-loadData()
-  .then((response) => {
-    modal_copy = response.content;
-    return true;
-  })
-  .catch(() => {
-    console.log("There has been an error loading the site. Please refresh.");
-  });
 
 onMount(() => {
   document.addEventListener("modal open", (event) => {

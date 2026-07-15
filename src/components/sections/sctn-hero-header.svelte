@@ -4,6 +4,8 @@ import { urlFor } from "$lib/sanity";
 import { onMount } from "svelte";
 import { onDestroy } from "svelte";
 import { browser } from "$app/environment";
+import { page } from "$app/stores";
+import { localizedPath } from "$lib/stores/language";
 
 export let section;
 let element;
@@ -150,7 +152,12 @@ function onWheel(event) {
   <section class="section-hero-header" bind:this={heroHeader}>
     <div class="section-hero-header__inner">
       <a
-        href="/work/{section.featured_project.handle.current}"
+        href={section.featured_project?.handle?.current
+          ? localizedPath(
+              `/work/${section.featured_project.handle.current}`,
+              $page.params.lang || "en"
+            )
+          : "#"}
         class="section-hero-header__copy"
       >
         <div class="main-container">

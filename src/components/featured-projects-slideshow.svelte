@@ -6,74 +6,59 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import { onMount } from "svelte";
 import { onDestroy } from "svelte";
-import { client } from "$lib/sanity";
-import { currentLanguage } from "$lib/stores/language";
+import { page } from "$app/stores";
+import { localizedPath } from "$lib/stores/language";
 
-let myData = [];
-let featuredProjects = [];
+export let featuredProjects = [];
+
 let swiper;
 let thumbnailContainer;
 
+$: lang = $page.params.lang || "en";
+$: projects = shuffleArray([...featuredProjects]);
+
 onMount(() => {
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
+  if (!projects.length) return;
 
-  async function fetchData() {
-    try {
-      const query = `*[_type == 'project'][0..6]{
-            name,
-            thumbnail, 
-            "medium" : medium ->{
-            ...
-            },
-            "handle": handle.current
-        }`;
-      const data = await client.fetch(query);
-      myData = shuffleArray(data);
-      return myData;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
+  setTimeout(() => {
+    swiper = new Swiper(".featured-projects-swiper", {
+      modules: [EffectFade, Pagination, Autoplay],
+      speed: 1000,
+      effect: "fade",
+      fadeEffect: {
+        crossFade: true,
+      },
+      loop: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      },
+    });
 
-  fetchData().then((response) => {
-    featuredProjects = response;
-    setTimeout(() => {
-      swiper = new Swiper(".featured-projects-swiper", {
-        modules: [EffectFade, Pagination, Autoplay],
-        speed: 1000,
-        effect: "fade",
-        fadeEffect: {
-          crossFade: true,
-        },
-        loop: true,
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        },
-      });
-
+    if (thumbnailContainer) {
       thumbnailContainer.style.opacity = 1;
-    }, 200);
-  });
+    }
+  }, 200);
 });
 
 onDestroy(() => {
-  // Destroy the Swiper instance when the component is unmounted
   if (swiper) {
     swiper.destroy();
   }
 });
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 </script>
 
 <aside>
-  {#if featuredProjects}
+  {#if projects.length}
     <div
       class="thumbnails-container"
       style="opacity: 0;"
@@ -81,10 +66,10 @@ onDestroy(() => {
     >
       <div class="swiper thumbnails-container__inner featured-projects-swiper">
         <div class="swiper-wrapper">
-          {#each featuredProjects as project}
+          {#each projects as project}
             <div class="swiper-slide">
               <a
-                href="/work/{project.handle}"
+                href={localizedPath(`/work/${project.handle}`, lang)}
                 title="Go to project {project.name}"
                 rel="internal"
                 class="thumbnail"

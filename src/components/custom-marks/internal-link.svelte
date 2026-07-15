@@ -1,5 +1,7 @@
 <script lang="ts">
 import type { MarkComponentProps } from "@portabletext/svelte";
+import { page } from "$app/stores";
+import { localizedPath } from "$lib/stores/language";
 
 export let portableText: MarkComponentProps<{
   _type?: string;
@@ -7,7 +9,7 @@ export let portableText: MarkComponentProps<{
   page?: {
     title: string | null;
     slug: string | null;
-    _type: string; // This will tell us if it's a page or project
+    _type: string;
   };
 }>;
 
@@ -15,9 +17,7 @@ $: ({ value } = portableText);
 $: type = value.page?._type;
 $: page_title = value.page?.title || value.name;
 $: handle = value.page?.slug;
-
-// Debug logging
-$: console.log("Internal Link Value:", { value, type, page_title, handle });
+$: lang = $page.params.lang || "en";
 </script>
 
 {#if !handle}
@@ -26,7 +26,7 @@ $: console.log("Internal Link Value:", { value, type, page_title, handle });
   </span>
 {:else if type === "project"}
   <a
-    href="/work/{handle}"
+    href={localizedPath(`/work/${handle}`, lang)}
     rel="internal"
     title="View {page_title || 'Untitled'} Case Study"
   >
@@ -34,7 +34,7 @@ $: console.log("Internal Link Value:", { value, type, page_title, handle });
   </a>
 {:else}
   <a
-    href="/{handle}"
+    href={localizedPath(`/${handle}`, lang)}
     rel="internal"
     title="Go to {page_title || 'Untitled'} page"
   >

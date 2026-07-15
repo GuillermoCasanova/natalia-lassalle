@@ -1,0 +1,1 @@
+import{createClient as t}from"@sanity/client";const s={projectId:"43ajij5z",dataset:"production",apiVersion:"2022-11-14",token:"skKfNNgILwxuXfQfQ97HXSLu99pc8h1F85pevC454YTmuFFtQgwVCdxGGK1h0usLl9xFiwqMAvtlGY2XPPWECTE3ABDzNmPl9K54f2dGs1YwOyUYOzaMFeYCdlfqru4ZWWM8kBqxech5NChxrrQcA4vsN4ZyBHVIgTmVtiafKWYYVulor47Q",useCdn:!1},e=t(s);export{e as c,s};

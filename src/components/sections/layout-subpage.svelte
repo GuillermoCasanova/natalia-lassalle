@@ -18,7 +18,7 @@ export let seo;
 							<h1>{$page.data.content.page_title}</h1>
 						</div>
 					</section> -->
-        {#if data.content.page_layout}
+        {#if data.content?.page_layout}
           {#each data.content.page_layout as section}
             {#if section._type == "sctn_rich_text"}
               <SectionRichText {section} />

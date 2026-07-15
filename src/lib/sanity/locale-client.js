@@ -4,15 +4,7 @@
  */
 
 import { createClient } from '@sanity/client';
-
-// Base Sanity configuration
-const baseConfig = {
-    projectId: '43ajij5z',
-    dataset: 'production',
-    apiVersion: '2022-11-14',
-    token: 'skKfNNgILwxuXfQfQ97HXSLu99pc8h1F85pevC454YTmuFFtQgwVCdxGGK1h0usLl9xFiwqMAvtlGY2XPPWECTE3ABDzNmPl9K54f2dGs1YwOyUYOzaMFeYCdlfqru4ZWWM8kBqxech5NChxrrQcA4vsN4ZyBHVIgTmVtiafKWYYVulor47Q',
-    useCdn: false,
-};
+import { sanityConfig as baseConfig } from '$lib/server/sanity.js';
 
 /**
  * Create a Sanity client with automatic locale handling
@@ -227,9 +219,18 @@ export async function fetchWithLocale(query, language = 'en', params = {}) {
 }
 
 /**
+ * Get language from route params with fallback
+ * @param {{ lang?: string }} params
+ * @returns {string}
+ */
+export function getLanguageFromParams(params) {
+    return params?.lang || 'en';
+}
+
+/**
  * Get language from URL with fallback
- * @param {URL} url - The URL object
- * @returns {string} Language code
+ * @param {URL} url
+ * @returns {string}
  */
 export function getLanguageFromUrl(url) {
     return url.searchParams.get('lang') || 'en';
