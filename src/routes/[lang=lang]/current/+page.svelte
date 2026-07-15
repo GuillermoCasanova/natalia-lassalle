@@ -1,8 +1,10 @@
 <script>
 import { MetaTags } from "svelte-meta-tags";
+import { getSeoImageMeta } from "$lib/seo";
 import LayoutSubpage from "../../../components/sections/layout-subpage.svelte";
 export let data;
 $: seo = data.siteHead?.seo ?? data.content?.seo;
+$: seoImage = getSeoImageMeta(seo?.banner_image);
 </script>
 
 <svelte:head>
@@ -15,16 +17,7 @@ $: seo = data.siteHead?.seo ?? data.content?.seo;
       url: "https://natalialassallemorillo.com/current",
       title: seo.title,
       description: seo.description,
-      images: [
-        {
-          url: seo.banner_image?.url + "?auto=format&width=1200",
-          width: 800,
-          height: 600,
-          alt: seo.banner_image?.alt_text
-            ? seo.banner_image.alt_text
-            : "Missing Alt Text",
-        },
-      ],
+      ...(seoImage ? { images: [seoImage] } : {}),
       site_name: "SiteName",
     }}
     twitter={{
@@ -33,10 +26,7 @@ $: seo = data.siteHead?.seo ?? data.content?.seo;
       cardType: "summary_large_image",
       title: seo.title,
       description: seo.description,
-      image: seo.banner_image?.url + "?auto=format&width=1200",
-      imageAlt: seo.banner_image?.alt_text
-        ? seo.banner_image.alt_text
-        : "Missing Alt Text",
+      ...(seoImage ? { image: seoImage.url, imageAlt: seoImage.alt } : {}),
     }}
   />
   {/if}

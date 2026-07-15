@@ -12,10 +12,11 @@ export let lang = "en";
 function getPageSlug(internalLink) {
   const handle = internalLink?.handle;
   if (!handle) return null;
-  return typeof handle === "string" ? handle : handle.current;
+  const slug = typeof handle === "string" ? handle : handle.current;
+  return slug || null;
 }
 
-let navLinks = main_nav.items;
+$: navLinks = main_nav?.items ?? [];
 let container;
 let currentPage;
 let isHomePage = true;
@@ -196,7 +197,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                     class="menu-drawer__item"
                     style="transition-delay: {0.1 * index + 's'}"
                   >
-                    {#if navItem.navigationItemUrl.linkType == "external"}
+                    {#if navItem.navigationItemUrl?.linkType == "external"}
                       <a
                         on:click={closeMenuDrawer}
                         class="menu-drawer__link"
@@ -212,7 +213,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                       </a>
                     {/if}
 
-                    {#if navItem.navigationItemUrl.linkType == "internal" && getPageSlug(navItem.navigationItemUrl.internalLink)}
+                    {#if navItem.navigationItemUrl?.linkType == "internal" && getPageSlug(navItem.navigationItemUrl.internalLink)}
                       <a
                         data-sveltekit-noscroll
                         on:click={closeMenuDrawer}
@@ -234,7 +235,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                       </a>
                     {/if}
 
-                    {#if navItem.navigationItemUrl.linkType == "anchor"}
+                    {#if navItem.navigationItemUrl?.linkType == "anchor"}
                       {#if navItem.text && "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
                         <ModalTrigger
                           buttonText={navItem.text || "Contact"}
@@ -276,7 +277,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                 class="menu-list__item"
                 style="transition-delay: {0.1 * index + 's'}"
               >
-                {#if navItem.navigationItemUrl.linkType == "external"}
+                {#if navItem.navigationItemUrl?.linkType == "external"}
                   <a
                     on:click={closeMenuDrawer}
                     class="menu-list__link"
@@ -290,7 +291,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                   </a>
                 {/if}
 
-                {#if navItem.navigationItemUrl.linkType == "internal" && getPageSlug(navItem.navigationItemUrl.internalLink)}
+                {#if navItem.navigationItemUrl?.linkType == "internal" && getPageSlug(navItem.navigationItemUrl.internalLink)}
                   <a
                     data-sveltekit-noscroll
                     on:click={closeMenuDrawer}
@@ -318,7 +319,7 @@ let menuDrawerCloseAnim = function (pDetailsElement) {
                   </a>
                 {/if}
 
-                {#if navItem.navigationItemUrl.linkType == "anchor"}
+                {#if navItem.navigationItemUrl?.linkType == "anchor"}
                   {#if navItem.text && "contact us".indexOf(navItem.text.toLowerCase()) >= 0}
                     <ModalTrigger
                       bind:buttonText={navItem.text}

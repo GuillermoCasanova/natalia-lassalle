@@ -21,25 +21,13 @@
     "name": "featured-projects-slideshow",
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_sctn-experience-list.js",
       "_stores.js",
       "_language.js"
     ],
     "css": [
       "_app/immutable/assets/featured-projects-slideshow.mHtqLJBc.css"
-    ]
-  },
-  "_image.js": {
-    "file": "chunks/image.js",
-    "name": "image",
-    "imports": [
-      "_vendor.js",
-      "_stores.js",
-      "_language.js"
-    ],
-    "css": [
-      "_app/immutable/assets/image.DiPaT0Bv.css"
     ]
   },
   "_index.js": {
@@ -84,6 +72,18 @@
       "_sanity.js"
     ]
   },
+  "_rich-text.js": {
+    "file": "chunks/rich-text.js",
+    "name": "rich-text",
+    "imports": [
+      "_vendor.js",
+      "_stores.js",
+      "_language.js"
+    ],
+    "css": [
+      "_app/immutable/assets/rich-text.DiPaT0Bv.css"
+    ]
+  },
   "_sanity.js": {
     "file": "chunks/sanity.js",
     "name": "sanity"
@@ -93,7 +93,7 @@
     "name": "sctn-experience-list",
     "imports": [
       "_vendor.js",
-      "_image.js"
+      "_rich-text.js"
     ],
     "css": [
       "_app/immutable/assets/sctn-experience-list.jBeL1uzF.css"
@@ -106,16 +106,16 @@
       "_vendor.js",
       "_loader.js",
       "_sctn-experience-list.js",
-      "_image.js",
+      "_rich-text.js",
       "_language.js",
       "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/sctn-projects-list.H0dkXX4o.css"
+      "_app/immutable/assets/sctn-projects-list.luaACjOo.css"
     ]
   },
   "_sctn-projects-list.svelte_svelte_type_style_lang.js": {
-    "file": "_app/immutable/assets/sctn-projects-list.H0dkXX4o.css",
+    "file": "_app/immutable/assets/sctn-projects-list.luaACjOo.css",
     "src": "_sctn-projects-list.svelte_svelte_type_style_lang.js"
   },
   "_stores.js": {
@@ -228,7 +228,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
       "_sctn-projects-list.js",
@@ -256,7 +256,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
       "_featured-projects-slideshow.js"
@@ -282,7 +282,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
       "_language.js",
@@ -291,7 +291,7 @@
     "css": [
       "_app/immutable/assets/_page.Cussjxze.css",
       "_app/immutable/assets/loader.D9AmVt5-.css",
-      "_app/immutable/assets/sctn-projects-list.H0dkXX4o.css"
+      "_app/immutable/assets/sctn-projects-list.luaACjOo.css"
     ]
   },
   "src/routes/[lang=lang]/current/+page.server.js": {
@@ -310,7 +310,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
       "_sctn-projects-list.js"
@@ -333,7 +333,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_stores.js",
       "_sctn-experience-list.js",
       "_featured-projects-slideshow.js"
@@ -361,7 +361,7 @@
       "_vendor.js",
       "_stores.js",
       "_language.js",
-      "_image.js"
+      "_rich-text.js"
     ],
     "css": [
       "_app/immutable/assets/_page.ByD8kY5j.css"
@@ -383,7 +383,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_sctn-experience-list.js",
       "_sctn-projects-list.js"
     ],
@@ -408,7 +408,7 @@
     "isEntry": true,
     "imports": [
       "_vendor.js",
-      "_image.js",
+      "_rich-text.js",
       "_sctn-experience-list.js",
       "_sctn-projects-list.js"
     ],

@@ -31,10 +31,10 @@ export async function load({ params, url }) {
                     defined(text.en) => text.en,
                     "Untitled"
                 ),
-                select(navigationItemUrl.linkType == "internal") => {
-                    'navigationItemUrl': navigationItemUrl {
-                        ...,
-                        internalLink->
+                "navigationItemUrl": navigationItemUrl {
+                    ...,
+                    select(linkType == "internal") => {
+                        "internalLink": internalLink->
                     }
                 }
             }
@@ -52,7 +52,7 @@ export async function load({ params, url }) {
 	]);
 
 	return {
-		navigation,
+		navigation: navigation ?? { main_nav: { items: [] } },
 		footer,
 		contactModal,
 		pathname: url.pathname,

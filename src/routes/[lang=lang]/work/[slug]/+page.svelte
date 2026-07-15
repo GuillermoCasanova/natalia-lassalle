@@ -1,6 +1,6 @@
 <script>
-import { urlFor } from "$lib/sanity";
 import { MetaTags } from "svelte-meta-tags";
+import { getSeoImageMeta } from "$lib/seo";
 import SectionRichText from "../../../../components/sections/sctn-rich-text.svelte";
 import SectionProjectsList from "../../../../components/sections/sctn-projects-list.svelte";
 import SectionExperienceList from "../../../../components/sections/sctn-experience-list.svelte";
@@ -8,7 +8,7 @@ export let data;
 let seo = data.content.seo;
 
 function getCurrentProject(pHandle) {
-  let projects = data.projects; // Use optional chaining
+  let projects = data.projects;
 
   if (!projects) {
     console.error("Projects data is missing");
@@ -23,26 +23,19 @@ function getCurrentProject(pHandle) {
 }
 
 getCurrentProject(data.projHandle);
+
+$: seoImage = getSeoImageMeta(seo?.banner_image);
 </script>
 
 <MetaTags
   title={seo.title}
   description={seo.description}
-  canonical="https://www.canonical.ie/"
+  canonical="https://natalialassallemorillo.com/work"
   openGraph={{
-    url: "https://www.url.ie/a",
+    url: "https://natalialassallemorillo.com/work",
     title: seo.title,
     description: seo.description,
-    images: [
-      {
-        url: urlFor(seo.banner_image.asset),
-        width: 800,
-        height: 600,
-        alt: seo.banner_image.alt_text
-          ? seo.banner_image.alt_text
-          : "Missing Alt Text",
-      },
-    ],
+    ...(seoImage ? { images: [seoImage] } : {}),
     site_name: "SiteName",
   }}
   twitter={{
@@ -51,10 +44,7 @@ getCurrentProject(data.projHandle);
     cardType: "summary_large_image",
     title: seo.title,
     description: seo.description,
-    image: urlFor(seo.banner_image.asset),
-    imageAlt: seo.banner_image.alt_text
-      ? seo.banner_image.alt_text
-      : "Missing Alt Text",
+    ...(seoImage ? { image: seoImage.url, imageAlt: seoImage.alt } : {}),
   }}
 />
 

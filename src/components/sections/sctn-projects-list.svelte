@@ -67,6 +67,24 @@ function hideThumbnail(pSeo) {
   activeThumb = false;
 }
 
+function getCreditsByCategory(creditsList, category) {
+  if (!creditsList?.length) return [];
+
+  return creditsList.filter(
+    (credit) => (credit.category || "crew") === category
+  );
+}
+
+const creditCategoryLabels = {
+  en: { cast: "Cast", crew: "Crew" },
+  es: { cast: "Elenco", crew: "Equipo" },
+};
+
+function getCreditCategoryLabel(category, language = "en") {
+  const labels = creditCategoryLabels[language] || creditCategoryLabels.en;
+  return labels[category];
+}
+
 function getThumbURL(pMedia) {
   if (pMedia[0]) {
     return urlFor(
@@ -381,18 +399,29 @@ onMount(() => {
                     {#if project.creditsList.length > 0}
                       <h2 class="project-summary__headline">Credits</h2>
                     {/if}
-                    <ul class="credits-list">
-                      {#each project.creditsList as credit}
-                        <li class="credit">
-                          <span class="credit__work-done">
-                            {credit.workDone}
-                          </span>
-                          <span class="credit__name">
-                            {credit.name}
-                          </span>
-                        </li>
+                    <div class="credits-columns">
+                      {#each ["cast", "crew"] as category}
+                        {#if getCreditsByCategory(project.creditsList, category).length > 0}
+                          <div class="credits-column">
+                            <h3 class="credits-column__title">
+                              {getCreditCategoryLabel(category, $currentLanguage)}
+                            </h3>
+                            <ul class="credits-list">
+                              {#each getCreditsByCategory(project.creditsList, category) as credit}
+                                <li class="credit">
+                                  <span class="credit__work-done">
+                                    {credit.workDone}
+                                  </span>
+                                  <span class="credit__name">
+                                    {credit.name}
+                                  </span>
+                                </li>
+                              {/each}
+                            </ul>
+                          </div>
+                        {/if}
                       {/each}
-                    </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -801,6 +830,31 @@ h1 {
 .project-summary-credits {
   font-size: var(--h6);
   margin-bottom: var(--level5);
+}
+
+.credits-columns {
+  display: grid;
+  gap: var(--level6);
+}
+
+@media screen and (min-width: 780px) {
+  .credits-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--level8);
+  }
+}
+
+.credits-column__title {
+  font-size: var(--text-micro);
+  font-weight: bold;
+  margin-bottom: var(--level3);
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 1000px) {
+  .credits-column__title {
+    font-size: var(--h4);
+  }
 }
 
 @media screen and (min-width: 1200px) {

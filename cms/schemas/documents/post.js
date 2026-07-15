@@ -1,5 +1,5 @@
 
-import sanityClient from '@sanity/client';
+import { createClient } from '@sanity/client';
 
 
 const config = {
@@ -10,7 +10,7 @@ const config = {
     useCdn: false, // `false` if you want to ensure fresh data
 };
 
-const client = sanityClient(config);
+const client = createClient(config);
 
 
 import {FiEdit3} from 'react-icons/fi';

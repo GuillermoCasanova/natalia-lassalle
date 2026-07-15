@@ -238,7 +238,7 @@ onMount(() => {
             alt={media.alt_text}
             loading="lazy"
           />
-          <caption>{media.figure}</caption>
+          <figcaption>{media.figure}</figcaption>
         </figure>
       {/if}
     {/each}
@@ -260,7 +260,7 @@ img {
   transition: all 0.2s ease-in-out;
 }
 
-caption {
+figcaption {
   font-family: var(--secondary-font-family);
   font-style: italic;
   text-align: center;
@@ -278,7 +278,7 @@ figure img {
 }
 
 @media screen and (min-width: 900px) {
-  caption {
+  figcaption {
     max-width: 50ch;
     margin: auto;
     height: var(--level3);

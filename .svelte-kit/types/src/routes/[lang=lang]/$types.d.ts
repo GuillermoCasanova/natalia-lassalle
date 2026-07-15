@@ -1,8 +1,7 @@
 import type * as Kit from '@sveltejs/kit';
 
 type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
-// @ts-ignore
-type MatcherParam<M> = M extends (param : string) => param is infer U ? U extends string ? U : string : string;
+type MatcherParam<M> = M extends (param : string) => param is (infer U extends string) ? U : string;
 type RouteParams = { lang: MatcherParam<typeof import('../../../../../src/params/lang.js').match> };
 type RouteId = '/[lang=lang]';
 type MaybeWithVoid<T> = {} extends T ? T | void : T;
@@ -14,7 +13,7 @@ export type Snapshot<T = any> = Kit.Snapshot<T>;
 type PageServerParentData = Omit<EnsureDefined<import('../$types.js').LayoutServerData>, keyof LayoutServerData> & EnsureDefined<LayoutServerData>;
 type PageParentData = Omit<EnsureDefined<import('../$types.js').LayoutData>, keyof LayoutData> & EnsureDefined<LayoutData>;
 type LayoutRouteId = RouteId | "/[lang=lang]" | "/[lang=lang]/about" | "/[lang=lang]/contact" | "/[lang=lang]/current" | "/[lang=lang]/cv" | "/[lang=lang]/texts" | "/[lang=lang]/work" | "/[lang=lang]/work/[slug]"
-type LayoutParams = RouteParams & { lang?: MatcherParam<typeof import('../../../../../src/params/lang.js').match>; slug?: string }
+type LayoutParams = RouteParams & { lang?: MatcherParam<typeof import('../../../../../src/params/lang.js').match> | undefined; slug?: string | undefined }
 type LayoutServerParentData = EnsureDefined<import('../$types.js').LayoutServerData>;
 type LayoutParentData = EnsureDefined<import('../$types.js').LayoutData>;
 
@@ -26,10 +25,10 @@ export type PageServerData = Expand<OptionalUnion<EnsureDefined<Kit.LoadProperti
 export type PageData = Expand<Omit<PageParentData, keyof PageServerData> & EnsureDefined<PageServerData>>;
 export type Action<OutputData extends Record<string, any> | void = Record<string, any> | void> = Kit.Action<RouteParams, OutputData, RouteId>
 export type Actions<OutputData extends Record<string, any> | void = Record<string, any> | void> = Kit.Actions<RouteParams, OutputData, RouteId>
-export type PageProps = { data: PageData; form: ActionData }
+export type PageProps = { params: RouteParams; data: PageData; form: ActionData }
 export type LayoutServerLoad<OutputData extends Partial<App.PageData> & Record<string, any> | void = Partial<App.PageData> & Record<string, any> | void> = Kit.ServerLoad<LayoutParams, LayoutServerParentData, OutputData, LayoutRouteId>;
 export type LayoutServerLoadEvent = Parameters<LayoutServerLoad>[0];
 export type LayoutServerData = Expand<OptionalUnion<EnsureDefined<Kit.LoadProperties<Awaited<ReturnType<typeof import('../../../../../src/routes/[lang=lang]/+layout.server.js').load>>>>>>;
 export type LayoutData = Expand<Omit<LayoutParentData, keyof LayoutServerData> & EnsureDefined<LayoutServerData>>;
-export type LayoutProps = { data: LayoutData; children: import("svelte").Snippet }
+export type LayoutProps = { params: LayoutParams; data: LayoutData; children: import("svelte").Snippet }
 export type RequestEvent = Kit.RequestEvent<RouteParams, RouteId>;

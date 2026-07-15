@@ -1,5 +1,5 @@
 import { defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import schemaTypes from './schemas'
 import {languageFilter} from '@sanity/language-filter'
@@ -19,7 +19,7 @@ export default defineConfig({
       defaultLanguages: ['en'],
       documentTypes: ['project', 'page', 'post'],
     }),
-    deskTool({
+    structureTool({
       structure: deskStructure
     }),
     visionTool()

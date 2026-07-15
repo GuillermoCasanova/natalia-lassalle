@@ -1,11 +1,12 @@
 <script>
-	import { onMount } from 'svelte';
+	import { localizedPath } from '$lib/stores/language';
 
 	export let blocks;
+	export let lang = 'en';
 
 	let footer_columns = '';
 
-	let blocksLength = blocks.length;
+	let blocksLength = blocks?.length ?? 0;
 
 	export let column_total = '';
 
@@ -18,11 +19,16 @@
 	}
 
 	$: column_class = column_total;
+
+	function getInternalHref(block) {
+		const slug = block?.internalLink?.handle?.current;
+		return slug ? localizedPath(`/${slug}`, lang) : null;
+	}
 </script>
 
 <footer class="{column_class}">
 	<div class="footer__inner">
-		{#each blocks as block}
+		{#each blocks ?? [] as block}
 			<div class="footer__block">
 				{#if block._type == 'footer_link'}
 					<h1 class="footer-block__headline">{block.headline}</h1>
@@ -35,8 +41,8 @@
 						>
 					{/if}
 
-					{#if block.linkType == 'internal'}
-						<a class="footer-block__link" href="/{block.internalLink.handle.current}" rel="internal"
+					{#if block.linkType == 'internal' && getInternalHref(block)}
+						<a class="footer-block__link" href={getInternalHref(block)} rel="internal"
 							>{block.url_text}</a
 						>
 					{/if}

@@ -10,8 +10,8 @@ const config = {
 		prerender: {
 			handleMissingId: 'ignore',
 			handleHttpError: ({ status, path, referrer, message }) => {
-				if (status === 404) {
-					console.warn(`Prerender skipped missing page: ${path} (linked from ${referrer?.pathname})`);
+				if (status === 404 || path.includes('/undefined')) {
+					console.warn(`Prerender skipped missing page: ${path} (linked from ${referrer?.pathname ?? 'unknown'})`);
 					return;
 				}
 				throw new Error(message);

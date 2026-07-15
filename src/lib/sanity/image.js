@@ -1,4 +1,4 @@
-import imageUrlBuilder from '@sanity/image-url';
+import { createImageUrlBuilder } from '@sanity/image-url';
 import { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } from '$env/static/public';
 
 const imageConfig = {
@@ -6,7 +6,7 @@ const imageConfig = {
 	dataset: PUBLIC_SANITY_DATASET || 'production'
 };
 
-const imageBuilder = imageUrlBuilder(imageConfig);
+const imageBuilder = createImageUrlBuilder(imageConfig);
 
-/** @param {import('@sanity/image-url/lib/types/types').SanityImageSource} source */
+/** @param {import('@sanity/image-url').SanityImageSource} source */
 export const urlFor = (source) => imageBuilder.image(source);

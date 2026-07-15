@@ -109,7 +109,7 @@ export async function load({ params }) {
 
     const content = await fetchWithLocale(page_request, language, params);
 
-    const featuredProjectsQuery = `*[_type == 'project'][0..6]{
+    const featuredProjectsQuery = `*[_type == 'project' && defined(handle.current)][0..6]{
         name,
         thumbnail,
         "medium": medium->{

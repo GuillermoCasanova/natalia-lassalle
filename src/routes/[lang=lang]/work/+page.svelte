@@ -1,33 +1,26 @@
 <script>
 // @ts-nocheck
-import { urlFor } from "$lib/sanity";
 import { MetaTags } from "svelte-meta-tags";
+import { getSeoImageMeta } from "$lib/seo";
 import SectionRichText from "../../../components/sections/sctn-rich-text.svelte";
 import SectionProjectsList from "../../../components/sections/sctn-projects-list.svelte";
 import SectionExperienceList from "../../../components/sections/sctn-experience-list.svelte";
 export let data;
 export let projects;
 let seo = data.content.seo;
+
+$: seoImage = getSeoImageMeta(seo?.banner_image);
 </script>
 
 <MetaTags
   title={seo.title}
   description={seo.description}
-  canonical={seo.canonical}
+  canonical="https://natalialassallemorillo.com/work"
   openGraph={{
-    url: seo.canonical,
+    url: "https://natalialassallemorillo.com/work",
     title: seo.title,
     description: seo.description,
-    images: [
-      {
-        url: seo.banner_image.url + "?auto=format&width=1200",
-        width: 800,
-        height: 600,
-        alt: seo.banner_image.alt_text
-          ? seo.banner_image.alt_text
-          : "Missing Alt Text",
-      },
-    ],
+    ...(seoImage ? { images: [seoImage] } : {}),
     site_name: "SiteName",
   }}
   twitter={{
@@ -36,10 +29,7 @@ let seo = data.content.seo;
     cardType: "summary_large_image",
     title: seo.title,
     description: seo.description,
-    image: seo.banner_image.url + "?auto=format&width=1200",
-    imageAlt: seo.banner_image.alt_text
-      ? seo.banner_image.alt_text
-      : "Missing Alt Text",
+    ...(seoImage ? { image: seoImage.url, imageAlt: seoImage.alt } : {}),
   }}
 />
 

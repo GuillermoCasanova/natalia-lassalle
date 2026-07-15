@@ -2,11 +2,13 @@
 /** @type {import('./$types').PageData} */
 import Texts from "../../../components/sections/sctn-texts.svelte";
 import { MetaTags } from "svelte-meta-tags";
-import { urlFor } from "$lib/sanity";
+import { getSeoImageMeta } from "$lib/seo";
 
 export let data;
 let posts = data.posts;
 let seo = data.content.seo;
+
+$: seoImage = getSeoImageMeta(seo?.banner_image);
 </script>
 
 <svelte:head>
@@ -18,16 +20,7 @@ let seo = data.content.seo;
       url: "https://natalialassallemorillo.com/texts",
       title: seo.title,
       description: seo.description,
-      images: [
-        {
-          url: seo.banner_image.url + "?auto=format&width=1200",
-          width: 800,
-          height: 600,
-          alt: seo.banner_image.alt_text
-            ? seo.banner_image.alt_text
-            : "Missing Alt Text",
-        },
-      ],
+      ...(seoImage ? { images: [seoImage] } : {}),
       site_name: "SiteName",
     }}
     twitter={{
@@ -36,10 +29,7 @@ let seo = data.content.seo;
       cardType: "summary_large_image",
       title: seo.title,
       description: seo.description,
-      image: seo.banner_image.url + "?auto=format&width=1200",
-      imageAlt: seo.banner_image.alt_text
-        ? seo.banner_image.alt_text
-        : "Missing Alt Text",
+      ...(seoImage ? { image: seoImage.url, imageAlt: seoImage.alt } : {}),
     }}
   />
 </svelte:head>

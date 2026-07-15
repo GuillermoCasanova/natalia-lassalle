@@ -15,7 +15,9 @@ let swiper;
 let thumbnailContainer;
 
 $: lang = $page.params.lang || "en";
-$: projects = shuffleArray([...featuredProjects]);
+$: projects = shuffleArray(
+  featuredProjects.filter((project) => project?.handle)
+);
 
 onMount(() => {
   if (!projects.length) return;

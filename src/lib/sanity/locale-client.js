@@ -124,6 +124,7 @@ export function buildLocalizedQuery(baseQuery, language = 'en', availableLanguag
             _type,
             _ref,
             _key,
+            category,
             "workDone": workDone->name,
             "name": name
         }
@@ -246,7 +247,7 @@ export const queries = {
      * @returns {string} GROQ query
      */
     projects: (language = 'en') => buildLocalizedQuery(
-        `*[_type == 'project' && !(_id in path('drafts.**'))]`,
+        `*[_type == 'project' && !(_id in path('drafts.**')) && defined(handle.current)]`,
         language
     ),
 

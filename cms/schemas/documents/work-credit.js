@@ -6,6 +6,20 @@ export default {
     type: 'document',
     fields: [
       {
+        name: 'category',
+        title: 'Category',
+        type: 'string',
+        options: {
+          list: [
+            { title: 'Cast', value: 'cast' },
+            { title: 'Crew', value: 'crew' },
+          ],
+          layout: 'radio',
+        },
+        initialValue: 'crew',
+        validation: Rule => Rule.required(),
+      },
+      {
         name: 'workDone',
         title: 'Work Done',
         type: 'reference',
@@ -26,7 +40,15 @@ export default {
     preview: {
       select: {
         title: 'workDone.name',
-        subtitle: 'name'
-      }
+        subtitle: 'name',
+        category: 'category',
+      },
+      prepare({ title, subtitle, category }) {
+        const categoryLabel = category === 'cast' ? 'Cast' : 'Crew';
+        return {
+          title,
+          subtitle: `${categoryLabel} · ${subtitle}`,
+        };
+      },
     }
   }

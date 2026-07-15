@@ -31,8 +31,10 @@ export async function load({ params }) {
 
 export async function entries() {
 	const projects = await client.fetch(
-		`*[_type == 'project' && !(_id in path('drafts.**'))] { "slug": handle.current }`
+		`*[_type == 'project' && !(_id in path('drafts.**')) && defined(handle.current)] { "slug": handle.current }`
 	);
 
-	return ['en', 'es'].flatMap((lang) => projects.map(({ slug }) => ({ lang, slug })));
+	return ['en', 'es'].flatMap((lang) =>
+		projects.filter(({ slug }) => slug).map(({ slug }) => ({ lang, slug }))
+	);
 }
