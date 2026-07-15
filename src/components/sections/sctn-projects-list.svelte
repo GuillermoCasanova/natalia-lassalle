@@ -6,7 +6,6 @@ import ThumbnailsContainer from "../thumbnails-container.svelte";
 import RichText from "../rich-text.svelte";
 import { urlFor } from "$lib/sanity";
 import { page } from "$app/stores";
-import { goto } from "$app/navigation";
 import {
   currentLanguage,
   localizedPath,
@@ -133,7 +132,11 @@ function formatDates(pProjects) {
 
 function goToWorkHome() {
   seo = workIndexSeo;
-  goto(localizedPath("/work", $currentLanguage));
+
+  const path = localizedPath("/work", $currentLanguage);
+  if (window.location.pathname !== path) {
+    history.replaceState({}, "", path);
+  }
 }
 
 onMount(() => {
@@ -144,8 +147,38 @@ onMount(() => {
   let currentState = history ? history.state : false;
   let activeDrawer = null;
 
+  const isMobile = () => window.innerWidth < 900;
+  const drawerTransitionMs = 400;
+
+  const animateMobileMediaHeight = (mediaContainer, open) => {
+    if (!mediaContainer) return;
+
+    if (open) {
+      mediaContainer.style.height = "auto";
+      const targetHeight = mediaContainer.scrollHeight;
+      mediaContainer.style.height = "0";
+      mediaContainer.offsetHeight;
+      mediaContainer.style.height = `${targetHeight}px`;
+
+      const onTransitionEnd = (event) => {
+        if (event.propertyName !== "height") return;
+        mediaContainer.removeEventListener("transitionend", onTransitionEnd);
+        if (mediaContainer.style.height !== "0px") {
+          mediaContainer.style.height = "auto";
+        }
+      };
+
+      mediaContainer.addEventListener("transitionend", onTransitionEnd);
+    } else {
+      mediaContainer.style.height = `${mediaContainer.scrollHeight}px`;
+      mediaContainer.offsetHeight;
+      mediaContainer.style.height = "0";
+    }
+  };
+
   const closeDrawer = (pElem) => {
     const detailsSelector = pElem.closest("details");
+    const summary = detailsSelector.querySelector("summary");
     const projectContentContainer = detailsSelector.querySelector(
       "[data-project-content-container]"
     );
@@ -158,13 +191,16 @@ onMount(() => {
     projectContentContainer.style.height = 0;
     projectContentContainer.style.opacity = 0;
 
-    mediaContainer.dispatchEvent(event);
+    if (isMobile()) {
+      animateMobileMediaHeight(mediaContainer, false);
+    }
 
-    pElem.querySelector("summary").setAttribute("aria-expanded", false);
+    mediaContainer.dispatchEvent(event);
+    summary.setAttribute("aria-expanded", false);
 
     setTimeout(() => {
       pElem.removeAttribute("open");
-    }, 400);
+    }, drawerTransitionMs);
   };
 
   const toggleDrawer = (event) => {
@@ -205,33 +241,52 @@ onMount(() => {
 
     pDrawer.closest("details").setAttribute("open", true);
     toggleFading(pDrawer.closest("[data-projects-list]"));
-    loadMedia(pDrawer);
     projectIsOpen = true;
+
+    const mediaContainer = detailsSelector.querySelector(
+      "[data-project-media-container]"
+    );
 
     projectContentContainer.style.height = projectContent.offsetHeight + "px";
     projectContentContainer.style.opacity = 1;
 
+    if (isMobile()) {
+      animateMobileMediaHeight(mediaContainer, true);
+      setTimeout(() => loadMedia(pDrawer), drawerTransitionMs);
+      setTimeout(() => {
+        scrollToProject(pDrawer, 12);
+      }, drawerTransitionMs);
+    } else {
+      loadMedia(pDrawer);
+    }
+
     activeDrawer = pDrawer.dataset.id;
 
-    setTimeout(() => {
-      scrollToProject(pDrawer, 20);
-    }, 500);
+    if (!isMobile()) {
+      setTimeout(() => {
+        scrollToProject(pDrawer, 20);
+      }, 500);
+    }
   };
 
   const scrollToProject = (pElement, pOffsetPixels) => {
-    const targetSection = pElement;
-    const scrollPosition = targetSection.offsetTop;
+    const archiveContainer = document.querySelector(".projects-archive-container");
+    const header = document.querySelector("header");
+    const headerOffset = header ? header.offsetHeight : 0;
+    const totalOffset = headerOffset + pOffsetPixels;
+    const elementTop = pElement.getBoundingClientRect().top;
 
     if (window.innerWidth < 900) {
       window.scrollTo({
-        top: scrollPosition - pOffsetPixels,
+        top: Math.max(0, elementTop + window.scrollY - totalOffset),
         behavior: "smooth",
       });
       return;
     }
-    if (targetSection) {
-      document.querySelector(".projects-archive-container").scrollTo({
-        top: scrollPosition - pOffsetPixels,
+
+    if (archiveContainer) {
+      archiveContainer.scrollTo({
+        top: Math.max(0, archiveContainer.scrollTop + elementTop - totalOffset),
         behavior: "smooth",
       });
     }
@@ -254,6 +309,11 @@ onMount(() => {
         .querySelectorAll("[data-project-media-container]")
         .forEach((elem) => {
           elem.classList.remove("is-visible");
+
+          if (isMobile()) {
+            elem.style.height = "0";
+            elem.style.overflow = "hidden";
+          }
         });
     });
 
@@ -555,6 +615,13 @@ summary::marker {
   color: white;
   position: relative;
   opacity: 1;
+}
+
+@media screen and (max-width: 899px) {
+  .project-media {
+    overflow: hidden;
+    transition: height 0.4s ease-in-out;
+  }
 }
 
 @media screen and (min-width: 900px) {

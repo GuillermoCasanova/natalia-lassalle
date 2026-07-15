@@ -64,8 +64,7 @@ onMount(() => {
         let latestImages = imagesWrapper.querySelectorAll("img");
         latestImages.forEach((elem, index) => {
           elem.style.opacity = 0;
-          elem.style.transitionDelay = index * 0.1 + "s";
-          elem.removeAttribute("loading");
+          elem.style.transitionDelay = `${index * 0.08}s`;
         });
       },
 
@@ -155,6 +154,10 @@ onMount(() => {
           this.images = this.container.querySelectorAll("img");
           this.totalImages = this.images.length;
 
+          this.images.forEach((image) => {
+            image.removeAttribute("loading");
+          });
+
           if (this.imagesHaveBeenLoaded) {
             setTimeout(() => {
               this.loader.style.opacity = 0;
@@ -164,11 +167,13 @@ onMount(() => {
             return;
           }
 
-          this.images.forEach((image, index) => {
+          this.images.forEach((image) => {
             if (image.complete) {
               this.imageLoaded();
             } else {
-              image.addEventListener("load", this.imageLoaded.bind(this));
+              image.addEventListener("load", this.imageLoaded.bind(this), {
+                once: true,
+              });
             }
           });
         });
@@ -189,21 +194,26 @@ onMount(() => {
       },
 
       animateImages() {
+        const mediaContainer = this.container.querySelector(".media-container");
         let latestImages = this.container.querySelectorAll("img");
 
         setTimeout(() => {
           this.loader.style.opacity = 0;
-          latestImages.forEach((elem) => {
+          mediaContainer?.classList.add("is-revealed");
+          latestImages.forEach((elem, index) => {
+            elem.style.transitionDelay = `${index * 0.08}s`;
             elem.style.opacity = 1;
           });
-        }, 300);
+        }, 200);
       },
 
       resetAnimation() {
+        const mediaContainer = this.container.querySelector(".media-container");
+        mediaContainer?.classList.remove("is-revealed");
         let latestImages = this.container.querySelectorAll("img");
-        latestImages.forEach((elem, index) => {
+        latestImages.forEach((elem) => {
           elem.style.opacity = 0;
-          elem.style.transitionDelay = index * 0.1 + "s";
+          elem.style.transitionDelay = "0s";
         });
       },
     };
@@ -257,7 +267,19 @@ onMount(() => {
 
 img {
   border: 1px solid rgb(31, 30, 30);
-  transition: all 0.2s ease-in-out;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+@media screen and (max-width: 899px) {
+  .media-container :global(img) {
+    transform: translateY(8px);
+  }
+
+  .media-container.is-revealed :global(img) {
+    transform: translateY(0);
+  }
 }
 
 figcaption {
