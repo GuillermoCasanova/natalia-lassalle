@@ -66,7 +66,7 @@ Supported languages: `en`, `es`
 
 ## Prerequisites
 
-- **Node.js** 23.7.0 (see `.nvmrc` — run `nvm use` if you use nvm)
+- **Node.js** 24.x (see `.nvmrc` — run `nvm use` if you use nvm)
 - A Sanity project with read access (project ID and dataset)
 - Gmail OAuth credentials (only required for the contact form)
 
@@ -162,7 +162,7 @@ GROQ queries in `src/lib/sanity/locale-client.js` handle language selection with
 
 ## Deployment
 
-The site uses `@sveltejs/adapter-vercel` with the Node.js 24 runtime on Vercel (Vercel's current default — supported majors are 20.x, 22.x, and 24.x). Local development targets Node 23.7.0 via `package.json` engines and `.nvmrc`. Deploy by connecting the repository to Vercel and setting the environment variables listed above in the project dashboard.
+The site uses `@sveltejs/adapter-vercel` with the Node.js 24 runtime. Set `"engines": { "node": "24.x" }` in `package.json` and Node.js **24.x** in your Vercel project settings (Settings → Build and Deployment). Deploy by connecting the repository to Vercel and setting the environment variables listed above in the project dashboard.
 
 Build command:
 
