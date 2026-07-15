@@ -70,7 +70,7 @@ onMount(() => {
 }
 
 /* Desktop menu styles */
-.menu-list .language-switcher .language-button {
+:global(.menu-list) .language-switcher .language-button {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -85,21 +85,21 @@ onMount(() => {
   position: relative;
 }
 
-.menu-list .language-switcher .language-button:hover {
+:global(.menu-list) .language-switcher .language-button:hover {
   color: var(--primary-color, #000);
 }
 
-.menu-list .language-switcher .chevron {
+:global(.menu-list) .language-switcher .chevron {
   transition: transform var(--duration-default) cubic-bezier(0.5, 1, 0.89, 1);
   width: 12px;
   height: 12px;
 }
 
-.menu-list .language-switcher .chevron.rotate {
+:global(.menu-list) .language-switcher .chevron.rotate {
   transform: rotate(180deg);
 }
 
-.menu-list .language-switcher .language-dropdown {
+:global(.menu-list) .language-switcher .language-dropdown {
   position: relative;
   top: calc(100% + 8px);
   right: 0;
@@ -114,12 +114,12 @@ onMount(() => {
 }
 
 @media screen and (min-width: 900px) {
-  .menu-list .language-switcher .language-dropdown {
+  :global(.menu-list) .language-switcher .language-dropdown {
     position: absolute;
   }
 }
 
-.menu-list .language-switcher .language-option {
+:global(.menu-list) .language-switcher .language-option {
   width: 100%;
   display: flex;
   align-items: center;
@@ -135,21 +135,21 @@ onMount(() => {
   text-transform: uppercase;
 }
 
-.menu-list .language-switcher .language-option:hover {
+:global(.menu-list) .language-switcher .language-option:hover {
   background-color: #f0f0f0;
 }
 
-.menu-list .language-switcher .language-option.active {
+:global(.menu-list) .language-switcher .language-option.active {
   background-color: #e0e0e0;
   font-weight: bold;
 }
 
-.menu-list .language-switcher .flag {
+:global(.menu-list) .language-switcher .flag {
   font-size: 16px;
 }
 
 /* Mobile menu drawer styles */
-.menu-drawer .language-switcher .language-button {
+:global(.menu-drawer) .language-switcher .language-button {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -166,12 +166,12 @@ onMount(() => {
   line-height: 1;
 }
 
-.menu-drawer .language-switcher .language-button:hover,
-.menu-drawer .language-switcher .language-button:focus {
+:global(.menu-drawer) .language-switcher .language-button:hover,
+:global(.menu-drawer) .language-switcher .language-button:focus {
   color: black;
 }
 
-.menu-drawer .language-switcher .language-button:before {
+:global(.menu-drawer) .language-switcher .language-button:before {
   content: " ";
   width: 100%;
   height: 100%;
@@ -184,22 +184,22 @@ onMount(() => {
   transition: all 0 cubic-bezier(0.5, 1, 0.89, 1);
 }
 
-.menu-drawer .language-switcher .language-button:hover:before,
-.menu-drawer .language-switcher .language-button:focus:before {
+:global(.menu-drawer) .language-switcher .language-button:hover:before,
+:global(.menu-drawer) .language-switcher .language-button:focus:before {
   opacity: 1;
 }
 
-.menu-drawer .language-switcher .chevron {
+:global(.menu-drawer) .language-switcher .chevron {
   transition: transform var(--duration-default) cubic-bezier(0.5, 1, 0.89, 1);
   width: 16px;
   height: 16px;
 }
 
-.menu-drawer .language-switcher .chevron.rotate {
+:global(.menu-drawer) .language-switcher .chevron.rotate {
   transform: rotate(180deg);
 }
 
-.menu-drawer .language-switcher .language-dropdown {
+:global(.menu-drawer) .language-switcher .language-dropdown {
   position: relative;
   top: calc(100% + 8px);
   right: 0;
@@ -213,7 +213,7 @@ onMount(() => {
   min-width: 160px;
 }
 
-.menu-drawer .language-switcher .language-option {
+:global(.menu-drawer) .language-switcher .language-option {
   width: 100%;
   display: flex;
   align-items: center;
@@ -230,19 +230,19 @@ onMount(() => {
   color: white;
   font-weight: bold;
 }
-.menu-drawer .language-switcher .language-button {
+:global(.menu-drawer) .language-switcher .language-button {
   display: inline-block;
 }
 
-.menu-drawer .language-switcher .language-option:hover {
+:global(.menu-drawer) .language-switcher .language-option:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.menu-drawer .language-switcher .language-option.active {
+:global(.menu-drawer) .language-switcher .language-option.active {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.menu-drawer .language-switcher .flag {
+:global(.menu-drawer) .language-switcher .flag {
   font-size: 20px;
 }
 </style>

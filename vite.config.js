@@ -21,21 +21,7 @@ const config = {
     target: 'esnext',
     minify: 'terser',
     sourcemap: false,
-    chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: [
-            'svelte',
-            'svelte/internal',
-            'svelte/store',
-            'svelte/transition',
-            'svelte/animate'
-          ],
-          email: ['nodemailer', 'googleapis', 'dotenv']
-        }
-      }
-    }
+    chunkSizeWarningLimit: 1000
   }
 };
 

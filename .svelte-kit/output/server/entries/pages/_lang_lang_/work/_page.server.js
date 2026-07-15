@@ -1,1 +1,0 @@
-import{g as n,q as a,f as e}from"../../../../chunks/locale-client.js";function t(){return[{lang:"en"},{lang:"es"}]}async function r({params:t}){const r=n(t),s=a.page(r),c=a.projects(r),[o,l]=await Promise.all([e(s,r,t),e(c,r)]);return{content:o,projects:l,currentLanguage:r}}export{t as entries,r as load};
